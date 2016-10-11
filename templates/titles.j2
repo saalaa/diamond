@@ -1,0 +1,36 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  Title index
+{% endblock %}
+
+{% block body %}
+  <p>
+    <center>
+      {% for letter in index.letters %}
+        <a href="#entry_{{ letter | lower }}">{{ letter | upper }}</a>
+      {% endfor %}
+    </center>
+  </p>
+
+  <ul>
+    {% set letter = None %}
+    {% for title in index.results | sort %}
+      {% if letter != title[0] %}
+        <center>
+          <h3>
+            <a id="entry_{{ title[0] | lower }}" href="#entry_{{ title[0] | lower }}">
+              {{ title[0] }}
+            </a>
+          </h3>
+        </center>
+
+        {% set letter = title[0] %}
+      {% endif %}
+
+        <li>
+          <a href="{{ title }}">{{ title }}</a>
+        </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

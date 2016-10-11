@@ -1,0 +1,40 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  Word index
+{% endblock %}
+
+{% block body %}
+  <p>
+    <center>
+      {% for letter in index.letters %}
+        <a href="#entry_{{ letter | lower }}">{{ letter | upper }}</a>
+      {% endfor %}
+    </center>
+  </p>
+
+  {% set letter = None %}
+  {% for word, pages in index.results | dictsort %}
+    {% if letter != word[0] %}
+      <center>
+        <h3>
+          <a id="entry_{{ word[0] | lower }}" href="#entry_{{ word[0] | lower }}">
+            {{ word[0] }}
+          </a>
+        </h3>
+      </center>
+
+      {% set letter = word[0] %}
+    {% endif %}
+
+    <b>{{ word }}</b><br>
+
+    <ul>
+      {% for title in pages %}
+        <li>
+          <a href="{{ title }}">{{ title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+{% endblock %}

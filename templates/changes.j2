@@ -1,0 +1,17 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  Changes
+{% endblock %}
+
+{% block body %}
+  <ul>
+    {% for title, address, time in changes.results %}
+      <li>
+        <a href="{{ title }}">{{ title }}</a>
+        . . . .
+        {{ time }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

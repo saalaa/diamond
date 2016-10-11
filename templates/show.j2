@@ -1,0 +1,32 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  <a href="/search?query={{ page.page_name }}&fulltext=yes">
+    {{ page.page_name | title }}
+  </a>
+{% endblock %}
+
+{% block body %}
+  {{ page.get_body() | format }}
+
+  <p>
+    <table class="body metabox">
+      {% for pair in page.metadata().keyvals %}
+        <tr>
+          <td class="metakey">{{ pair.key }}:</td>
+          <td class="metaval">
+            <a href="/facets/{{ pair.key }}={{ pair.val }}">{{ pair.val }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </p>
+
+  <p>
+    <small>Laste modified: {{ page._last_modified() }}</small>
+  </p>
+{% endblock %}
+
+{% block edit %}
+  <a href="/{{ page.page_name }}/edit">Edit</a> |
+{% endblock %}

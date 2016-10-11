@@ -1,0 +1,44 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  {% if search.executed %}
+    {% if search.fulltext %}
+      Full text search for "{{ search.query }}"
+    {% else %}
+      Title search for "{{ search.query }}"
+    {% endif %}
+  {% else %}
+    Search
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <div class="form">
+    <form>
+      <input type="text" name="query" value="{{ search.query }}" size="30">
+      <input type="submit" value="Go">
+      <br>
+
+      <label>
+        <input type="checkbox" name="fulltext" value="yes"
+          {{ 'checked="checked"' if search.fulltext else '' }}> Full text
+      </label>
+    </form>
+  </div>
+
+  {% if search.executed %}
+    <ul>
+      {% for (count, name) in search.results %}
+        <li>
+          <a href="{{ name }}">{{ name | title }}</a>
+          {% if search.fulltext %}
+            . . . . {{ count | pluralize('%d match', '%d matches') }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p>{{ search.hits | pluralize('%d hit', '%d hits') }} out of
+      {{ search.total | pluralize('%d page', '%d pages')}} searched.</p>
+  {% endif %}
+{% endblock %}
