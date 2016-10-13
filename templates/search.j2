@@ -13,18 +13,27 @@
 {% endblock %}
 
 {% block body %}
-  <div class="form">
-    <form>
-      <input type="text" name="query" value="{{ search.query }}" size="30">
-      <input type="submit" value="Go">
-      <br>
+  <form>
+    <fieldset>
+      <legend class="sr">Search through the wiki</legend>
 
-      <label>
-        <input type="checkbox" name="fulltext" value="yes"
-          {{ 'checked="checked"' if search.fulltext else '' }}> Full text
-      </label>
-    </form>
-  </div>
+      <div class="col-7 col-9-m no-padding">
+        <label class="sr" for="field-query">Query term</label>
+        <input type="text" id="field-query" name="query"
+          value="{{ search.query }}" class="field">
+
+        <label>
+          <input type="checkbox" name="fulltext" value="yes"
+            {{ 'checked="checked"' if search.fulltext else '' }}>
+            Perform a full text search
+        </label>
+      </div>
+
+      <div class="col-5 col-3-m no-padding">
+        <input type="submit" value="Go" class="button button-fw" />
+      </div>
+    </fieldset>
+  </form>
 
   {% if search.executed %}
     <ul>

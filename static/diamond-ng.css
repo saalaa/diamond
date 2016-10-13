@@ -1,0 +1,82 @@
+body {
+  border-top: 4px solid #7050c0;
+}
+
+a {
+  text-decoration: none;
+  border-bottom: 1px solid #7050c0;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #fff;
+  color: #7050c0;
+}
+
+a.wikilink {
+  border-bottom: 1px solid #fff;
+  color: #7050c0;
+}
+
+a.wikilink:hover {
+  border-bottom: 1px solid #7050c0;
+  color: #000;
+}
+
+blockquote p {
+  font-size: 1rem;
+  line-height: 1.55rem;
+
+  padding-left: 5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: #000000;
+  border-bottom: 1px solid #fff;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  color: #000000;
+  border-bottom: 1px solid #7050c0;
+}
+
+.actions {
+  text-align: right;
+  font-size: 0.8rem;
+}
+
+.flash {
+  text-align: center;
+  font-style: italic;
+}
+
+.button-fw {
+  height: 36px;
+  width: 100%;
+}
+
+fieldset {
+  border: 0px;
+  padding: 0px;
+}
+
+tr.last-row th, tr.last-row td {
+    border-bottom: 0;
+}
+
+table.codehilitetable td.linenos {
+  width: 70px;
+}
+
+table.codehilitetable td {
+  border: 0;
+}
+
+textarea {
+  font-family: monospace;
+}

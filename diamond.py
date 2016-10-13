@@ -8,12 +8,12 @@
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation; either version 2 of the License, or (at your option) any later
 # version.
-
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 # FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
-
+#
 # You should have received a copy of the GNU General Public License along with
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA 02111-1307 USA
@@ -28,18 +28,16 @@ from flask import Flask, request, render_template, redirect, url_for, flash, \
 
 from markdown import markdown
 from markdown.extensions.wikilinks import WikiLinkExtension
+from markdown.extensions.codehilite import CodeHiliteExtension
 
 from time import localtime, strftime, time
 
-# Regular expression defining a WikiWord (but this definition
-# is also assumed in other places.
-word_re_str = r"\b([A-Z][a-z]+){2,}\b"
-word_anchored_re = re.compile('^' + word_re_str + '$')
+WIKILINK_RE = re.compile(r'^([\w0-9_ -]+)$') # Markdown compatibility
 
-data_dir = 'data/'
-editlog_name = 'data/changes.log'
+DATA_DIR = 'data/'
+CHANGE_LOG = 'data/changes.log'
 
-datetime_fmt = '%a %d %b %Y %I:%M %p'
+DATETIME_FMT = '%a %d %b %Y %I:%M %p'
 
 class KeyVal:
     """A key-value pair.  This class is used to represent the metadata
@@ -69,11 +67,11 @@ class KeyVal:
 
         return 0
 
-    def describe_val(self):
-        return self.val or 'No %s' % self.key
-
-    def url_piece(self):
+    def build_url(self):
         return "/%s=%s" % (urllib.quote(self.key), urllib.quote(self.val))
+
+    def build_title(self):
+        return self.val or 'No %s' % self.key
 
 class View:
     """A view is the subset of pages that match particular metadata
@@ -98,10 +96,6 @@ class View:
     def pages(self):
         all_pages = [Page(page_name) for page_name in page_list()]
         return [p for p in all_pages if self.includes(p.metadata())]
-
-    def breadcrumb(self):
-        crumbs = [kv.describe_val() for kv in self.keyvals]
-        return ', '.join(crumbs)
 
     def includes(self, other_view):
         for kv in self.keyvals:
@@ -150,6 +144,12 @@ class View:
 
         return result
 
+    def build_url(self):
+        return ''.join([kv.build_url() for kv in self.keyvals])
+
+    def build_title(self):
+        return ', '.join([kv.build_title() for kv in self.keyvals])
+
 # TODO page_name should be name
 # TODO Get rid of weird private members
 # TODO Simplify save methods
@@ -159,13 +159,13 @@ class Page:
         self.page_name = page_name
 
     def _body_filename(self):
-        return os.path.join(data_dir, self.page_name)
+        return os.path.join(DATA_DIR, self.page_name)
 
     def _metadata_filename(self):
-        return os.path.join(data_dir, self.page_name + ".meta")
+        return os.path.join(DATA_DIR, self.page_name + ".meta")
 
     def _tmp_filename(self):
-        return os.path.join(data_dir, ('#' + self.page_name + '.' + `os.getpid()` + '#'))
+        return os.path.join(DATA_DIR, ('#' + self.page_name + '.' + `os.getpid()` + '#'))
 
     def exists(self):
         try:
@@ -208,7 +208,7 @@ class Page:
         except IOError, er:
             if er.errno == errno.ENOENT:
                 # just doesn't exist, use default
-                return 'Describe %s here.' % self.page_name
+                return 'Describe [[%s]] here.' % self.page_name
             else:
                 raise er
 
@@ -218,7 +218,7 @@ class Page:
 
         ctime = localtime(os.stat(self._body_filename()).st_ctime)
 
-        return strftime(datetime_fmt, ctime)
+        return strftime(DATETIME_FMT, ctime)
 
     def _write_file(self, text, filename):
         tmp_filename = self._tmp_filename()
@@ -347,6 +347,9 @@ class FacetsBrowser:
         self.filters = filters
         self.results = hits
 
+        self.url = view.build_url();
+        self.title = view.build_title();
+
         self.executed = True
 
 class TitleIndex:
@@ -389,7 +392,7 @@ class Changes:
         def format(t):
             t = float(t)
             t = localtime(t)
-            return strftime(datetime_fmt, t)
+            return strftime(DATETIME_FMT, t)
 
         lines = editlog_raw_lines()
         lines.reverse()
@@ -408,7 +411,13 @@ app.config.update({
 
 @app.template_filter('format')
 def format(text):
-    html = markdown(text, extensions=[WikiLinkExtension(end_url='')])
+    html = markdown(text, extensions=[
+        'markdown.extensions.extra',
+        'markdown.extensions.toc',
+        CodeHiliteExtension(guess_lang=False),
+        WikiLinkExtension(end_url='')
+    ])
+
     return Markup(html)
 
 @app.template_filter('title')
@@ -422,12 +431,16 @@ def pluralize(number, singular='', plural='s'):
 @app.route('/')
 @app.route('/<name>')
 def show(name=None):
+    menu = Page('MainMenu')
     page = Page(name or 'FrontPage')
 
-    return render_template('show.j2', page=page)
+    return render_template('show.j2', menu=menu, page=page)
 
 @app.route('/<name>/edit', methods=['GET', 'POST'])
 def edit(name):
+    menu = Page('MainMenu')
+    help = Page('EditHelp')
+
     page = Page(name)
 
     if request.method == 'POST':
@@ -436,62 +449,65 @@ def edit(name):
 
         flash('Thank you for your changes. Your attention to detail is appreciated.')
 
-        return redirect(url_for('show'))
+        return redirect(url_for('show', name=name))
 
-    help = Page('EditHelp')
-
-    return render_template('edit.j2', help=help, page=page)
+    return render_template('edit.j2', menu=menu, help=help, page=page)
 
 @app.route('/titles')
 def titles():
+    menu = Page('MainMenu')
     help = Page('TitlesHelp')
 
     index = TitleIndex()
     index.execute()
 
-    return render_template('titles.j2', help=help, index=index)
+    return render_template('titles.j2', menu=menu, help=help, index=index)
 
 @app.route('/words')
 def words():
+    menu = Page('MainMenu')
     help = Page('WordsHelp')
 
     index = WordIndex()
     index.execute()
 
-    return render_template('words.j2', help=help, index=index)
+    return render_template('words.j2', menu=menu, help=help, index=index)
 
 @app.route('/changes')
 def changes():
+    menu = Page('MainMenu')
     help = Page('ChangesHelp')
 
     changes = Changes()
     changes.execute()
 
-    return render_template('changes.j2', help=help, changes=changes)
+    return render_template('changes.j2', menu=menu, help=help, changes=changes)
 
 @app.route('/search')
 def search():
+    menu = Page('MainMenu')
+    help = Page('SearchHelp')
+
     query = request.args.get('query', '')
     fulltext = request.args.get('fulltext', False)
-
-    help = Page('SearchHelp')
 
     search = Search(query, fulltext)
 
     if query:
         search.execute()
 
-    return render_template('search.j2', help=help, search=search)
+    return render_template('search.j2', menu=menu, help=help, search=search)
 
 @app.route('/facets')
 @app.route('/facets/<path:query>')
 def facets(query=None):
+    menu = Page('MainMenu')
     help = Page('FacetsHelp')
 
     facets = FacetsBrowser(query)
     facets.execute()
 
-    return render_template('facets.j2', help=help, facets=facets)
+    return render_template('facets.j2', menu=menu, help=help, facets=facets)
 
 # Functions to keep track of when people have changed pages, so we can
 # do the recent changes page and so on.
@@ -499,7 +515,7 @@ def facets(query=None):
 # words: page_name, host, time
 
 def editlog_add(page_name, host):
-    editlog = open(editlog_name, 'a+')
+    editlog = open(CHANGE_LOG, 'a+')
     try:
         editlog.seek(0, 2)                  # to end
         editlog.write("\t".join((page_name, host, `time()`)) + "\n")
@@ -507,14 +523,14 @@ def editlog_add(page_name, host):
         editlog.close()
 
 def editlog_raw_lines():
-    editlog = open(editlog_name, 'rt')
+    editlog = open(CHANGE_LOG, 'rt')
     try:
         return editlog.readlines()
     finally:
         editlog.close()
 
 def page_list():
-    files = filter(word_anchored_re.match, os.listdir(data_dir))
+    files = filter(WIKILINK_RE.match, os.listdir(DATA_DIR))
     files.sort()
     return files
 

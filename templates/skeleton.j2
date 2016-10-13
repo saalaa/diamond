@@ -1,47 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>uu</title>
-  <link rel="stylesheet" type="text/css" href="/static/diamond.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ self.title() | striptags }} - DiamondWiki</title>
+
+  <meta name="description" content="Get started with Base and build a new web app or mobile-first website in no time.">
+
+  <link rel="canonical" href="http://getbase.org">
+
+  <link rel="stylesheet" type="text/css" href="/static/base.css">
+  <link rel="stylesheet" type="text/css" href="/static/diamond-ng.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.css">
 </head>
-
 <body>
-
-  <div class="container">
-    <table class="header">
-      <tr>
-        <td valign=absmiddle>
-          <a href="/FrontPage">
-            <img src="/static/diamond.jpg" alt="Diamond wiki">
-          </a>
-        </td>
-        <td width="10"></td>
-        <td>
-          <h1 class="title">
-            {% block title %}{% endblock %}
-          </h1>
-        </td>
-      </tr>
-    </table>
-
+  <div id="layout" class="container pad-top-20">
     {% for message in get_flashed_messages() %}
       <div class="flash">{{ message }}</div>
     {% endfor %}
 
-    {% if help and help.exists() %}
-      <div class="help">
-        {{ help.get_body() | format }}
+    <div class="clear pad-top-20">
+      <div id="sidebar" class="col-3-l pad-top-15">
+        {% if menu and menu.exists() %}
+          <div class="main-menu">
+            {{ menu.get_body() | format }}
+          </div>
+        {% endif %}
+
+        {% block meta %}{% endblock %}
       </div>
-    {% endif %}
 
-    {% block body %}{% endblock %}
+      <div id="body" class="col-9-l">
+        <h1 class="title">
+          {% block title %}{% endblock %}
+        </h1>
+
+        <hr/>
+
+        {% if help and help.exists() %}
+          <div class="help">
+            {{ help.get_body() | format }}
+          </div>
+        {% endif %}
+
+        {% block body %}{% endblock %}
+      </div>
+    </div>
   </div>
-
-  <div class="menu">
-    {% block edit %}{% endblock %}
-    <a href="/changes">Changes</a> |
-    <a href="/titles">Title Index</a> |
-    <a href="/words">Word Index</a> |
-    <a href="/search">Search</a> |
-    <a href="/facets">Facets</a>
-  </div>
-
 </body>
+</html>

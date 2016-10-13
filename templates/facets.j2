@@ -2,7 +2,7 @@
 
 {% block title %}
   {% if facets.query %}
-    Browsing view.breadcrumb()
+    Browsing {{ facets.title }}
   {% else %}
     Browsing All Pages
   {% endif %}
@@ -15,10 +15,10 @@
         {% for key, values in facets.filters.items() %}
           <b>{{ key | title }}</b><br>
           {% for value in values %}
-            &nbsp;&nbsp; <a href="/facets/{{ key }}={{ value.val }}">{{ value.val | title }}</a> <small>({{ value.count }})</small><br>
+            &nbsp;&nbsp; <a href="/facets{{ facets.url }}/{{ key }}={{ value.val }}">{{ value.val | title }}</a> <small>({{ value.count }})</small><br>
           {% endfor %}
 
-          &nbsp;&nbsp; <a href="/facets/{{ key }}="><em>Not set</em><br></a>
+          &nbsp;&nbsp; <a href="/facets{{ facets.url }}/{{ key }}="><em>Not set</em><br></a>
         {% else %}
           No further faceting possible
         {% endfor %}
