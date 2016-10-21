@@ -322,8 +322,6 @@ class Search:
         self.query_string = 'query=%s&fulltext=%s' % (self.query,
                 self.fulltext)
 
-        self.executed = False
-
     def build_filters(self):
         if not self.filters:
             return {}
@@ -353,8 +351,6 @@ class Search:
         self.hits = len(results)
         self.total = total
 
-        self.executed = True
-
         return self
 
 class TitleIndex:
@@ -369,8 +365,6 @@ class TitleIndex:
 
         self.results = titles
         self.letters = letters
-
-        self.executed = True
 
         return self
 
@@ -399,8 +393,6 @@ class WordIndex:
         self.results = mapping
         self.letters = letters
 
-        self.executed = True
-
         return self
 
 class Changes:
@@ -409,22 +401,16 @@ class Changes:
 
         self.results = changes
 
-        self.executed = True
-
         return self
 
 class History:
     def __init__(self, page):
         self.page = page
 
-        self.executed = False
-
     def execute(self):
         history = self.page.history()
 
         self.results = history
-
-        self.executed = True
 
         return self
 
