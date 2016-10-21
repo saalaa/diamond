@@ -65,8 +65,12 @@ fieldset {
   padding: 0px;
 }
 
+tr th {
+  vertical-align: top;
+}
+
 tr.last-row th, tr.last-row td {
-    border-bottom: 0;
+  border-bottom: 0;
 }
 
 table.codehilitetable td.linenos {

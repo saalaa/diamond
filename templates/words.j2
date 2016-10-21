@@ -32,7 +32,7 @@
     <ul>
       {% for title in pages %}
         <li>
-          <a href="{{ title }}">{{ title }}</a>
+          <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
         </li>
       {% endfor %}
     </ul>

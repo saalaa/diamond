@@ -6,9 +6,9 @@
 
 {% block body %}
   <ul>
-    {% for title, address, time in changes.results %}
+    {% for title, time in changes.results %}
       <li>
-        <a href="{{ title }}">{{ title }}</a>
+        <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
         . . . .
         {{ time }}
       </li>

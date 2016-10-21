@@ -1,15 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  {% if search.executed %}
-    {% if search.fulltext %}
-      Full text search for "{{ search.query }}"
-    {% else %}
-      Title search for "{{ search.query }}"
-    {% endif %}
-  {% else %}
-    Search
-  {% endif %}
+  Search
 {% endblock %}
 
 {% block body %}
@@ -21,11 +13,10 @@
         <label class="sr" for="field-query">Query term</label>
         <input type="text" id="field-query" name="query"
           value="{{ search.query }}" class="field">
-
         <label>
           <input type="checkbox" name="fulltext" value="yes"
             {{ 'checked="checked"' if search.fulltext else '' }}>
-            Perform a full text search
+          Perform a full text search
         </label>
       </div>
 
@@ -35,19 +26,45 @@
     </fieldset>
   </form>
 
-  {% if search.executed %}
+  <hr />
+
+  <div class="col-6 col-5-m no-padding">
+    <table>
+      {% for key, values in search.facets.items() %}
+        <tr {% if loop.last %} class="last-row" {% endif %}>
+          <th>{{ key }}:</th>
+
+          <td>
+            {% for value, count in values %}
+              <a href="/search{{ search.path }}/{{ key }}={{ value }}?{{ search.query_string }}">
+                {{ value }}</a>
+
+              <small>({{ count }})</small><br>
+            {% endfor %}
+
+            <a href="/search/{{ key }}="><em>Not set</em></a><br>
+          </td>
+        </tr>
+      {% else %}
+        <em>No further faceting available.</em>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="col-1 col-1-m no-padding">
+    &nbsp;
+  </div>
+
+  <div class="col-5 col-6-m no-padding">
+    <p>{{ search.hits | pluralize('%d hit', '%d hits') }} out of
+      {{ search.total | pluralize('%d page', '%d pages') }} searched.</p>
+
     <ul>
-      {% for (count, name) in search.results %}
+      {% for name in search.results %}
         <li>
-          <a href="{{ name }}">{{ name | title }}</a>
-          {% if search.fulltext %}
-            . . . . {{ count | pluralize('%d match', '%d matches') }}
-          {% endif %}
+          <a href="/{{ name }}" class="wikilink">{{ name | title }}</a>
         </li>
       {% endfor %}
     </ul>
-
-    <p>{{ search.hits | pluralize('%d hit', '%d hits') }} out of
-      {{ search.total | pluralize('%d page', '%d pages')}} searched.</p>
-  {% endif %}
+  </div>
 {% endblock %}

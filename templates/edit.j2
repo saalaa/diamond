@@ -1,15 +1,13 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Editing <a href="/{{ page.page_name }}">{{ page.page_name | title}}</a>
+  Editing <a href="/{{ page.name }}">{{ page.name | title}}</a>
 {% endblock %}
 
 {% block body %}
   <div class="form">
     <form method="POST">
-      <textarea name="body" cols="80" rows="17">{{ page.get_body() }}</textarea>
-      <br>
-      <textarea name="meta" cols="80" rows="4">{{ page.raw_metadata() }}</textarea>
+      <textarea name="body" cols="80" rows="17">{{ page.body }}</textarea>
       <br>
       <input type="submit">
     </form>

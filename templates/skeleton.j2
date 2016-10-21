@@ -16,16 +16,16 @@
   <link rel="stylesheet" type="text/css" href="/static/pygments.css">
 </head>
 <body>
-  <div id="layout" class="container pad-top-20">
+  <div id="layout" class="container pad-top-20 pad-bottom-40">
     {% for message in get_flashed_messages() %}
       <div class="flash">{{ message }}</div>
     {% endfor %}
 
     <div class="clear pad-top-20">
       <div id="sidebar" class="col-3-l pad-top-15">
-        {% if menu and menu.exists() %}
+        {% if menu and menu %}
           <div class="main-menu">
-            {{ menu.get_body() | format }}
+            {{ menu.body | format }}
           </div>
         {% endif %}
 
@@ -39,9 +39,9 @@
 
         <hr/>
 
-        {% if help and help.exists() %}
+        {% if help and help %}
           <div class="help">
-            {{ help.get_body() | format }}
+            {{ help.body | format }}
           </div>
         {% endif %}
 

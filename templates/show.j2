@@ -1,38 +1,46 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  <a href="/search?query={{ page.page_name }}&fulltext=yes">
-    {{ page.page_name | title }}
+  <a href="/search?query={{ page.name }}&fulltext=yes">
+    {{ page.name | title }}
   </a>
 {% endblock %}
 
-{% block meta %}
-  <h5><a href="/MetaData" class="wikilink">MetaData</a> for this page:</h5>
-
-  <table>
-    {% for pair in page.metadata().keyvals %}
-      <tr {% if loop.last %} class="last-row" {% endif %}>
-        <th>{{ pair.key }}:</th>
-        <td>
-          <a href="/facets/{{ pair.key }}={{ pair.val }}" class="wikilink">
-            {{ pair.val }}
-          </a>
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
-{% endblock %}
-
 {% block body %}
-  {{ page.get_body() | format }}
+  {{ page.body | format }}
 
   <div class="actions">
     <hr/>
 
     <p>
-      Last modified: {{ page._last_modified() or 'never' }} |
-      <a href="/{{ page.page_name }}/history">History</a> |
-      <a href="/{{ page.page_name }}/edit">Edit</a>
+      Last modified: {{ page.mtime or 'never' }} |
+      <a href="/{{ page.name }}/history">History</a> |
+      <a href="/{{ page.name }}/edit">Edit</a>
     </p>
   </div>
+{% endblock %}
+
+{% block meta %}
+  {% if page.meta | length %}
+    <h5><a href="/Metadata" class="wikilink">Metadata</a> for this page:</h5>
+
+    <table>
+      {% for key, values in page.meta.items() %}
+        <tr {% if loop.last %} class="last-row" {% endif %}>
+          <th>{{ key }}:</th>
+          <td>
+            {% for value in values %}
+              <a href="/search/{{ key }}={{ value }}">
+                {{ value }}
+              </a>
+              <br>
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <h5><em>No <a href="/Metadata" class="wikilink">Metadata</a> for this
+        page.</em></h5>
+  {% endif %}
 {% endblock %}

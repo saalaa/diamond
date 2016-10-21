@@ -1,0 +1,27 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  History
+{% endblock %}
+
+{% block body %}
+  <ul>
+    {% for title, time in history.results %}
+      <li>
+        <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
+        . . . .
+        {{ time }}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="actions">
+    <hr/>
+
+    <p>
+      Last modified: {{ page.mtime or 'never' }} |
+      <a href="/{{ page.name }}/history">History</a> |
+      <a href="/{{ page.name }}/edit">Edit</a>
+    </p>
+  </div>
+{% endblock %}
