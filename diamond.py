@@ -467,14 +467,14 @@ def pluralize(number, singular='', plural='s'):
 
 @app.route('/')
 @app.route('/<name>')
-def show(name=None):
+def read(name=None):
     page = Document.get(name or 'FrontPage')
 
     if not page.exists:
-        return render_template('show.j2', menu=Document.get('MainMenu'),
+        return render_template('read.j2', menu=Document.get('MainMenu'),
                 page=page), 404
 
-    return render_template('show.j2', menu=Document.get('MainMenu'),
+    return render_template('read.j2', menu=Document.get('MainMenu'),
             page=page)
 
 @app.route('/preview/<name>')
@@ -494,7 +494,7 @@ def edit(name):
         flash('Thank you for your changes. Your attention to detail is ' \
                 'appreciated.')
 
-        return redirect(url_for('show', name=name))
+        return redirect(url_for('read', name=name))
 
     return render_template('edit.j2', menu=Document.get('MainMenu'),
             help=Document.get('EditHelp'), page=page)
