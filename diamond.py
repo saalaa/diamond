@@ -467,7 +467,7 @@ def read(name=None):
 def preview(name=None):
     return render_template('preview.j2', page=Document.get(name))
 
-@app.route('/<name>/edit', methods=['GET', 'POST'])
+@app.route('/edit/<name>', methods=['GET', 'POST'])
 def edit(name):
     page = Document.get(name)
 
@@ -521,7 +521,7 @@ def changes():
     return render_template('changes.j2', menu=Document.get('MainMenu'),
             help=Document.get('ChangesHelp'), changes=changes)
 
-@app.route('/<name>/history')
+@app.route('/history/<name>')
 def history(name):
     page = Document.get(name)
 

@@ -1,0 +1,9 @@
+User-agent: *
+
+Disallow: /changes
+Disallow: /edit/
+Disallow: /history/
+Disallow: /search
+Disallow: /search/
+Disallow: /titles
+Disallow: /words
