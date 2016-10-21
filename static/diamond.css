@@ -1,76 +1,101 @@
 body {
-    font-family: Arial, sans-serif;;
-    font-size: 16px;
-
-    color: #000000;
-
-    background-color: #FFFFFF;
-
-    text-align: center;
+  border-top: 4px solid #000;
 }
 
 a {
-    color: #7050c0;
-    text-decoration: none;
+  text-decoration: none;
+  border-bottom: 1px solid #000;
 }
 
-a:hover, a:active {
-    text-decoration: underline;
-    color: #5080a0;
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #fff;
+  color: #000;
 }
 
-h1.title, h1.title a, h1.title a:hover, h1.title a:active {
-    font-family: Georgia, serif;
-    font-size: 32px;
-
-    color: #000000;
-
-    letter-spacing: 1px;
-
-    margin: 0;
+a.wikilink {
+  border-bottom: 1px solid #fff;
+  color: #000;
 }
 
-table.header {
-  margin-bottom: 15px;
+a.wikilink:hover {
+  border-bottom: 1px solid #000;
 }
 
-.container, .menu {
-  width: 960px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
+blockquote p {
+  font-size: 1rem;
+  line-height: 1.55rem;
+
+  padding-left: 5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: #000;
+  border-bottom: 1px solid #fff;
+}
+
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover {
+  color: #000;
+  border-bottom: 1px solid #000;
+}
+
+.actions {
+  text-align: right;
+  font-size: 0.8rem;
 }
 
 .flash {
+  text-align: center;
   font-style: italic;
 }
 
-.menu {
-  border-top: 1px solid gray;
-  padding-top: 3px;
+.button-fw {
+  height: 36px;
+  width: 100%;
 }
 
-form {
-  margin: 0;
-  padding: 0;
+fieldset {
+  border: 0px;
+  padding: 0px;
 }
 
-.form {
-  background-color: #f0f0f0;
-  padding: 15px 15px;
+tr th {
+  vertical-align: top;
 }
 
-.metabox, .metakey {
-    background-color: #d8d8f4;
+tr.last-row th,
+tr.last-row td {
+  border-bottom: 0;
 }
 
-.metakey {
-    padding-left: 2px;
-    padding-right: 5px;
+table.codehilitetable td.linenos {
+  width: 70px;
 }
 
-.metaval {
-    background-color: #ffffff;
-    padding-left: 5px;
-    padding-right: 5px;
+table.codehilitetable td {
+  border: 0;
+}
+
+textarea {
+  font-family: monospace;
 }
