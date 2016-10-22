@@ -1,16 +1,16 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Changes
+  Recent Changes
 {% endblock %}
 
 {% block body %}
   <ul>
-    {% for title, time in changes.results %}
+    {% for item in changes %}
       <li>
-        <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
+        <a href="/{{ item.name }}" class="wikilink">{{ item.name | title }}</a>
         . . . .
-        {{ time }}
+        {{ item.mtime }}
       </li>
     {% endfor %}
   </ul>

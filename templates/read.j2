@@ -6,6 +6,14 @@
   </a>
 {% endblock %}
 
+{% block message %}
+  {% if thank %}
+    <div class="flash">
+      Thank you for your changes. Your attention to detail is appreciated.
+    </div>
+  {% endif %}
+{% endblock %}
+
 {% block body %}
   {{ page.body | format }}
 
@@ -21,19 +29,17 @@
 {% endblock %}
 
 {% block meta %}
-  {% if page.meta | length %}
+  {% if page.meta %}
     <h5><a href="/Metadata" class="wikilink">Metadata</a> for this page:</h5>
 
     <table>
-      {% for key, values in page.meta.items() %}
+      {% for item in page.meta %}
         <tr {% if loop.last %} class="last-row" {% endif %}>
-          <th>{{ key }}:</th>
+          <th>{{ item.key }}:</th>
           <td>
-            {% for value in values %}
-              <a href="/search/{{ key }}={{ value }}">
-                {{ value }}</a>
-              <br>
-            {% endfor %}
+            <a href="/search/{{ item.key }}={{ item.value }}">
+              {{ item.value }}</a>
+            <br>
           </td>
         </tr>
       {% endfor %}

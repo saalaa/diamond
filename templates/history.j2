@@ -1,16 +1,16 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  History
+  History for <a href="/{{ page.name }}">{{ page.name }}</a>
 {% endblock %}
 
 {% block body %}
   <ul>
-    {% for title, time in history.results %}
+    {% for item in page.history() %}
       <li>
-        <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
+        <a href="/{{ item.name }}" class="wikilink">{{ item.name | title }}</a>
         . . . .
-        {{ time }}
+        {{ item.mtime }}
       </li>
     {% endfor %}
   </ul>

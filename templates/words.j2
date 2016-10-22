@@ -1,20 +1,22 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Word index
+  Word Index
 {% endblock %}
 
 {% block body %}
+  {% set words = titles | words %}
+
   <p>
     <center>
-      {% for letter in index.letters %}
-        <a href="#entry_{{ letter | lower }}">{{ letter | upper }}</a>
+      {% for letter in words.keys() | letters %}
+        <a href="#entry_{{ letter }}">{{ letter | upper }}</a>
       {% endfor %}
     </center>
   </p>
 
   {% set letter = None %}
-  {% for word, pages in index.results | dictsort %}
+  {% for word, items in words.items() %}
     {% if letter != word[0] %}
       <center>
         <h3>
@@ -30,9 +32,9 @@
     <b>{{ word }}</b><br>
 
     <ul>
-      {% for title in pages %}
+      {% for item in items %}
         <li>
-          <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
+          <a href="/{{ item }}" class="wikilink">{{ item | title }}</a>
         </li>
       {% endfor %}
     </ul>
