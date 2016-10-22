@@ -276,6 +276,11 @@ def title(title):
 def pluralize(number, singular='', plural='s'):
     return (singular if number == 1 else plural) % number
 
+@app.route('/preview', methods=['POST'])
+def preview():
+    return format(request.form['body'] or ''), 200, {
+            'Content-Type': 'text/html; charset=utf-8' }
+
 @app.route('/')
 @app.route('/<name>')
 def read(name='FrontPage'):
