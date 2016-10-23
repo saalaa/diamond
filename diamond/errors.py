@@ -2,6 +2,7 @@ from flask import render_template
 
 from .app import app
 
-@app.errorhandler(Exception)
-def handle_bad_request(e):
-    return render_template('error.j2', error='default'), 500
+if not app.config['FLASK_DEBUG']:
+    @app.errorhandler(Exception)
+    def default_error_handler(e):
+        return render_template('error.j2', error='default'), 500
