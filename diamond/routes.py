@@ -6,6 +6,10 @@ from .app import app
 from .md import convert, parse
 from .models import Document, Metadata, setup
 
+@app.route('/robots.txt')
+def robots_txt():
+    return app.send_static_file('robots.txt')
+
 @app.route('/preview', methods=['POST'])
 def preview():
     return format(request.form['body'] or ''), 200, {

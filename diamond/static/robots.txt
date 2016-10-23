@@ -3,6 +3,7 @@ User-agent: *
 Disallow: /changes
 Disallow: /edit/
 Disallow: /history/
+Disallow: /initdb
 Disallow: /search
 Disallow: /search/
 Disallow: /titles
