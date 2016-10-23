@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Error - DiamondWiki</title>
+
+  <link rel="stylesheet" type="text/css" href="/static/base.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.css">
+
+  <link rel="stylesheet" type="text/css" href="/static/diamond.css">
+  <link rel="stylesheet" type="text/css" href="/static/diamond-purple.css">
+</head>
+<body>
+  <div id="layout" class="container pad-top-20 pad-bottom-40">
+    <div class="flash">
+      {% if error == 'database' %}
+        The database has not yet been initalized.
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

@@ -1,4 +1,5 @@
 .sw?
 env/
 .*.sw?
+*.pyc
 *.db
