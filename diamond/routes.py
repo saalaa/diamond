@@ -4,7 +4,7 @@ from flask import request, render_template, redirect, url_for
 
 from .app import app
 from .md import convert, parse
-from .models import Document, Metadata, setup
+from .models import Document, Metadata
 
 @app.route('/robots.txt')
 def robots_txt():
@@ -105,9 +105,3 @@ def changes():
 def history(name):
     return render_template('history.j2', menu=Document.get('MainMenu'),
             help=Document.get('HistoryHelp'), page=Document.get(name))
-
-@app.route('/initdb')
-def initdb():
-    setup()
-
-    return redirect(url_for('read'))

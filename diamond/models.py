@@ -14,11 +14,15 @@ Base = declarative_base()
 Engine = create_engine(app.config['DATABASE_URL'], convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=Engine)
 
+Base.metadata.create_all(Engine, checkfirst=True)
+
 db = scoped_session(Session)
 
-def setup():
-    if not app.config['PREVENT_INITDB']:
-        Base.metadata.create_all(Engine)
+def db_init():
+    Base.metadata.create_all(Engine, checkfirst=True)
+
+def db_drop():
+    Base.metadata.drop_all(Engine, checkfirst=True)
 
 class Document(Base):
     __tablename__ = 'documents'

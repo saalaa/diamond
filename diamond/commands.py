@@ -1,6 +1,10 @@
 from .app import app
-from .models import setup
+from .models import db_init, db_drop
 
 @app.cli.command('initdb')
 def initdb():
-    setup()
+    db_init()
+
+@app.cli.command('dropdb')
+def dropdb():
+    db_drop()
