@@ -14,8 +14,6 @@ Base = declarative_base()
 Engine = create_engine(app.config['DATABASE_URL'], convert_unicode=True)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=Engine)
 
-Base.metadata.create_all(Engine, checkfirst=True)
-
 db = scoped_session(Session)
 
 def db_init():
@@ -177,3 +175,5 @@ class Metadata(Base):
 
         if commit:
             db.commit()
+
+Base.metadata.create_all(Engine, checkfirst=True)
