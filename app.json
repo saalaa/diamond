@@ -16,7 +16,11 @@
     },
     "FRONTPAGE": {
       "description": "Name of your installation's home page.",
-      "generator": "FrontPage"
+      "value": "FrontPage"
+    },
+    "COLORSCHEME": {
+      "description": "Name of the colorscheme (blue, green, pink, purple).",
+      "value": "purple"
     }
   }
 }

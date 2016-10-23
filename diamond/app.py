@@ -10,5 +10,6 @@ app.config.update({
     'PORT': env('PORT', 5000, int),
     'DATABASE_URL': env('DATABASE_URL', 'sqlite:///diamond.db'),
     'SECRET_KEY': env('SECRET_KEY', secret()),
-    'FRONTPAGE': env('FRONTPAGE', 'FrontPage')
+    'FRONTPAGE': env('FRONTPAGE', 'FrontPage'),
+    'COLORSHCEME': env('COLORSHCEME', 'purple')
 })
