@@ -1,40 +1,65 @@
 # Diamond Wiki
 
-Quick-quick implementation of WikiWikiWeb in Python.
+The metadata enabled wiki engine.
 
-This is the enhanced implementation of Diamond Wiki, the meta-data capable Wiki
-engine.
 
-It features an extended faceted navigation, Markdown syntax and multiple
-databases support.
+## Running on Heroku
 
-## Running the Wiki
+The simplest is probably to use the following button:
 
-### On Heroku
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://bitbucket.com/saalaa/diamond)
 
-First, you should install and download the [Heroku
-CLI](https://devcenter.heroku.com/articles/heroku-command-line).
+But if you want to do it manually and/or intend to make meaningful changes to
+Diamond Wiki, we've got you covered. First, you should download and install the
+[Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line).
 
-Then, you should create a new app on Heroku's website. For simplicity, that
-app's name will be `APP_NAME` below; replace it with whatever you chose.
+Then, create a new Heroku app:
 
-You'll want to add a database resource to your Heroku app and add its
-connection string to the environment variables passed to your app.
+    $ heroku create
 
-Then, it's time to clone the repository and configure the Heroku CLI for
-deployment:
+Add a PostgreSQL resource to the Heroku app (it doesn't have to be the free
+plan, please refer to Heroku documentation for alternative plans):
 
-    $ git clone https://bitbucket.org/saalaa/diamond
-    $ cd diamond
+    $ heroku addons:create heroku-postgresql:hobby-dev
 
-    $ heroku login
-    $ heroku git:remote -a APP_NAME
+And finally deploy the repository to the Heroku app:
 
     $ git push heroku
 
-Visit http://APP_NAME.herokuapp.com/initdb.
+The following chapters should also provide plenty of information on how to
+further configure the installation.
 
-After you've visited `/initdb`, you should add the following environment
-variable:
 
-    PREVENT_INITDB=yes
+## Running Elsewhere
+
+We will only cover using `virtualenv` for simplicity, so let's start with
+creating a new environment and activating it:
+
+    $ virtualenv env
+    $ source env/bin/activate
+
+Now, let's install dependencies:
+
+    $ pip install -r requirements.txt
+
+Finally, we can run the wiki:
+
+    $ python diamond.py
+
+
+## Configuration
+
+Configuration is entirely done through environment variables (which means the
+code base is friendly with most PaaS and orchestration solutions).
+
+Here's a full list of supported environment variables:
+
+- `FLASK_DEBUG`: Enable pretty exceptions and automatic code reloading while
+  hacking Diamond Wiki. Set to `yes` to enable. Must not be set on production.
+- `HOST`: Define the host the application listens on. Defaults to `0.0.0.0`.
+- `PORT`: Define the port the application listens on. Defaults to `5000`.
+- `DATABASE_URL`: Database connection credentials. Defaults to
+  `sqlite:///diamond.db`.
+- `SECRET_KEY`: Secret key for encrypting and signing things. Defaults to a
+  random value.
+- `FRONTPAGE`: Name of your installation's home page. Defaults to `FrontPage`.

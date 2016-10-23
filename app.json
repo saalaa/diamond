@@ -1,0 +1,22 @@
+{
+  "name": "Diamond Wiki on Heroku",
+  "description": "The metadata enabled wiki engine",
+  "repository": "https://bitbucket.com/saalaa/diamond",
+  "success_url": "/",
+  "keywords": [
+    "wiki"
+  ],
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "A secret key for encrypting and signing things.",
+      "generator": "secret"
+    },
+    "FRONTPAGE": {
+      "description": "Name of your installation's home page.",
+      "generator": "FrontPage"
+    }
+  }
+}
