@@ -56,7 +56,7 @@ def read_json(name):
 def edit(name):
     if request.method == 'GET':
         return render_template('edit.j2', menu=Document.get('MainMenu'),
-                help=Document.get('EditHelp'), page=Document.get(name))
+                help=Document.get('Edit'), page=Document.get(name))
 
     for key, values in parse(request.form['body']).items():
         for value in values:
@@ -83,25 +83,25 @@ def search(path=None):
     facets = Document.facets(hits, ignores=ignores)
 
     return render_template('search.j2', menu=Document.get('MainMenu'),
-            help=Document.get('SearchHelp'), query=query, fulltext=fulltext,
+            help=Document.get('Search'), query=query, fulltext=fulltext,
             path=path, hits=hits, facets=facets, total=Document.count())
 
 @app.route('/titles')
 def titles():
     return render_template('titles.j2', menu=Document.get('MainMenu'),
-            help=Document.get('TitlesHelp'), titles=Document.titles())
+            help=Document.get('TitleIndex'), titles=Document.titles())
 
 @app.route('/words')
 def words():
     return render_template('words.j2', menu=Document.get('MainMenu'),
-            help=Document.get('WordsHelp'), titles=Document.titles())
+            help=Document.get('WordIndex'), titles=Document.titles())
 
 @app.route('/changes')
 def changes():
     return render_template('changes.j2', menu=Document.get('MainMenu'),
-            help=Document.get('ChangesHelp'), changes=Document.changes())
+            help=Document.get('RecentChanges'), changes=Document.changes())
 
 @app.route('/history/<name>')
 def history(name):
     return render_template('history.j2', menu=Document.get('MainMenu'),
-            help=Document.get('HistoryHelp'), page=Document.get(name))
+            help=Document.get('PageHistory'), page=Document.get(name))

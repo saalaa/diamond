@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{{ self.title() | striptags }} - DiamondWiki</title>
+  <title>{% block title %}{% endblock %} - DiamondWiki</title>
 
   <meta name="description" content="">
 
@@ -34,12 +34,6 @@
       </div>
 
       <div id="body" class="col-9-l">
-        <h1 class="title">
-          {% block title %}{% endblock %}
-        </h1>
-
-        <hr/>
-
         {% if help and help %}
           <div class="help">
             {{ help.body | format }}

@@ -1,9 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  <a href="/search?query={{ page.name }}&fulltext=yes">
-    {{ page.name | title }}
-  </a>
+  {{ page.name | title }}
 {% endblock %}
 
 {% block message %}

@@ -9,6 +9,8 @@ from sqlalchemy import create_engine
 
 from .app import app
 
+DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
+
 Base = declarative_base()
 
 Engine = create_engine(app.config['DATABASE_URL'], convert_unicode=True,
@@ -52,8 +54,8 @@ class Document(Base):
                 .one_or_none()
 
         if not document:
-            document = Document(name=name, body='Describe [[%s]] here.' %
-                    name.replace('_', ' '))
+            document = Document(name=name, body=DEFAULT_BODY % {
+                'name': name.replace('_', ' ')})
 
         return document
 
