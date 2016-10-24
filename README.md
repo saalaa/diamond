@@ -54,6 +54,8 @@ code base is friendly with most PaaS and orchestration solutions).
 
 Here's a full list of supported environment variables:
 
+- `SQL_DEBUG`: Enable output of SQL statements. Set to `yes` to enable. Should
+  not be set on production.
 - `FLASK_DEBUG`: Enable pretty exceptions and automatic code reloading while
   hacking Diamond Wiki. Set to `yes` to enable. Must not be set on production.
 - `HOST`: Define the host the application listens on. Defaults to `0.0.0.0`.

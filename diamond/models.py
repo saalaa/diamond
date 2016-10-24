@@ -11,7 +11,9 @@ from .app import app
 
 Base = declarative_base()
 
-Engine = create_engine(app.config['DATABASE_URL'], convert_unicode=True)
+Engine = create_engine(app.config['DATABASE_URL'], convert_unicode=True,
+        echo=app.config['SQL_DEBUG'])
+
 Session = sessionmaker(autocommit=False, autoflush=False, bind=Engine)
 
 db = scoped_session(Session)
