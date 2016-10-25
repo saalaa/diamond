@@ -20,6 +20,11 @@ def preview():
 def read(name=None):
     page = Document.get(name or app.config['FRONTPAGE'])
 
+    parsed = parse(page.body)
+
+    if 'page' in parsed['redirect']:
+        return redirect(url_for('read', name=parsed['redirect']['page']))
+
     return render_template('read.j2', menu=Document.get('main-menu'),
             page=page, thank=request.args.get('thank', False)), \
             200 if page.id else 404

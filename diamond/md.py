@@ -1,69 +1,36 @@
 import markdown
 
-from slugify import slugify
-
-from markdown import Extension
-from markdown.treeprocessors import Treeprocessor
-from markdown.extensions.wikilinks import WikiLinkExtension, WikiLinks
+from markdown.blockprocessors import BlockProcessor
 from markdown.extensions.codehilite import CodeHiliteExtension
 
-WIKILINK_PATTERN = r'\[\[([\w0-9\(\)\'_ -]+)\]\]'
-
-def build_url(label, base, end):
-    return '%s%s%s' % (base, slugify(label), end)
-
-class ExtendedWikiLinkExtension(WikiLinkExtension):
-    def extendMarkdown(self, md, md_globals):
-        self.md = md
-
-        wikilinkPattern = WikiLinks(WIKILINK_PATTERN, self.getConfigs())
-        wikilinkPattern.md = md
-
-        md.inlinePatterns.add('wikilink', wikilinkPattern, '<not_strong')
-
-class TitleTreeProcessor(Treeprocessor):
-    def __init__(self, md):
-        self.md = md
-
-    def run(self, root):
-        for child in root.getchildren():
-            if child.tag == 'h1':
-                self.md.Title = (child.text or '').strip()
-                break
-
-class TitleExtension(Extension):
-    TreeProcessorClass = TitleTreeProcessor
-
-    def extendMarkdown(self, md, md_globals):
-        md.registerExtension(self)
-
-        ext = self.TreeProcessorClass(md)
-
-        self.md = md
-        self.reset()
-
-        md.treeprocessors.add('title', ext, '_end')
-
-    def reset(self):
-        self.md.Title = ''
+from .md_redirect import RedirectExtension
+from .md_search import SearchExtension
+from .md_title import TitleExtension
+from .md_link import LinkExtension
 
 def convert(text):
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.meta',
-        CodeHiliteExtension(guess_lang=False),
-        ExtendedWikiLinkExtension(end_url='', build_url=build_url)
+        SearchExtension(),
+        RedirectExtension(),
+        LinkExtension(),
+        CodeHiliteExtension(guess_lang=False)
     ])
 
     return md.convert(text)
 
 def parse(text):
-    md = markdown.Markdown(extensions=['markdown.extensions.meta',
-        TitleExtension(),])
+    md = markdown.Markdown(extensions=[
+        'markdown.extensions.meta',
+        TitleExtension(),
+        RedirectExtension()
+    ])
 
     md.convert(text)
 
     return {
         'title': getattr(md, 'Title', ''),
-        'meta': getattr(md, 'Meta', {})
+        'meta': getattr(md, 'Meta', {}),
+        'redirect': getattr(md, 'Redirect', {})
     }
