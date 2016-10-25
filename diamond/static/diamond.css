@@ -99,3 +99,7 @@ table.codehilitetable td {
 textarea {
   font-family: monospace;
 }
+
+.main-menu h1 {
+  display: none;
+}

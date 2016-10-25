@@ -7,30 +7,27 @@
 {% block body %}
   <p>
     <center>
-      {% for letter in titles | letters %}
-        <a href="#entry_{{ letter }}">{{ letter | upper }}</a>
+      {% for initial, pages in titles | groupby('initial') %}
+        <a href="#entry_{{ initial }}">{{ initial | upper }}</a>
       {% endfor %}
     </center>
   </p>
 
   <ul>
-    {% set letter = None %}
-    {% for title in titles %}
-      {% if letter != title[0] %}
-        <center>
-          <h3>
-            <a id="entry_{{ title[0] | lower }}" href="#entry_{{ title[0] | lower }}">
-              {{ title[0] }}
-            </a>
-          </h3>
-        </center>
+    {% for initial, pages in titles | groupby('initial') %}
+      <center>
+        <h3>
+          <a id="entry_{{ initial }}" href="#entry_{{ initial }}">
+            {{ initial | upper }}
+          </a>
+        </h3>
+      </center>
 
-        {% set letter = title[0] %}
-      {% endif %}
-
+      {% for page in pages %}
         <li>
-          <a href="/{{ title }}" class="wikilink">{{ title | title }}</a>
+          <a href="/{{ page.name }}" class="wikilink">{{ page.title }}</a>
         </li>
+      {% endfor %}
     {% endfor %}
   </ul>
 {% endblock %}

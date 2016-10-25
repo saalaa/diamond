@@ -64,6 +64,6 @@ Here's a full list of supported environment variables:
   `sqlite:///diamond.db`.
 - `SECRET_KEY`: Secret key for encrypting and signing things. Defaults to a
   random value.
-- `FRONTPAGE`: Name of your installation's home page. Defaults to `FrontPage`.
+- `FRONTPAGE`: Name of your installation's home page. Defaults to `front-page`.
 - `COLORSCHEME`: Name of the colorscheme. Defaults to `purple` (blue, green,
   pink and purple available).

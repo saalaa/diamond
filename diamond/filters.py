@@ -1,12 +1,18 @@
 import re
 
 from collections import OrderedDict
+
 from jinja2 import Markup
+from slugify import slugify
 
 from .app import app
 from .md import convert
 
 WORD_PATTERN = r'[A-Z][a-z]+'
+
+@app.template_filter('slug')
+def slug(text):
+    return slugify(text)
 
 @app.template_filter('format')
 def format(text):

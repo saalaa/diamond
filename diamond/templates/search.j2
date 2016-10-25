@@ -58,9 +58,9 @@
       {{ total | pluralize('%d page', '%d pages') }} searched.</p>
 
     <ul>
-      {% for name in hits %}
+      {% for page in hits %}
         <li>
-          <a href="/{{ name }}" class="wikilink">{{ name | title }}</a>
+          <a href="/{{ page.name }}" class="wikilink">{{ page.title }}</a>
         </li>
       {% endfor %}
     </ul>

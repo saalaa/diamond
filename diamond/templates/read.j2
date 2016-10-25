@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  {{ page.name | title }}
+  {{ page.title }}
 {% endblock %}
 
 {% block message %}
@@ -28,7 +28,7 @@
 
 {% block meta %}
   {% if page.meta %}
-    <h5><a href="/Metadata" class="wikilink">Metadata</a> for this page:</h5>
+    <h5><a href="/metadata" class="wikilink">Metadata</a> for this page:</h5>
 
     <table>
       {% for item in page.meta %}
@@ -43,7 +43,7 @@
       {% endfor %}
     </table>
   {% else %}
-    <h5><em>No <a href="/Metadata" class="wikilink">Metadata</a> for this
+    <h5><em>No <a href="/metadata" class="wikilink">metadata</a> for this
         page.</em></h5>
   {% endif %}
 {% endblock %}

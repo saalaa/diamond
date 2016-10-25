@@ -20,7 +20,7 @@ def preview():
 def read(name=None):
     page = Document.get(name or app.config['FRONTPAGE'])
 
-    return render_template('read.j2', menu=Document.get('MainMenu'),
+    return render_template('read.j2', menu=Document.get('main-menu'),
             page=page, thank=request.args.get('thank', False)), \
             200 if page.id else 404
 
@@ -44,6 +44,7 @@ def read_json(name):
 
     page = {
         'name': page.name,
+        'title': page.title,
         'body': page.body,
         'active': page.active,
         'mtime': page.mtime.isoformat() if page.mtime else None
@@ -55,15 +56,20 @@ def read_json(name):
 @app.route('/edit/<name>', methods=['GET', 'POST'])
 def edit(name):
     if request.method == 'GET':
-        return render_template('edit.j2', menu=Document.get('MainMenu'),
-                help=Document.get('Edit'), page=Document.get(name))
+        return render_template('edit.j2', menu=Document.get('main-menu'),
+                help=Document.get('edit-help'), page=Document.get(name))
 
-    for key, values in parse(request.form['body']).items():
+    parsed = parse(request.form['body'])
+
+    for key, values in parsed['meta'].items():
         for value in values:
             Metadata(name=name, key=key, value=value) \
                     .save(False)
 
-    Document(name=name, body=request.form['body']) \
+    title = parsed['title'] or name
+    body = request.form['body']
+
+    Document(name=name, title=title, body=body) \
             .save()
 
     return redirect(url_for('read', name=name, thank='yes'))
@@ -82,26 +88,22 @@ def search(path=None):
     hits = Document.search(query, fulltext, filters)
     facets = Document.facets(hits, ignores=ignores)
 
-    return render_template('search.j2', menu=Document.get('MainMenu'),
-            help=Document.get('Search'), query=query, fulltext=fulltext,
+    return render_template('search.j2', menu=Document.get('main-menu'),
+            help=Document.get('search-help'), query=query, fulltext=fulltext,
             path=path, hits=hits, facets=facets, total=Document.count())
 
-@app.route('/titles')
-def titles():
-    return render_template('titles.j2', menu=Document.get('MainMenu'),
-            help=Document.get('TitleIndex'), titles=Document.titles())
+@app.route('/title-index')
+def title_index():
+    return render_template('titles.j2', menu=Document.get('main-menu'),
+            help=Document.get('title-index-help'), titles=Document.titles())
 
-@app.route('/words')
-def words():
-    return render_template('words.j2', menu=Document.get('MainMenu'),
-            help=Document.get('WordIndex'), titles=Document.titles())
-
-@app.route('/changes')
-def changes():
-    return render_template('changes.j2', menu=Document.get('MainMenu'),
-            help=Document.get('RecentChanges'), changes=Document.changes())
+@app.route('/recent-changes')
+def recent_changes():
+    return render_template('changes.j2', menu=Document.get('main-menu'),
+            help=Document.get('recent-changes-help'),
+            changes=Document.changes())
 
 @app.route('/history/<name>')
 def history(name):
-    return render_template('history.j2', menu=Document.get('MainMenu'),
-            help=Document.get('PageHistory'), page=Document.get(name))
+    return render_template('history.j2', menu=Document.get('main-menu'),
+            help=Document.get('history-help'), page=Document.get(name))

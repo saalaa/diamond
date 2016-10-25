@@ -32,6 +32,8 @@ class Document(Base):
     id = Column(Integer, primary_key=True)
 
     name = Column(String, nullable=False)
+    title = Column(String, nullable=False)
+
     body = Column(Text, nullable=False)
     mtime = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
     active = Column(Boolean, nullable=False, default=0)
@@ -39,6 +41,10 @@ class Document(Base):
     @property
     def meta(self):
         return Metadata.get(self.name)
+
+    @property
+    def initial(self):
+        return self.title[0].lower()
 
     @classmethod
     def count(cls):
@@ -48,16 +54,16 @@ class Document(Base):
 
     @classmethod
     def get(cls, name):
-        document = db.query(Document) \
+        item = db.query(Document) \
                 .filter(Document.name == name) \
                 .filter(Document.active == True) \
                 .one_or_none()
 
-        if not document:
-            document = Document(name=name, body=DEFAULT_BODY % {
+        if not item:
+            item = Document(name=name, body=DEFAULT_BODY % {
                 'name': name.replace('_', ' ')})
 
-        return document
+        return item
 
     @classmethod
     def changes(cls):
@@ -67,11 +73,10 @@ class Document(Base):
 
     @classmethod
     def titles(cls):
-        items = db.query(Document) \
+        return db.query(Document) \
                 .filter(Document.active == True) \
-                .order_by(Document.name)
-
-        return [item.name for item in items]
+                .order_by(Document.title) \
+                .all()
 
     @classmethod
     def search(cls, query, fulltext, filters=None):
@@ -81,7 +86,7 @@ class Document(Base):
             names = reduce(lambda acc, x: acc if acc is None else \
                     acc.intersection(x), filters)
 
-        items = db.query(Document.name) \
+        items = db.query(Document) \
                 .filter(Document.active == True) \
                 .order_by(Document.name)
 
@@ -94,11 +99,13 @@ class Document(Base):
             else:
                 items = items.filter(Document.name.like('%' + query + '%'))
 
-        return [item[0] for item in items]
+        return items.all()
 
     @classmethod
-    def facets(cls, names, ignores=None, all=False):
+    def facets(cls, pages, ignores=None, all=False):
         ignores = ignores or []
+
+        names = [page.name for page in pages]
 
         items = db.query(Metadata.key, Metadata.value, func.count()) \
                 .filter(Metadata.name.in_(names)) \
@@ -118,6 +125,9 @@ class Document(Base):
     @classmethod
     def deactivate(cls, name, commit=True):
         item = Document.get(name)
+
+        if not item.id:
+            return
 
         item.active = False
         db.add(item)
@@ -155,7 +165,8 @@ class Metadata(Base):
     def get(self, name):
         return db.query(Metadata) \
                 .filter(Metadata.name == name) \
-                .order_by(Metadata.key, Metadata.value)
+                .order_by(Metadata.key, Metadata.value) \
+                .all()
 
     @classmethod
     def search(self, key, value):
