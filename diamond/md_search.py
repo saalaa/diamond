@@ -10,6 +10,7 @@ class SearchProcessor(BlockProcessor):
         blocks.pop(0)
 
         div = etree.SubElement(parent, 'div')
+        div.set('class', 'clear')
 
         form = etree.SubElement(div, 'form')
         form.set('action', '/search')

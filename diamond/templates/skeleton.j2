@@ -30,6 +30,20 @@
           </div>
         {% endif %}
 
+        <div class="clear">
+          <form action="/search">
+            <div class="col-7 col-9-m no-padding">
+              <input class="field" name="query" type="text">
+              <input name="fulltext" type="hidden" value="yes">
+            </div>
+            <div class="col-5 col-3-m no-padding">
+              <button class="button button-fw no-padding" type="submit">
+                Go!
+              </button>
+            </div>
+          </form>
+        </div>
+
         {% block meta %}{% endblock %}
       </div>
 
