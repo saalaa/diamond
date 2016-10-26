@@ -1,15 +1,31 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Editing {{ page.name | title }}
+  Edit
 {% endblock %}
 
 {% block body %}
-  <div class="form">
+  <div class="edit">
     <form method="POST">
-      <textarea name="body" cols="80" rows="17">{{ page.body }}</textarea>
-      <br>
-      <input type="submit">
+      <fieldset>
+        <legend class="sr">Page edition</legend>
+
+        <p>
+          <label for="field-body">Page body</label>
+          <textarea name="body" id="field-body" cols="80" rows="24"
+            class="field">{{ page.body }}</textarea>
+        </p>
+
+        <p>
+          <label for="field-comment">Comment</label>
+          <input name="comment" id="field-comment" type="text" class="field"
+            placeholder="Describe your changes unless it's a minor edit">
+        </p>
+
+        <p>
+          <input type="submit" value="Save" class="button button-fw" />
+        </p>
+      </fieldset>
     </form>
   </div>
 {% endblock %}

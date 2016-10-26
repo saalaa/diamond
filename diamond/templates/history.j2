@@ -1,25 +1,49 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  History for {{ page.name }}
+  History
 {% endblock %}
 
 {% block body %}
-  <ul>
-    {% for item in page.history() %}
-      <li>
-        <a href="/{{ item.name }}" class="wikilink">{{ item.name | title }}</a>
-        . . . .
-        {{ item.mtime }}
-      </li>
-    {% endfor %}
-  </ul>
+  {% for ymd, items in page.history() | groupby('ymd') | reverse %}
+    <h4>{{ ymd }}</h4>
+
+    <table>
+      <tr>
+        <th>Time</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Comment</th>
+      </tr>
+
+      {% for item in items %}
+        <tr>
+          <td>
+            {{ item.hm }}
+          </td>
+          <td>
+            <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
+          </td>
+          <td>
+            {% if item.user %}
+              <a href="/{{ item.user.slug }}" class="wikilink">
+                {{ item.user.name }}
+              </a>
+            {% endif %}
+          </td>
+          <td>
+            {{ item.comment or '' }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% endfor %}
 
   <div class="actions">
     <hr/>
 
     <p>
-      Last modified: {{ page.mtime or 'never' }} |
+      Last modified: {{ page.ymd_hm }} |
       <a href="/history/{{ page.name }}">History</a> |
       <a href="/edit/{{ page.name }}">Edit</a>
     </p>

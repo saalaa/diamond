@@ -88,6 +88,7 @@ class Document(Base):
     body = Column(Text, nullable=False)
     user_slug = Column(String, ForeignKey('users.slug'))
     mtime = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+    comment = Column(Text)
     active = Column(Boolean, nullable=False, default=0)
 
     user = relationship('User')
@@ -95,6 +96,18 @@ class Document(Base):
     @property
     def initial(self):
         return self.title[0].lower()
+
+    @cached_property
+    def ymd(self):
+        return self.mtime.strftime('%Y-%m-%d')
+
+    @property
+    def hm(self):
+        return self.mtime.strftime('%H:%M')
+
+    @property
+    def ymd_hm(self):
+        return self.mtime.strftime('%Y-%m-%d %H:%M') if self.mtime else 'never'
 
     @cached_property
     def meta(self):

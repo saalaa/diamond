@@ -75,8 +75,9 @@ def edit(name):
 
     title = parsed['title'] or name
     body = request.form['body']
+    comment = request.form['comment'] or None
 
-    document = Document(name=name, title=title, body=body)
+    document = Document(name=name, title=title, body=body, comment=comment)
 
     if current_user.is_authenticated:
         document.user_slug = current_user.slug
