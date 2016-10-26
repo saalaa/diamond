@@ -4,14 +4,6 @@
   {{ page.title }}
 {% endblock %}
 
-{% block message %}
-  {% if thank %}
-    <div class="flash">
-      Thank you for your changes. Your attention to detail is appreciated.
-    </div>
-  {% endif %}
-{% endblock %}
-
 {% block body %}
   {{ page.body | format }}
 

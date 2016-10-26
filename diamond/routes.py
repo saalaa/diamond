@@ -1,10 +1,11 @@
 import json
 
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template, redirect, url_for, flash
 
 from .app import app
 from .md import convert, parse
 from .models import Document, Metadata
+from .auth import current_user
 
 @app.route('/robots.txt')
 def robots_txt():
@@ -23,11 +24,12 @@ def read(name=None):
     parsed = parse(page.body)
 
     if 'page' in parsed['redirect']:
+        flash('Redirected from %s' % (page.title or page.name))
+
         return redirect(url_for('read', name=parsed['redirect']['page']))
 
     return render_template('read.j2', menu=Document.get('main-menu'),
-            page=page, thank=request.args.get('thank', False)), \
-            200 if page.id else 404
+            page=page), 200 if page.id else 404
 
 @app.route('/<name>.html')
 def read_html(name):
@@ -74,10 +76,17 @@ def edit(name):
     title = parsed['title'] or name
     body = request.form['body']
 
-    Document(name=name, title=title, body=body) \
-            .save()
+    document = Document(name=name, title=title, body=body)
 
-    return redirect(url_for('read', name=name, thank='yes'))
+    if current_user.is_authenticated:
+        document.user_slug = current_user.slug
+
+    document.save()
+
+    flash('Thank you for your changes. Your attention to detail is '
+            'appreciated.')
+
+    return redirect(url_for('read', name=name))
 
 @app.route('/search')
 @app.route('/search/<path:path>')

@@ -18,6 +18,7 @@
 
 from .app import app
 
+from .auth import *
 from .routes import *
 from .filters import *
 from .commands import *

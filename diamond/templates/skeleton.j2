@@ -20,7 +20,9 @@
 </head>
 <body>
   <div id="layout" class="container pad-top-20 pad-bottom-40">
-    {% block message %}{% endblock %}
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
 
     <div class="clear pad-top-20">
       <div id="sidebar" class="col-3-l pad-top-15">
@@ -43,6 +45,21 @@
             </div>
           </form>
         </div>
+
+        <hr />
+
+        <small>
+          <center>
+            {% if current_user.is_authenticated %}
+              Signed in as <a href="/{{ current_user.slug }}" class="wikilink">
+                {{ current_user.name }}</a>.
+              <a href="/sign-out">Sign out</a>.
+            {% else %}
+              <a href="/sign-in">Sign in</a>.
+              <a href="/sign-up">Sign up</a>.
+            {% endif %}
+          </center>
+        </small>
 
         {% block meta %}{% endblock %}
       </div>

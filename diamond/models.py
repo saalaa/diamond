@@ -1,12 +1,14 @@
 import datetime
+import bcrypt
+
+from flask_login import UserMixin
 
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy import Column, String, Text, Integer, Boolean, DateTime, \
-        desc, func
+        ForeignKey, create_engine, desc, func
 
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy import create_engine
-
+from .utils import cached_property
 from .app import app
 
 DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
@@ -26,25 +28,77 @@ def db_init():
 def db_drop():
     Base.metadata.drop_all(Engine, checkfirst=True)
 
+class User(UserMixin, Base):
+    __tablename__ = 'users'
+
+    slug = Column(String, primary_key=True)
+    password = Column(String)
+    admin = Column(Boolean, nullable=False)
+    timestamp = Column(DateTime, nullable=False,
+            default=datetime.datetime.utcnow)
+
+    @cached_property
+    def document(self):
+        return Document.get(self.slug)
+
+    @cached_property
+    def name(self):
+        return self.document.title if self.document else self.slug
+
+    @classmethod
+    def is_first(self):
+        return db.query(User) \
+                .count() == 0
+
+    @classmethod
+    def exists(self, slug):
+        return db.query(User) \
+                .filter(User.slug == slug) \
+                .count() != 0
+
+    @classmethod
+    def get(cls, slug):
+        return db.query(User) \
+                .filter(User.slug == slug) \
+                .one_or_none()
+
+    def get_id(self):
+        return self.slug
+
+    def set_password(self, password):
+        self.password = bcrypt.hashpw(password.encode('utf8'),
+                bcrypt.gensalt())
+
+    def check_password(self, password):
+        return bcrypt.checkpw(password.encode('utf8'),
+                self.password.encode('utf8'))
+
+    def save(self, commit=True):
+        db.add(self)
+
+        if commit:
+            db.commit()
+
 class Document(Base):
     __tablename__ = 'documents'
 
     id = Column(Integer, primary_key=True)
-
     name = Column(String, nullable=False)
     title = Column(String, nullable=False)
-
     body = Column(Text, nullable=False)
+    user_slug = Column(String, ForeignKey('users.slug'))
     mtime = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
     active = Column(Boolean, nullable=False, default=0)
 
-    @property
-    def meta(self):
-        return Metadata.get(self.name)
+    user = relationship('User')
 
     @property
     def initial(self):
         return self.title[0].lower()
+
+    @cached_property
+    def meta(self):
+        return Metadata.get(self.name)
 
     @classmethod
     def count(cls):

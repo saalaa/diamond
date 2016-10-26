@@ -1,0 +1,42 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  Sign up
+{% endblock %}
+
+{% block body %}
+  <div style="max-width: 400px; margin: 30px auto;">
+
+    <form method="POST">
+      <input type="hidden" name="checksum" value="{{ checksum}}">
+
+      <fieldset>
+        <legend class="sr">Sign up form</legend>
+
+        <p>
+          <label for="field-name">User name</label>
+          <input type="text" id="field-name" name="name" class="field"
+            placeholder="Your full name, eg.: John Doe">
+        </p>
+
+        <p>
+          <label for="field-password">Password</label>
+          <input type="password" id="field-password" name="password"
+            class="field" placeholder="Choose a password">
+        </p>
+
+        <p>
+          <label for="field-answer">Confirm you're human: <em>
+              {{ question }}</em></label>
+          <input type="text" id="field-answer" name="answer" class="field"
+            placeholder="Answer using numbers only">
+        </p>
+
+        <p>
+          <input type="submit" value="Go" class="button button-fw" />
+        </p>
+      </fieldset>
+    </form>
+
+  </div>
+{% endblock %}
