@@ -95,19 +95,19 @@ class Document(Base):
 
     @property
     def initial(self):
-        return self.title[0].lower()
+        return self.title[0].lower() if self.title else self.slug[0]
 
     @cached_property
     def ymd(self):
-        return self.mtime.strftime('%Y-%m-%d')
+        return self.mtime.strftime('%Y-%m-%d') if self.mtime else None
 
     @property
     def hm(self):
-        return self.mtime.strftime('%H:%M')
+        return self.mtime.strftime('%H:%M') if self.mtime else None
 
     @property
     def ymd_hm(self):
-        return self.mtime.strftime('%Y-%m-%d %H:%M') if self.mtime else 'never'
+        return self.mtime.strftime('%Y-%m-%d %H:%M') if self.mtime else None
 
     @cached_property
     def meta(self):
