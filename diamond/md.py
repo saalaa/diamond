@@ -2,9 +2,9 @@ import markdown
 
 from markdown.extensions.codehilite import CodeHiliteExtension
 
-from .md_redirect import RedirectExtension
-from .md_title import TitleExtension
-from .md_link import LinkExtension
+from md_redirect import RedirectExtension
+from md_title import TitleExtension
+from md_link import LinkExtension
 
 def convert(text):
     md = markdown.Markdown(extensions=[

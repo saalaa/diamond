@@ -1,6 +1,6 @@
 from flask import Flask
 
-from .utils import env, secret
+from utils import env, secret
 
 app = Flask(__name__)
 

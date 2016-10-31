@@ -1,5 +1,6 @@
 .sw?
 env/
+.env
 .git/
 .*.sw?
 *.pyc

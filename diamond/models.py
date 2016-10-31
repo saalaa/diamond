@@ -8,8 +8,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy import Column, String, Text, Integer, Boolean, DateTime, \
         ForeignKey, create_engine, desc, func
 
-from .utils import cached_property
-from .app import app
+from utils import cached_property
+from app import app
 
 DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
 

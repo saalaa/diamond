@@ -1,1 +1,1 @@
-web: python diamond.py
+web: sh diamond.sh run

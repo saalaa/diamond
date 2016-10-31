@@ -2,10 +2,10 @@ import json
 
 from flask import request, render_template, redirect, url_for, flash
 
-from .app import app
-from .md import convert, parse
-from .models import Document, Metadata, db
-from .auth import current_user
+from app import app
+from md import convert, parse
+from models import Document, Metadata, db
+from auth import current_user
 
 @app.route('/robots.txt')
 def robots_txt():

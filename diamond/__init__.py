@@ -16,13 +16,13 @@
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA 02111-1307 USA
 
-from .app import app
+from app import app
 
-from .auth import *
-from .routes import *
-from .filters import *
-from .commands import *
-from .errors import *
+from auth import *
+from routes import *
+from filters import *
+from commands import *
+from errors import *
 
 __version__ = '0.3'
 __all__ = ['app']

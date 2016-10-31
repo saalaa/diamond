@@ -1,4 +1,5 @@
 import hashlib
+
 from random import choice
 from operator import add, sub#, mul
 

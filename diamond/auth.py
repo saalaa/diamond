@@ -3,9 +3,9 @@ from flask import request, render_template, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, current_user
 from slugify import slugify
 
-from .app import app
-from .maths import hash, generate
-from .models import User, Document
+from app import app
+from maths import hash, generate
+from models import User, Document
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'sign-in'

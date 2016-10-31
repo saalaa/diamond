@@ -44,7 +44,7 @@ Now, let's install dependencies:
 
 Finally, we can run the wiki:
 
-    $ python diamond.py
+    $ sh diamond.sh run
 
 
 ## Configuration
