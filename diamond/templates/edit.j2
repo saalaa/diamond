@@ -6,7 +6,7 @@
 
 {% block body %}
   <div class="edit">
-    <form method="POST">
+    <form method="POST" class="edit">
       <fieldset>
         <legend class="sr">Page edition</legend>
 
@@ -23,9 +23,21 @@
         </p>
 
         <p>
-          <input type="submit" value="Save" class="button button-fw" />
+
+          <div class="col-6">
+            <button type="button" class="button button-fw button-preview">
+              Preview
+            </button>
+          </div>
+
+          <div class="col-6">
+            <input type="submit" value="Save" class="button button-fw" />
+          </div>
+
         </p>
       </fieldset>
     </form>
+
+    <div class="preview"></div>
   </div>
 {% endblock %}

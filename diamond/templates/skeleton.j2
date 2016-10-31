@@ -17,6 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/static/diamond.css">
   <link rel="stylesheet" type="text/css"
     href="/static/diamond-{{ config['COLORSHCEME'] }}.css">
+
+  <script type="text/javascript" src="/static/zepto-min.js"></script>
 </head>
 <body>
   <div id="layout" class="container pad-top-20 pad-bottom-40">
@@ -75,5 +77,27 @@
       </div>
     </div>
   </div>
+
+  <script type="">
+    $(function($){
+
+      $('.flash').on('click', function () {
+        $(this).hide();
+      });
+
+      $('.button-preview').on('click', function () {
+        var pos = $(this).offset();
+        var payload = $('form.edit').serialize();
+
+        $.post('/preview', payload, function (res, status) {
+          if (status === 'success') {
+            $('.preview').html('<hr />' + res);
+            $('body').scrollTop(pos.top);
+          }
+        });
+      });
+
+    });
+  </script>
 </body>
 </html>

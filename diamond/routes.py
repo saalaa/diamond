@@ -13,7 +13,7 @@ def robots_txt():
 
 @app.route('/preview', methods=['POST'])
 def preview():
-    return format(request.form['body'] or ''), 200, {
+    return convert(request.form['body'] or ''), 200, {
             'Content-Type': 'text/html; charset=utf-8' }
 
 @app.route('/')

@@ -67,6 +67,8 @@ h6 a:hover {
 .flash {
   text-align: center;
   font-style: italic;
+
+  cursor: pointer;
 }
 
 .button-fw {
