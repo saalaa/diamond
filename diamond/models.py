@@ -120,10 +120,16 @@ class Document(Base):
                 .count()
 
     @classmethod
-    def get(cls, name):
+    def get(cls, name, version=None):
+        if version:
+            return db.query(Document) \
+                    .filter(Document.id == version) \
+                    .filter(Document.name == name) \
+                    .one_or_none()
+
         item = db.query(Document) \
-                .filter(Document.name == name) \
                 .filter(Document.active == True) \
+                .filter(Document.name == name) \
                 .one_or_none()
 
         if not item:

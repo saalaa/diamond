@@ -1,0 +1,5 @@
+.diff .line-new { background-color: #E0FFE0; }
+.diff .line-old { background-color: #FFFFE0; }
+.diff .chunk-added { background-color: #80FF80; }
+.diff .chunk-deleted { background-color: #FFFF80; }
+.diff .chunk-changed { background-color: #FFFF80; }

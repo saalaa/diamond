@@ -5,37 +5,50 @@
 {% endblock %}
 
 {% block body %}
-  {% for ymd, items in page.history() | groupby('ymd') | reverse %}
-    <h4>{{ ymd }}</h4>
 
-    <table>
+<form>
+  <table>
+    <tr>
+      <th>Timestamp</th>
+      <th>
+        <a href="/diff/{{ page.name }}" class="diff-button">
+          Diff.
+        </a>
+      </th>
+      <th>V.</th>
+      <th>Author</th>
+      <th>Comment</th>
+    </tr>
+
+    {% for item in page.history() %}
       <tr>
-        <th>Time</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Comment</th>
+        <td>
+          {{ item.ymd_hm }}
+        </td>
+        <td>
+          <input type="radio" value="{{ item.id }}" name="version-a"
+            {{ 'checked="checked"' if loop.index == 2 else '' }}>
+          <input type="radio" value="{{ item.id }}" name="version-b"
+            {{ 'checked="checked"' if loop.index == 1 else '' }}>
+        </td>
+        <td>
+          <a href="/{{ item.name }}?version={{ item.id }}" class="wikilink">
+            {{ item.id }}{{ '*' if item.active else ''}}
+          </a>
+        </td>
+        <td>
+          {% if item.user %}
+            <a href="/{{ item.user.slug }}" class="wikilink">
+              {{ item.user.name }}
+            </a>
+          {% endif %}
+        </td>
+        <td>
+          {{ item.comment or '' }}
+        </td>
       </tr>
+    {% endfor %}
+  </table>
+</form>
 
-      {% for item in items %}
-        <tr>
-          <td>
-            {{ item.hm }}
-          </td>
-          <td>
-            <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
-          </td>
-          <td>
-            {% if item.user %}
-              <a href="/{{ item.user.slug }}" class="wikilink">
-                {{ item.user.name }}
-              </a>
-            {% endif %}
-          </td>
-          <td>
-            {{ item.comment or '' }}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% endfor %}
 {% endblock %}

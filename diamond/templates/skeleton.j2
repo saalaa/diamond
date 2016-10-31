@@ -13,6 +13,7 @@
 
   <link rel="stylesheet" type="text/css" href="/static/base.css">
   <link rel="stylesheet" type="text/css" href="/static/pygments.css">
+  <link rel="stylesheet" type="text/css" href="/static/diff.css">
 
   <link rel="stylesheet" type="text/css" href="/static/diamond.css">
   <link rel="stylesheet" type="text/css"
@@ -83,6 +84,18 @@
 
       $('.flash').on('click', function () {
         $(this).hide();
+      });
+
+      $('.diff-button').on('click', function () {
+        var href = $(this).attr('href');
+        var a = $('input[name=version-a]:checked').val();
+        var b = $('input[name=version-b]:checked').val();
+
+        if (a && b) {
+          document.location = href + '/' + a + '/' + b;
+        }
+
+        return false;
       });
 
       $('.button-preview').on('click', function () {

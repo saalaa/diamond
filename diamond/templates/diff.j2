@@ -1,0 +1,9 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  Diff
+{% endblock %}
+
+{% block body %}
+<pre class="diff">{% for line in diff %}{{ line }}{{ "\n" }}{% endfor %}</pre>
+{% endblock %}

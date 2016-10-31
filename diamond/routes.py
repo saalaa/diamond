@@ -6,6 +6,7 @@ from app import app
 from md import convert, parse
 from models import Document, Metadata, db
 from auth import current_user
+from diff import unified_diff
 
 @app.route('/robots.txt')
 def robots_txt():
@@ -19,7 +20,18 @@ def preview():
 @app.route('/')
 @app.route('/<name>')
 def read(name=None):
-    page = Document.get(name or app.config['FRONTPAGE'])
+    version = request.args.get('version', None)
+    page = Document.get(name or app.config['FRONTPAGE'], version=version)
+
+    if version:
+        if not page:
+            return render_template('error.j2', error='This version does not '
+                    'exist'), 404
+
+        flash('You are viewing version %s of this page' % version)
+
+        return render_template('read.j2', menu=Document.get('main-menu'),
+                page=page)
 
     parsed = parse(page.body)
 
@@ -122,6 +134,22 @@ def recent_changes():
 def history(name):
     return render_template('history.j2', menu=Document.get('main-menu'),
             help=Document.get('history-help'), page=Document.get(name))
+
+@app.route('/diff/<name>/<a>/<b>')
+def diff(name, a, b):
+    doc_a = Document.get(name, int(a))
+    doc_b = Document.get(name, int(b))
+
+    body_a = (doc_a.body or '').splitlines()
+    body_b = (doc_b.body or '').splitlines()
+
+    name_a = '%s v%s' % (name, a)
+    name_b = '%s v%s' % (name, b)
+
+    diff = unified_diff(body_a, body_b, name_a, name_b)
+
+    return render_template('diff.j2', menu=Document.get('main-menu'),
+            help=Document.get('diff-help'), page=Document.get(name), diff=diff)
 
 @app.route('/deactivate/<name>', methods=['GET', 'POST'])
 def deactivate(name):
