@@ -1,0 +1,27 @@
+<div class="actions">
+  <hr/>
+
+  <p>
+    Last modified: {{ page.ymd_hm or 'never' }} |
+
+    {% if page.id %}
+      <a href="/history/{{ page.name }}">History</a> |
+    {% endif %}
+
+    {% if page.id %}
+      <a href="/edit/{{ page.name }}">Edit</a>
+    {% else %}
+      <a href="/edit/{{ page.name }}">Create</a>
+    {% endif %}
+
+    <br />
+
+    {% if current_user.admin %}
+
+      {% if page.id %}
+        <a href="/deactivate/{{ page.name }}">Deactivate</a>
+      {% endif %}
+
+    {% endif %}
+  </p>
+</div>

@@ -4,7 +4,7 @@ from flask import request, render_template, redirect, url_for, flash
 
 from .app import app
 from .md import convert, parse
-from .models import Document, Metadata
+from .models import Document, Metadata, db
 from .auth import current_user
 
 @app.route('/robots.txt')
@@ -122,3 +122,20 @@ def recent_changes():
 def history(name):
     return render_template('history.j2', menu=Document.get('main-menu'),
             help=Document.get('history-help'), page=Document.get(name))
+
+@app.route('/deactivate/<name>', methods=['GET', 'POST'])
+def deactivate(name):
+    if request.method == 'GET':
+        return render_template('deactivate.j2', menu=Document.get('main-menu'),
+                help=Document.get('deactivate-help'))
+
+    if not current_user.admin:
+        return render_template('error.j2', error='You are not allowed to '
+                'deactivate this page'), 403
+
+    Document.deactivate(name, False)
+    Metadata.deactivate(name, False)
+
+    db.commit()
+
+    return redirect(url_for('read'))

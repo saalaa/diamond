@@ -7,15 +7,7 @@
 {% block body %}
   {{ page.body | format }}
 
-  <div class="actions">
-    <hr/>
-
-    <p>
-      Last modified: {{ page.ymd_hm or 'never' }} |
-      <a href="/history/{{ page.name }}">History</a> |
-      <a href="/edit/{{ page.name }}">Edit</a>
-    </p>
-  </div>
+  {% include "menu.j2" %}
 {% endblock %}
 
 {% block meta %}

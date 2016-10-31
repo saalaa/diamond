@@ -38,14 +38,4 @@
       {% endfor %}
     </table>
   {% endfor %}
-
-  <div class="actions">
-    <hr/>
-
-    <p>
-      Last modified: {{ page.ymd_hm or 'never' }} |
-      <a href="/history/{{ page.name }}">History</a> |
-      <a href="/edit/{{ page.name }}">Edit</a>
-    </p>
-  </div>
 {% endblock %}
