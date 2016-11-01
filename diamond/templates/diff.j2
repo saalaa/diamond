@@ -5,5 +5,5 @@
 {% endblock %}
 
 {% block body %}
-<pre class="diff">{% for line in diff %}{{ line }}{{ "\n" }}{% endfor %}</pre>
+<pre class="diff">{% for line in diff %}{{ line + '\n' }}{% endfor %}</pre>
 {% endblock %}
