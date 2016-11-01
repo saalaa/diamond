@@ -5,37 +5,33 @@
 {% endblock %}
 
 {% block body %}
-  {% for ymd, items in changes | groupby('ymd') | reverse %}
-    <h4>{{ ymd }}</h4>
+  <table>
+    <tr>
+      <th>Timestamp</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Comment</th>
+    </tr>
 
-    <table>
+    {% for item in changes %}
       <tr>
-        <th>Time</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Comment</th>
+        <td>
+          {{ item.ymd_hm }}
+        </td>
+        <td>
+          <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
+        </td>
+        <td>
+          {% if item.user %}
+            <a href="/{{ item.user.slug }}" class="wikilink">
+              {{ item.user.name }}
+            </a>
+          {% endif %}
+        </td>
+        <td>
+          {{ item.comment or '' }}
+        </td>
       </tr>
-
-      {% for item in items %}
-        <tr>
-          <td>
-            {{ item.hm }}
-          </td>
-          <td>
-            <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
-          </td>
-          <td>
-            {% if item.user %}
-              <a href="/{{ item.user.slug }}" class="wikilink">
-                {{ item.user.name }}
-              </a>
-            {% endif %}
-          </td>
-          <td>
-            {{ item.comment or '' }}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  {% endfor %}
+    {% endfor %}
+  </table>
 {% endblock %}
