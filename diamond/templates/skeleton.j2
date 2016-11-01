@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ g.param('lang', 'en') }}" dir="{{ g.param('dir', 'ltr') }}">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>{% block title %}{% endblock %} - DiamondWiki</title>
+  <title>
+    {% block title %}{% endblock %} / {{ g.param('title', 'Diamond wiki') }}
+  </title>
 
-  <meta name="description" content="">
-
-  <link rel="canonical" href="">
+  <meta name="description" content="{{ g.param('description', 'Diamond wiki, the metadata enabled wiki engine') }}">
 
   <link rel="shortcut icon" type="image/x-icon" href="/static/diamond.ico" />
 
@@ -19,7 +19,7 @@
 
   <link rel="stylesheet" type="text/css" href="/static/diamond.css">
   <link rel="stylesheet" type="text/css"
-    href="/static/diamond-{{ config['COLORSHCEME'] }}.css">
+    href="/static/diamond-{{ g.param('colorscheme', 'purple') }}.css">
 
   <script type="text/javascript" src="/static/zepto-min.js"></script>
 </head>

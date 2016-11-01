@@ -1,0 +1,62 @@
+{% extends "skeleton.j2" %}
+
+{% block title %}
+  Settings
+{% endblock %}
+
+{% block body %}
+  <form method="POST">
+    <fieldset>
+      <legend class="sr">Settings</legend>
+
+      <input value="lang dir title description colorscheme frontpage auth_only"
+        type="hidden" name="params">
+
+      <p>
+        <label for="field-lang">Language</label>
+        <input name="lang" id="field-lang" class="field"
+          value="{{ g.param('lang', 'en') }}">
+      </p>
+
+      <p>
+        <label for="field-dir">Text direction</label>
+        <input name="dir" id="field-dir" class="field"
+          value="{{ g.param('dir', 'ltr') }}">
+      </p>
+
+      <p>
+        <label for="field-title">Title</label>
+        <input name="title" id="field-title" class="field"
+          value="{{ g.param('title', 'Diamond wiki') }}">
+      </p>
+
+      <p>
+        <label for="field-description">Description</label>
+        <input name="description" id="field-description" class="field"
+          value="{{ g.param('description', 'Diamond wiki, the metadata enabled wiki engine') }}">
+      </p>
+
+      <p>
+        <label for="field-colorscheme">Colorscheme</label>
+        <input name="colorscheme" id="field-colorscheme" class="field"
+          value="{{ g.param('colorscheme', 'purple') }}">
+      </p>
+
+      <p>
+        <label for="field-frontpage">Front page name</label>
+        <input name="frontpage" id="field-frontpage" class="field"
+          value="{{ g.param('frontpage', 'front-page') }}">
+      </p>
+
+      <p>
+        <label for="field-auth_only">Restrict edition to registered users</label>
+        <input name="auth_only" id="field-auth_only" class="field"
+          value="{{ g.param('auth_only', '') }}">
+      </p>
+
+      <p>
+        <input type="submit" value="Save" class="button button-fw" />
+      </p>
+    </fieldset>
+  </form>
+{% endblock %}

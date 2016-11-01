@@ -1,5 +1,6 @@
 import datetime
 import bcrypt
+import time
 
 from flask_login import UserMixin
 
@@ -11,6 +12,7 @@ from sqlalchemy import Column, String, Text, Integer, Boolean, DateTime, \
 from utils import cached_property
 from app import app
 
+PARAMETER_DELAY = 300
 DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
 
 Base = declarative_base()
@@ -27,6 +29,62 @@ def db_init():
 
 def db_drop():
     Base.metadata.drop_all(Engine, checkfirst=True)
+
+def param(key, default='', cast=None):
+    return Parameter.get(key, default, cast)
+
+class Parameter(Base):
+    __tablename__ = 'parameters'
+
+    key = Column(String, primary_key=True)
+    value = Column(String, nullable=False)
+
+    cache = timestamp = None
+
+    @classmethod
+    def get_all(cls):
+        items = db.query(Parameter) \
+                .all()
+
+        values = {}
+        for item in items:
+            values[item.key] = item.value
+
+        return values
+
+    @classmethod
+    def get(cls, key, default='', cast=None):
+        now = time.time()
+
+        if not cls.cache or cls.timestamp + PARAMETER_DELAY > now:
+            cls.cache = cls.get_all()
+            cls.timestamp = now
+
+        value = cls.cache.get(key, default)
+
+        if cast:
+            value = cast(value)
+
+        return value
+
+    @classmethod
+    def clear_cache(cls):
+        cls.cache = None
+
+    @classmethod
+    def set(cls, key, value):
+        items = db.query(Parameter) \
+                .filter(Parameter.key == key) \
+                .all()
+
+        for item in items:
+            db.delete(item)
+
+        Parameter(key=key, value=value) \
+                .save()
+
+    def save(self):
+        db.add(self)
 
 class User(UserMixin, Base):
     __tablename__ = 'users'

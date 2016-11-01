@@ -1,13 +1,18 @@
 from flask import request, render_template, redirect, url_for, flash
 
-from flask_login import LoginManager, login_user, logout_user, current_user
 from slugify import slugify
+from flask_login import LoginManager, login_user, logout_user, current_user, \
+        AnonymousUserMixin
 
 from app import app
 from maths import hash, generate
 from models import User, Document, db
 
+class AnonymousUser(AnonymousUserMixin):
+    admin = False
+
 login_manager = LoginManager(app)
+login_manager.anonymous_user = AnonymousUser
 login_manager.login_view = 'sign-in'
 
 @login_manager.user_loader

@@ -13,14 +13,6 @@
     "SECRET_KEY": {
       "description": "A secret key for encrypting and signing things.",
       "generator": "secret"
-    },
-    "FRONTPAGE": {
-      "description": "Name of your installation's home page.",
-      "value": "FrontPage"
-    },
-    "COLORSCHEME": {
-      "description": "Name of the colorscheme (blue, green, pink, purple).",
-      "value": "purple"
     }
   }
 }

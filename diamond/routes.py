@@ -1,12 +1,16 @@
 import json
 
-from flask import request, render_template, redirect, url_for, flash
+from flask import request, render_template, redirect, url_for, flash, g
 
 from app import app
 from md import convert, parse
-from models import Document, Metadata, db
+from models import Document, Metadata, Parameter, db, param
 from auth import current_user
 from diff import unified_diff
+
+@app.before_request
+def set_globals():
+    g.param = param
 
 @app.route('/robots.txt')
 def robots_txt():
@@ -21,7 +25,8 @@ def preview():
 @app.route('/<name>')
 def read(name=None):
     version = request.args.get('version', None)
-    page = Document.get(name or app.config['FRONTPAGE'], version=version)
+    page = Document.get(name or param('frontpage', 'front-page'),
+            version=version)
 
     if version:
         if not page:
@@ -77,6 +82,11 @@ def edit(name):
     if request.method == 'GET':
         return render_template('edit.j2', menu=Document.get('main-menu'),
                 help=Document.get('edit-help'), page=Document.get(name))
+
+    auth_only = param('auth_only', False)
+    if auth_only and not current_user.is_authenticated:
+        return render_template('error.j2', error='Edition is limited to '
+                'registered users only'), 403
 
     parsed = parse(request.form['body'])
 
@@ -136,6 +146,31 @@ def recent_changes():
 def history(name):
     return render_template('history.j2', menu=Document.get('main-menu'),
             help=Document.get('history-help'), page=Document.get(name))
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    if not current_user.admin:
+        return render_template('error.j2', error='You are not allowed to '
+                'change settings'), 403
+
+    if request.method == 'GET':
+        return render_template('settings.j2', menu=Document.get('main-menu'),
+                help=Document.get('settings-help'))
+
+    params = request.form.get('params', '')
+    for key in params.split():
+        if not key:
+            pass
+
+        Parameter.set(key, request.form.get(key, ''))
+
+    db.commit()
+
+    Parameter.clear_cache()
+
+    flash('Your changes have been saved')
+
+    return redirect(url_for('settings'))
 
 @app.route('/diff/<name>/<a>/<b>')
 def diff(name, a, b):
