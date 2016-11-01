@@ -5,7 +5,7 @@ from slugify import slugify
 
 from app import app
 from maths import hash, generate
-from models import User, Document
+from models import User, Document, db
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'sign-in'
@@ -48,12 +48,14 @@ def sign_up():
 
     if not page.id:
         page.title = name
-        page.save(False)
+        page.save()
 
     user = User(slug=slug, admin=is_first)
     user.set_password(password)
 
     user.save()
+
+    db.commit()
 
     login_user(user)
 

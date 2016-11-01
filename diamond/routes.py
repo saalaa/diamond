@@ -83,7 +83,7 @@ def edit(name):
     for key, values in parsed['meta'].items():
         for value in values:
             Metadata(name=name, key=key, value=value) \
-                    .save(False)
+                    .save()
 
     title = parsed['title'] or name
     body = request.form['body']
@@ -95,6 +95,8 @@ def edit(name):
         document.user_slug = current_user.slug
 
     document.save()
+
+    db.commit()
 
     flash('Thank you for your changes. Your attention to detail is '
             'appreciated.')
@@ -161,8 +163,8 @@ def deactivate(name):
         return render_template('error.j2', error='You are not allowed to '
                 'deactivate this page'), 403
 
-    Document.deactivate(name, False)
-    Metadata.deactivate(name, False)
+    Document.deactivate(name)
+    Metadata.deactivate(name)
 
     db.commit()
 

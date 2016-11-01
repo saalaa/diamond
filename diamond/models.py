@@ -73,11 +73,8 @@ class User(UserMixin, Base):
         return bcrypt.checkpw(password.encode('utf8'),
                 self.password.encode('utf8'))
 
-    def save(self, commit=True):
+    def save(self):
         db.add(self)
-
-        if commit:
-            db.commit()
 
 class Document(Base):
     __tablename__ = 'documents'
@@ -196,7 +193,7 @@ class Document(Base):
         return facets
 
     @classmethod
-    def deactivate(cls, name, commit=True):
+    def deactivate(cls, name):
         item = Document.get(name)
 
         if not item.id:
@@ -205,18 +202,12 @@ class Document(Base):
         item.active = False
         db.add(item)
 
-        if commit:
-            db.commit()
-
-    def save(self, commit=True):
-        Document.deactivate(self.name, False)
-        Metadata.deactivate(self.name, False)
+    def save(self):
+        Document.deactivate(self.name)
+        Metadata.deactivate(self.name)
 
         self.active = True
         db.add(self)
-
-        if commit:
-            db.commit()
 
     def history(self):
         return db.query(Document) \
@@ -251,17 +242,11 @@ class Metadata(Base):
         return set([item[0] for item in items])
 
     @classmethod
-    def deactivate(cls, name, commit=True):
+    def deactivate(cls, name):
         for item in Metadata.get(name):
             db.delete(item)
 
-        if commit:
-            db.commit()
-
-    def save(self, commit=True):
+    def save(self):
         db.add(self)
-
-        if commit:
-            db.commit()
 
 Base.metadata.create_all(Engine, checkfirst=True)
