@@ -1,5 +1,7 @@
 .sw?
 env/
+__pycache__/
+.DS_Store
 .env
 .git/
 .*.sw?
