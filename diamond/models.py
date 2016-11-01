@@ -152,7 +152,7 @@ class Document(Base):
                 .all()
 
     @classmethod
-    def search(cls, query, fulltext, filters=None):
+    def search(cls, query=None, fulltext=False, filters=None):
         names = None
         if filters:
             filters = [Metadata.search(key, value) for key, value in filters]

@@ -5,6 +5,7 @@ from markdown.extensions.codehilite import CodeHiliteExtension
 from md_redirect import RedirectExtension
 from md_title import TitleExtension
 from md_link import LinkExtension
+from md_list import ListExtension
 
 def convert(text):
     md = markdown.Markdown(extensions=[
@@ -12,6 +13,7 @@ def convert(text):
         'markdown.extensions.meta',
         RedirectExtension(),
         LinkExtension(),
+        ListExtension(),
         CodeHiliteExtension(guess_lang=False)
     ])
 
