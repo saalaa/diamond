@@ -21,9 +21,9 @@
   <link rel="stylesheet" type="text/css"
     href="/static/diamond-{{ g.param('colorscheme', 'purple') }}.css">
 
-  <script type="text/javascript" src="/static/zepto-min.js"></script>
+  <style>{{ g.param('css', '') }}</style>
 </head>
-<body>
+<body class="{{ g.param('classes', '') }}">
   <div id="layout" class="container pad-top-20 pad-bottom-40">
     {% for message in get_flashed_messages() %}
       <div class="flash">{{ message }}</div>
@@ -81,7 +81,9 @@
     </div>
   </div>
 
-  <script type="text/javascript">
+  <script src="/static/zepto-min.js"></script>
+
+  <script>
     $(function($) {
 
       $('.flash').on('click', function () {

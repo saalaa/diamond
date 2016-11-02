@@ -9,7 +9,7 @@
     <fieldset>
       <legend class="sr">Settings</legend>
 
-      <input value="lang dir title description colorscheme frontpage auth_only"
+      <input value="lang dir title description colorscheme frontpage auth_only classes css"
         type="hidden" name="params">
 
       <p>
@@ -49,9 +49,22 @@
       </p>
 
       <p>
-        <label for="field-auth_only">Restrict edition to registered users</label>
+        <label for="field-auth_only">Restrict edition to registered
+          users</label>
         <input name="auth_only" id="field-auth_only" class="field"
           value="{{ g.param('auth_only', '') }}">
+      </p>
+
+      <p>
+        <label for="field-classes">Body classes</label>
+        <input name="classes" id="field-classes" class="field"
+          value="{{ g.param('classes', '') }}">
+      </p>
+
+      <p>
+        <label for="field-css">CSS</label>
+        <textarea name="css" id="field-css"
+          class="field">{{ g.param('css', '') }}</textarea>
       </p>
 
       <p>
