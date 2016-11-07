@@ -10,31 +10,24 @@ class SearchProcessor(BlockProcessor):
         blocks.pop(0)
 
         div = etree.SubElement(parent, 'div')
-        div.set('class', 'clear')
+        div.set('class', 'search')
+
+        link = etree.SubElement(div, 'a')
+        link.set('href', '/search')
+        link.set('class', 'hidden-l wikilink')
+        link.text = 'Search'
 
         form = etree.SubElement(div, 'form')
         form.set('action', '/search')
+        form.set('class', 'hidden visible-l')
 
-        left_col = etree.SubElement(form, 'div')
-        left_col.set('class', 'col-7 col-9-m no-padding')
-
-        right_col = etree.SubElement(form, 'div')
-        right_col.set('class', 'col-5 col-3-m no-padding')
-
-        fulltext = etree.SubElement(left_col, 'input')
-        fulltext.set('type', 'hidden')
-        fulltext.set('name', 'fulltext')
-        fulltext.set('value', 'yes')
-
-        query = etree.SubElement(left_col, 'input')
+        query = etree.SubElement(form, 'input')
         query.set('type', 'text')
         query.set('name', 'query')
-        query.set('class', 'field')
 
-        button = etree.SubElement(right_col, 'button')
+        button = etree.SubElement(form, 'button')
         button.set('type', 'submit')
-        button.set('class', 'button button-fw no-padding')
-        button.text = 'Go!'
+        button.text = 'Search'
 
 class SearchExtension(Extension):
     def extendMarkdown(self, md, md_globals):

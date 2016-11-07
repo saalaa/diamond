@@ -1,0 +1,64 @@
+.make-column(@name, @numerator) {
+  .@{name}-@{numerator}-12 {
+    width: percentage(@numerator/12);
+  }
+}
+
+.make-columns(@name) {
+  .make-column(@name, 1);
+  .make-column(@name, 2);
+  .make-column(@name, 3);
+  .make-column(@name, 4);
+  .make-column(@name, 5);
+  .make-column(@name, 6);
+  .make-column(@name, 7);
+  .make-column(@name, 8);
+  .make-column(@name, 9);
+  .make-column(@name, 10);
+  .make-column(@name, 11);
+  .make-column(@name, 12);
+}
+
+/*
+ * Mobile-first grid
+ * -----------------
+ */
+
+.grid {
+  width: 100%;
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  // Optional gutters
+  &.gutters {
+    [class*='col-'] {
+      padding-right: @gutters;
+    }
+
+    [class*='col-']:last-of-type {
+      padding-right: 0;
+    }
+  }
+
+  [class*='col-'] {
+    float: left;
+  }
+
+  // Small screens and up
+  //.make-columns(col);
+  .make-columns(col-s);
+
+  // Medium screens and up
+  @media (min-width: @screen-m) {
+    .make-columns(col-m);
+  }
+
+  // Large screens and up
+  @media (min-width: @screen-l) {
+    .make-columns(col-l);
+  }
+}

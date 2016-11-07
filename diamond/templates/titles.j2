@@ -1,33 +1,35 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Title Index
+  Title index
 {% endblock %}
 
 {% block body %}
-  <p>
-    <center>
-      {% for initial, pages in titles | groupby('initial') %}
-        <a href="#entry_{{ initial }}">{{ initial | upper }}</a>
-      {% endfor %}
-    </center>
-  </p>
-
-  <ul>
-    {% for initial, pages in titles | groupby('initial') %}
+  <div class="title-index">
+    <p>
       <center>
-        <h3>
-          <a id="entry_{{ initial }}" href="#entry_{{ initial }}">
-            {{ initial | upper }}
-          </a>
-        </h3>
+        {% for initial, pages in titles | groupby('initial') %}
+          <a href="#entry_{{ initial }}">{{ initial | upper }}</a>
+        {% endfor %}
       </center>
+    </p>
 
-      {% for page in pages %}
-        <li>
-          <a href="/{{ page.name }}" class="wikilink">{{ page.title }}</a>
-        </li>
+    <ul>
+      {% for initial, pages in titles | groupby('initial') %}
+        <center>
+          <h3>
+            <a id="entry_{{ initial }}" href="#entry_{{ initial }}">
+              {{ initial | upper }}
+            </a>
+          </h3>
+        </center>
+
+        {% for page in pages %}
+          <li>
+            <a href="/{{ page.name }}" class="wikilink">{{ page.title }}</a>
+          </li>
+        {% endfor %}
       {% endfor %}
-    {% endfor %}
-  </ul>
+    </ul>
+  </div>
 {% endblock %}

@@ -5,33 +5,41 @@
 {% endblock %}
 
 {% block body %}
-  <table>
-    <tr>
-      <th>Timestamp</th>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Comment</th>
-    </tr>
-
-    {% for item in changes %}
+  <div class="recent-changes">
+    <table>
       <tr>
-        <td>
-          {{ item.ymd_hm }}
-        </td>
-        <td>
-          <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
-        </td>
-        <td>
-          {% if item.user %}
-            <a href="/{{ item.user.slug }}" class="wikilink">
-              {{ item.user.name }}
-            </a>
-          {% endif %}
-        </td>
-        <td>
-          {{ item.comment or '' }}
-        </td>
+        <th>Timestamp</th>
+        <th>V.</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Comment</th>
       </tr>
-    {% endfor %}
-  </table>
+
+      {% for item in changes %}
+        <tr>
+          <td>
+            {{ item.ymd_hm }}
+          </td>
+          <td>
+            <a href="/{{ item.name }}?version={{ item.id }}" class="wikilink">
+              {{ item.id }}{{ '*' if item.active else ''}}
+            </a>
+          </td>
+          <td>
+            <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
+          </td>
+          <td>
+            {% if item.user %}
+              <a href="/{{ item.user.slug }}" class="wikilink">
+                {{ item.user.name }}
+              </a>
+            {% endif %}
+          </td>
+          <td>
+            {{ item.comment or '' }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 {% endblock %}

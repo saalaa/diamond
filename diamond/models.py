@@ -207,7 +207,7 @@ class Document(Base):
                 .all()
 
     @classmethod
-    def search(cls, query=None, fulltext=False, filters=None):
+    def search(cls, query=None, filters=None):
         names = None
         if filters:
             filters = [Metadata.search(key, value) for key, value in filters]
@@ -222,10 +222,7 @@ class Document(Base):
             items = items.filter(Document.name.in_(names))
 
         if query:
-            if fulltext:
-                items = items.filter(Document.body.like('%' + query + '%'))
-            else:
-                items = items.filter(Document.name.like('%' + query + '%'))
+            items = items.filter(Document.body.like('%' + query + '%'))
 
         return items.all()
 

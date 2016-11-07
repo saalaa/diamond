@@ -5,29 +5,27 @@
 {% endblock %}
 
 {% block body %}
-  <div style="max-width: 400px; margin: 30px auto;">
-
+  <div class="sign-in">
     <form method="POST">
       <fieldset>
-        <legend class="sr">Sign in form</legend>
+        <legend>Sign in form</legend>
 
-        <p>
+        <div class="form-row">
           <label for="field-name">User name</label>
-          <input type="text" id="field-name" name="name" class="field"
+          <input type="text" id="field-name" name="name" class="full-w"
             placeholder="Your full name, eg.: John Doe">
-        </p>
+        </div>
 
-        <p>
+        <div class="form-row">
           <label for="field-password">Password</label>
           <input type="password" id="field-password" name="password"
-            class="field" placeholder="Your password">
-        </p>
+            class="full-w" placeholder="Your password">
+        </div>
 
-        <p>
-          <input type="submit" value="Go" class="button button-fw" />
-        </p>
+        <div class="form-row">
+          <input type="submit" value="Go" class="full-w" />
+        </div>
       </fieldset>
     </form>
-
   </div>
 {% endblock %}

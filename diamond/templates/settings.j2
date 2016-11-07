@@ -5,71 +5,121 @@
 {% endblock %}
 
 {% block body %}
-  <form method="POST">
-    <fieldset>
-      <legend class="sr">Settings</legend>
+  <div class="settings">
+    <form method="POST">
+      <fieldset>
+        <legend>Settings</legend>
 
-      <input value="lang dir title description colorscheme frontpage auth_only classes css"
-        type="hidden" name="params">
+        <input value="lang dir title description frontpage auth_only classes css favicon editor"
+          type="hidden" name="params">
 
-      <p>
-        <label for="field-lang">Language</label>
-        <input name="lang" id="field-lang" class="field"
-          value="{{ g.param('lang', 'en') }}">
-      </p>
+        <h2>Locale</h2>
 
-      <p>
-        <label for="field-dir">Text direction</label>
-        <input name="dir" id="field-dir" class="field"
-          value="{{ g.param('dir', 'ltr') }}">
-      </p>
+        <div class="form-row">
+          <label for="field-lang">Language</label>
+          <input name="lang" id="field-lang" class="full-w" type="text"
+            value="{{ g.param('lang', 'en') }}">
+        </div>
 
-      <p>
-        <label for="field-title">Title</label>
-        <input name="title" id="field-title" class="field"
-          value="{{ g.param('title', 'Diamond wiki') }}">
-      </p>
+        <div class="form-row">
+          <label for="field-dir">Text direction</label>
+          <select name="dir" id="field-dir" class="full-w">
+            <option {{ 'selected' if g.param('dir', '') == 'ltr' else '' }}
+              value="ltr">Left to right</option>
+            <option {{ 'selected' if g.param('dir', '') == 'rtl' else '' }}
+              value="rtl">Right to left</option>
+          </select>
+        </div>
 
-      <p>
-        <label for="field-description">Description</label>
-        <input name="description" id="field-description" class="field"
-          value="{{ g.param('description', 'Diamond wiki, the metadata enabled wiki engine') }}">
-      </p>
+        <h2>Configuration</h2>
 
-      <p>
-        <label for="field-colorscheme">Colorscheme</label>
-        <input name="colorscheme" id="field-colorscheme" class="field"
-          value="{{ g.param('colorscheme', 'purple') }}">
-      </p>
+        <div class="form-row">
+          <label for="field-title">Title</label>
+          <input name="title" id="field-title" class="full-w" type="text"
+            value="{{ g.param('title', 'Diamond wiki') }}">
+        </div>
 
-      <p>
-        <label for="field-frontpage">Front page name</label>
-        <input name="frontpage" id="field-frontpage" class="field"
-          value="{{ g.param('frontpage', 'front-page') }}">
-      </p>
+        <div class="form-row">
+          <label for="field-description">Description</label>
+          <input name="description" id="field-description" class="full-w"
+            type="text" value="{{ g.param('description',
+              'Diamond wiki, the metadata enabled wiki engine') }}">
+        </div>
 
-      <p>
-        <label for="field-auth_only">Restrict edition to registered
-          users</label>
-        <input name="auth_only" id="field-auth_only" class="field"
-          value="{{ g.param('auth_only', '') }}">
-      </p>
+        <div class="form-row">
+          <label for="field-frontpage">Front page slug</label>
+          <input name="frontpage" id="field-frontpage" class="full-w"
+            type="text" value="{{ g.param('frontpage', 'front-page') }}">
+        </div>
 
-      <p>
-        <label for="field-classes">Body classes</label>
-        <input name="classes" id="field-classes" class="field"
-          value="{{ g.param('classes', '') }}">
-      </p>
+        <h2>Security</h2>
 
-      <p>
-        <label for="field-css">CSS</label>
-        <textarea name="css" id="field-css"
-          class="field">{{ g.param('css', '') }}</textarea>
-      </p>
+        <div class="form-row">
+          <label for="field-auth_only">Edition policy</label>
+          <select name="auth_only" id="field-auth_only" class="full-w">
+            <option value="">Everyone</option>
+            <option {{ 'selected' if g.param('auth_only', '') else '' }}
+              value="yes">Registered users only</option>
+          </select>
+        </div>
 
-      <p>
-        <input type="submit" value="Save" class="button button-fw" />
-      </p>
-    </fieldset>
-  </form>
+        <h2>Appearance</h2>
+
+        <div class="form-row">
+          <label for="field-favicon">Favicon</label>
+          <input name="favicon" id="field-favicon" class="full-w" type="text"
+            value="{{ g.param('favicon', '/static/diamond.ico') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-classes">Body classes</label>
+          <input name="classes" id="field-classes" class="full-w" type="text"
+            placeholder="Example: diplomat fixed-menu"
+            value="{{ g.param('classes', '') }}">
+
+          <div class="form-help">
+            <p>Available color schemes: <code>green</code>, <code>pink</code>,
+            <code>purple</code>. Available layouts: <code>diplomat</code>,
+            <code>capital</code>. Menu variants: <code>fixed-menu</code>,
+            <code>static-menu</code>.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="field-editor">Editor</label>
+          <select name="editor" id="field-editor" class="full-w">
+            <option value="">Default editor</option>
+            <option {{ 'selected' if g.param('editor', '') else '' }}
+              value="codemirror">CodeMirror</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="field-css">Custom CSS</label>
+          <!--
+          <div style="font-size: 12px !important; line-height: 14px !important; width: 650px;">
+           -->
+            <textarea name="css" id="field-css" class="full-w editor"
+              cols="80" rows="6">{{ g.param('css', '') }}</textarea>
+          <!--
+          </div>
+           -->
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="Save" class="full-w" />
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}
+
+{% block extra %}
+  {% if g.param('editor', '') == 'codemirror' %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.css"
+      rel="stylesheet">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/css/css.min.js"></script>
+  {% endif %}
 {% endblock %}

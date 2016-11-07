@@ -117,19 +117,18 @@ def edit(name):
 @app.route('/search/<path:path>')
 def search(path=None):
     query = request.args.get('query', '')
-    fulltext = request.args.get('fulltext', '')
 
     filters = [item.split('=', 1) for item in path.split('/')] \
             if path else []
 
     ignores = [item[0] for item in filters]
 
-    hits = Document.search(query, fulltext, filters)
+    hits = Document.search(query, filters)
     facets = Document.facets(hits, ignores=ignores)
 
     return render_template('search.j2', menu=Document.get('main-menu'),
-            help=Document.get('search-help'), query=query, fulltext=fulltext,
-            path=path, hits=hits, facets=facets, total=Document.count())
+            help=Document.get('search-help'), query=query, path=path,
+            hits=hits, facets=facets, total=Document.count())
 
 @app.route('/title-index')
 def title_index():

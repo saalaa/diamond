@@ -9,68 +9,64 @@
     {% block title %}{% endblock %} / {{ g.param('title', 'Diamond wiki') }}
   </title>
 
-  <meta name="description" content="{{ g.param('description', 'Diamond wiki, the metadata enabled wiki engine') }}">
+  <meta name="description" content="{{ g.param('description',
+    'Diamond wiki, the metadata enabled wiki engine') }}">
 
-  <link rel="shortcut icon" type="image/x-icon" href="/static/diamond.ico" />
+  <link rel="shortcut icon" type="image/x-icon"
+    href="{{ g.param('favicon', '/static/diamond.ico') }}" />
 
-  <link rel="stylesheet" type="text/css" href="/static/base.css">
-  <link rel="stylesheet" type="text/css" href="/static/pygments.css">
-  <link rel="stylesheet" type="text/css" href="/static/diff.css">
-
-  <link rel="stylesheet" type="text/css" href="/static/diamond.css">
-  <link rel="stylesheet" type="text/css"
-    href="/static/diamond-{{ g.param('colorscheme', 'purple') }}.css">
+  <link rel="stylesheet" href="/static/diamond-ng.css">
 
   <style>{{ g.param('css', '') }}</style>
+
+  <!--
+  pre {
+    padding: 0 !important;
+    background: none !important;
+  }
+   -->
 </head>
 <body class="{{ g.param('classes', '') }}">
-  <div id="layout" class="container pad-top-20 pad-bottom-40">
+  <div class="container">
+
+    <div class="header">
+      <div class="title">
+        <a href="/">
+          {{ g.param('title', 'Diamond wiki') }}
+        </a>
+      </div>
+
+      <a href="#menu" class="menu-link hidden-m">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+
+      <div id="#menu" class="menu hidden-s visible-m">
+        {{ menu.body | format }}
+      </div>
+
+      <div class="auth">
+        {% if current_user.is_authenticated %}
+          <a href="/{{ current_user.slug }}" class="wikilink signed-in">
+            {{ current_user.name }}</a>
+          <span>/</span>
+          <a href="/sign-out" class="sign-out">Sign out</a>
+        {% else %}
+          <a href="/sign-in" class="sign-in">Sign in</a>
+          <span>/</span>
+          <a href="/sign-up" class="sign-up">Sign up</a>
+        {% endif %}
+      </div>
+    </div>
+
     {% for message in get_flashed_messages() %}
       <div class="flash">{{ message }}</div>
     {% endfor %}
 
-    <div class="clear pad-top-20">
-      <div id="sidebar" class="col-3-l pad-top-15">
-        {% if menu and menu %}
-          <div class="main-menu">
-            {{ menu.body | format }}
-          </div>
-        {% endif %}
-
-        <div class="clear">
-          <form action="/search">
-            <div class="col-7 col-9-m no-padding">
-              <input class="field" name="query" type="text">
-              <input name="fulltext" type="hidden" value="yes">
-            </div>
-            <div class="col-5 col-3-m no-padding">
-              <button class="button button-fw no-padding" type="submit">
-                Go!
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <hr />
-
-        <small>
-          <center>
-            {% if current_user.is_authenticated %}
-              Signed in as <a href="/{{ current_user.slug }}" class="wikilink">
-                {{ current_user.name }}</a>.
-              <a href="/sign-out">Sign out</a>.
-            {% else %}
-              <a href="/sign-in">Sign in</a>.
-              <a href="/sign-up">Sign up</a>.
-            {% endif %}
-          </center>
-        </small>
-
-        {% block meta %}{% endblock %}
-      </div>
-
-      <div id="body" class="col-9-l">
-        {% if help and help %}
+    <div class="document">
+      <div class="main">
+        {% if help %}
           <div class="help">
             {{ help.body | format }}
           </div>
@@ -78,13 +74,27 @@
 
         {% block body %}{% endblock %}
       </div>
+
+      <div class="sidebar">
+        <div class="meta">
+          {% block meta %}{% endblock %}
+        </div>
+      </div>
     </div>
+
   </div>
 
   <script src="/static/zepto-min.js"></script>
 
+  {% block extra %}{% endblock %}
+
   <script>
     $(function($) {
+
+      $('.header .menu-link').on('click', function () {
+        $('.header .menu,.header .menu-link')
+          .toggleClass('open');
+      });
 
       $('.flash').on('click', function () {
         $(this).hide();
@@ -113,6 +123,15 @@
           }
         });
       });
+
+      if (window.CodeMirror) {
+        $('.editor').each(function () {
+          CodeMirror.fromTextArea(this, {
+            lineWrapping: true,
+            //theme: 'zenburn'
+          });
+        });
+      }
 
     });
   </script>

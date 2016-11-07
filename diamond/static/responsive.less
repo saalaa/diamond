@@ -1,0 +1,23 @@
+.make-visibility-helpers(@size) {
+  .hidden@{size} { display: none !important; }
+  .visible@{size} { display: initial !important; }
+}
+
+/*
+ * Responsive utilities
+ * --------------------
+ */
+
+// Small screens and up
+.hidden { display: none !important; }
+.make-visibility-helpers(-s);
+
+// Medium screens and up
+@media (min-width: @screen-m) {
+  .make-visibility-helpers(-m);
+}
+
+// Large screens and up
+@media (min-width: @screen-l) {
+  .make-visibility-helpers(-l);
+}

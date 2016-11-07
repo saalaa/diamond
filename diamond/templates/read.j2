@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block body %}
-  {{ page.body | format }}
+  <div class="body">
+    {{ page.body | format }}
+  </div>
 
   {% include "menu.j2" %}
 {% endblock %}

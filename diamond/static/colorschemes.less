@@ -1,0 +1,39 @@
+/*
+ * Colorschemes
+ * ------------
+ */
+
+.make-colorscheme (@color) {
+  a { text-decoration: none; }
+
+  a {
+    color: @color-fg;
+    border-bottom: 1px solid @color;
+
+    &:hover {
+      color: @color;
+      border-bottom: 1px solid transparent;
+    }
+  }
+
+  .title a,
+  a.wikilink {
+    color: @color;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      color: @color-fg;
+      border-bottom: 1px solid @color;
+    }
+  }
+
+  .title a {
+    color: @color-fg;
+  }
+}
+
+.make-colorscheme(@color-blue); // Default
+
+.green { .make-colorscheme(@color-green); }
+.pink { .make-colorscheme(@color-pink); }
+.purple { .make-colorscheme(@color-purple); }

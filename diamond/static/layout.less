@@ -1,0 +1,99 @@
+/*
+ * Layouts
+ * -------
+ */
+
+body.diplomat {
+
+  background-color: #eee;
+
+  .flash {
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+
+    &:before {
+      content: open-quote " ";
+      color: red;
+    }
+
+    &:after {
+      content: " " close-quote;
+      color: red;
+    }
+  }
+
+  .container {
+    padding: 10px 15px;
+    background-color: #fff;
+  }
+
+  .actions {
+    text-align: right;
+  }
+
+  @media (min-width: @screen-m) {
+    .document {
+      padding-top: 20px;
+    }
+  }
+
+  @media (min-width: @screen-l) {
+    & {
+      padding: 40px 0;
+    }
+
+    .container {
+      margin: 0 auto;
+      max-width: 1020px;
+
+      padding: 30px;
+
+      .document {
+        .sign-in,
+        .sign-up,
+        .deactivate {
+          width: 400px;
+          margin: 0 auto;
+        }
+
+        .meta {
+          margin-left: 100px;
+
+          table {
+            width: initial;
+          }
+        }
+
+        .help,
+        .settings,
+        .title-index,
+        .search,
+        .edit .standard-rows,
+        .actions,
+        .body {
+          & > * {
+            max-width: 650px;
+            margin-left: 100px;
+          }
+
+          & > blockquote { margin-left: 140px; }
+
+          & > .illustration {
+            max-width: none;
+            margin-left: 0px;
+            margin-right: 0px;
+          }
+
+          & > table,
+          & > .codehilite {
+            max-width: none;
+            width: 100%;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+}

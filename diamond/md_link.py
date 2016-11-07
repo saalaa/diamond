@@ -1,9 +1,10 @@
 import re
 
+from random import random
 from slugify import slugify
 from markdown.extensions.wikilinks import WikiLinkExtension, WikiLinks
 
-LINK_PATTERN = r'\[\[([\w0-9\(\)\'_ -]+)\]\]'
+LINK_PATTERN = r'\[\[([\w0-9\?\!\(\)\'_ -]+)\]\]'
 
 def build_url(label, base, end):
     return '/%s' % slugify(label)

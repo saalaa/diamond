@@ -5,64 +5,65 @@
 {% endblock %}
 
 {% block body %}
-  <form>
-    <fieldset>
-      <legend class="sr">Search through the wiki</legend>
+  <div class="search">
+    <form>
+      <fieldset>
+        <legend>Search through the wiki</legend>
 
-      <div class="col-7 col-9-m no-padding">
-        <label class="sr" for="field-query">Query term</label>
-        <input type="text" id="field-query" name="query"
-          value="{{ query }}" class="field">
-        <label>
-          <input type="checkbox" name="fulltext" value="yes"
-            {{ 'checked="checked"' if fulltext else '' }}>
-          Perform a full text search
-        </label>
-      </div>
+        <div class="grid">
+          <div class="row">
+            <div class="col-s-9-12">
+              <label class="hidden" for="field-query">Query term</label>
+              <input type="text" id="field-query" name="query"
+                value="{{ query }}" class="full-w">
+            </div>
 
-      <div class="col-5 col-3-m no-padding">
-        <input type="submit" value="Go" class="button button-fw" />
-      </div>
-    </fieldset>
-  </form>
+            <div class="col-s-3-12">
+              <input type="submit" value="Search" class="full-w" />
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </form>
 
-  <hr />
+    <div class="grid gutters">
+      <div class="row">
+        <div class="col-s-12-12 col-m-6-12">
+          <p>&nbsp;</p>
 
-  <div class="col-6 col-5-m no-padding">
-    <table>
-      {% for key, values in facets.items() %}
-        <tr {% if loop.last %} class="last-row" {% endif %}>
-          <th>{{ key }}:</th>
+          <table>
+            {% for key, values in facets.items() %}
+              <tr {% if loop.last %} class="last-row" {% endif %}>
+                <th>{{ key }}:</th>
 
-          <td>
-            {% for value, count in values %}
-            <a href="/search{{ '/' + path if path else '' }}/{{ key }}={{ value }}?query={{ query }}&fulltext={{ fulltext }}">
-                {{ value }}</a>
+                <td>
+                  {% for value, count in values %}
+                  <a href="/search{{ '/' + path if path else '' }}/{{ key }}={{ value }}?query={{ query }}">
+                      {{ value }}</a>
 
-              <small>({{ count }})</small><br>
+                    <small>({{ count }})</small><br>
+                  {% endfor %}
+                </td>
+              </tr>
+            {% else %}
+              <em>No further faceting available.</em>
             {% endfor %}
-          </td>
-        </tr>
-      {% else %}
-        <em>No further faceting available.</em>
-      {% endfor %}
-    </table>
-  </div>
+          </table>
+        </div>
 
-  <div class="col-1 col-1-m no-padding">
-    &nbsp;
-  </div>
+        <div class="col-s-12-12 col-m-6-12">
+          <p>{{ hits | length | pluralize('%d hit', '%d hits') }} out of
+            {{ total | pluralize('%d page', '%d pages') }} searched.</p>
 
-  <div class="col-5 col-6-m no-padding">
-    <p>{{ hits | length | pluralize('%d hit', '%d hits') }} out of
-      {{ total | pluralize('%d page', '%d pages') }} searched.</p>
-
-    <ul>
-      {% for page in hits %}
-        <li>
-          <a href="/{{ page.name }}" class="wikilink">{{ page.title }}</a>
-        </li>
-      {% endfor %}
-    </ul>
+          <ul>
+            {% for page in hits %}
+              <li>
+                <a href="/{{ page.name }}" class="wikilink">{{ page.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

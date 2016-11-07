@@ -2,9 +2,12 @@
   <hr/>
 
   <p>
-    Last modified: {{ page.ymd_hm or 'never' }} |
-
     {% if page.id %}
+      {{ page.ymd_hm or 'never' }} –
+
+      <a href="/{{ page.name }}?version={{ page.id }}" class="wikilink">
+        {{ page.id }}{{ '*' if page.active else '' }}</a> |
+
       <a href="/history/{{ page.name }}">History</a> |
     {% endif %}
 
@@ -14,12 +17,10 @@
       <a href="/edit/{{ page.name }}">Create</a>
     {% endif %}
 
-    <br />
-
     {% if current_user.admin %}
 
       {% if page.id %}
-        <a href="/deactivate/{{ page.name }}">Deactivate</a>
+        | <a href="/deactivate/{{ page.name }}">Deactivate</a>
       {% endif %}
 
     {% endif %}
