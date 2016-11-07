@@ -1,7 +1,6 @@
 import json
 
-from models import Document
-
+from model_document import Document
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
 

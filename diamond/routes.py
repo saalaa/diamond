@@ -4,9 +4,16 @@ from flask import request, render_template, redirect, url_for, flash, g
 
 from app import app
 from md import convert, parse
-from models import Document, Metadata, Parameter, db, param
 from auth import current_user
 from diff import unified_diff
+from db import db
+from model_document import Document
+from model_metadata import Metadata
+from model_parameter import Parameter, param
+
+@app.before_first_request
+def auto_init():
+    db.create_all()
 
 @app.before_request
 def set_globals():
@@ -106,7 +113,7 @@ def edit(name):
 
     document.save()
 
-    db.commit()
+    db.session.commit()
 
     flash('Thank you for your changes. Your attention to detail is '
             'appreciated.')
@@ -163,7 +170,7 @@ def settings():
 
         Parameter.set(key, request.form.get(key, ''))
 
-    db.commit()
+    db.session.commit()
 
     Parameter.clear_cache()
 
@@ -200,6 +207,6 @@ def deactivate(name):
     Document.deactivate(name)
     Metadata.deactivate(name)
 
-    db.commit()
+    db.session.commit()
 
     return redirect(url_for('read'))

@@ -5,8 +5,10 @@ from flask_login import LoginManager, login_user, logout_user, current_user, \
         AnonymousUserMixin
 
 from app import app
+from db import db
+from model_user import User
+from model_document import Document
 from maths import hash, generate
-from models import User, Document, db
 
 class AnonymousUser(AnonymousUserMixin):
     admin = False
@@ -60,7 +62,7 @@ def sign_up():
 
     user.save()
 
-    db.commit()
+    db.session.commit()
 
     login_user(user)
 
