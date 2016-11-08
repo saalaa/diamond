@@ -3,7 +3,7 @@
 All versions should also be git tags.
 
 
-## Version v0.4
+## Version v0.4 (2016-11-08)
 
 - Added generic database storage (SQLAlchemy)
 - Added indexes
@@ -31,6 +31,8 @@ All versions should also be git tags.
 - Added colour schemes (purple, blue, pink, green), configurable layout and
   improved typography
 - Added an advanced editor (CodeMirror), still early feature
+- Added fixtures (automatically loaded for Heroku deploy button)
+- Added correct licensing
 
 ## Version v0.3 (2016-10-13)
 
