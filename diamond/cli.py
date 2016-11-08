@@ -57,7 +57,7 @@ def load_fixtures():
 
         parsed = parse(body)
 
-        slug = filename[:3]
+        slug = filename[:-3]
         title = parsed['title'] or slug
 
         Metadata.deactivate(slug)
