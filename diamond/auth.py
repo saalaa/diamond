@@ -28,6 +28,8 @@ from diamond.db import db
 from diamond.models import User, Document
 from diamond.maths import hash, generate
 
+DEFAULT_COMMENT = 'Sign up'
+
 class AnonymousUser(AnonymousUserMixin):
     admin = False
 
@@ -73,6 +75,7 @@ def sign_up():
 
     if not page.id:
         page.title = name
+        page.comment = DEFAULT_COMMENT
         page.save()
 
     user = User(slug=slug, admin=is_first)
