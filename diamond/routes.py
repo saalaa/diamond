@@ -171,12 +171,12 @@ def search(path=None):
 
 @app.route('/title-index')
 def title_index():
-    return render_template('titles.j2', menu=Document.get('main-menu'),
+    return render_template('title-index.j2', menu=Document.get('main-menu'),
             help=Document.get('title-index-help'), titles=Document.titles())
 
 @app.route('/recent-changes')
 def recent_changes():
-    return render_template('changes.j2', menu=Document.get('main-menu'),
+    return render_template('recent-changes.j2', menu=Document.get('main-menu'),
             help=Document.get('recent-changes-help'),
             changes=Document.changes())
 
