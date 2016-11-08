@@ -1,1 +1,1 @@
-web: sh scripts/diamond.sh run
+web: gunicorn diamond:app

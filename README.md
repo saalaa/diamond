@@ -44,7 +44,7 @@ Now, let's install dependencies:
 
 Finally, we can run the wiki:
 
-    $ ./scripts/diamond.sh run
+    $ scripts/diamond.sh run
 
 
 ## Configuration
@@ -58,9 +58,14 @@ Here's a full list of supported environment variables:
   not be set on production.
 - `FLASK_DEBUG`: Enable pretty exceptions and automatic code reloading while
   hacking Diamond Wiki. Set to `yes` to enable. Must not be set on production.
-- `HOST`: Define the host the application listens on. Defaults to `0.0.0.0`.
-- `PORT`: Define the port the application listens on. Defaults to `5000`.
 - `DATABASE_URL`: Database connection credentials. Defaults to
   `sqlite:///diamond.db`.
 - `SECRET_KEY`: Secret key for encrypting and signing things. Defaults to a
   random value.
+
+When running Diamond wiki through Gunicorn (on Heroku for example) or directly
+through Python (`python -m diamond`), the following variables are taken into
+account: `HOST`, `PORT`.
+
+When using `scripts/diamond.sh run`, the host and port can be configured
+through command-line options.
