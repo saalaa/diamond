@@ -7,7 +7,7 @@ The metadata enabled wiki engine.
 
 The simplest is probably to use the following button:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://bitbucket.com/saalaa/diamond)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/saalaa/diamond)
 
 But if you want to do it manually and/or intend to make meaningful changes to
 Diamond Wiki, we've got you covered. First, you should download and install the
