@@ -2,7 +2,7 @@ import json
 
 from flask import request, render_template, redirect, url_for, flash, g
 from diamond.app import app
-from diamond.md import convert, parse
+from diamond.formatter import convert, parse
 from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db

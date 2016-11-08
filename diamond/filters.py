@@ -4,7 +4,7 @@ from collections import OrderedDict
 from jinja2 import Markup
 from slugify import slugify
 from diamond.app import app
-from diamond.md import convert
+from diamond.formatter import convert
 
 WORD_PATTERN = r'[A-Z][a-z]+'
 
