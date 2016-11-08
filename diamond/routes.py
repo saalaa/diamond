@@ -105,7 +105,7 @@ def read_md(slug):
 def read_json(slug):
     page = Document.get(slug)
 
-    page = {
+    data = {
         'slug': page.slug,
         'title': page.title,
         'body': page.body,
@@ -113,7 +113,7 @@ def read_json(slug):
         'timestamp': page.timestamp.isoformat() if page.timestamp else None
     }
 
-    return json.dumps(page, indent=2), 200 if page.id else 404, {
+    return json.dumps(data, indent=2), 200 if page.id else 404, {
             'Content-Type': 'application/json; charset=utf-8' }
 
 @app.route('/edit/<slug>', methods=['GET', 'POST'])
