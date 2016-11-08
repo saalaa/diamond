@@ -800,6 +800,7 @@ body.diplomat .actions {
   }
   body.diplomat .container .document .sign-in,
   body.diplomat .container .document .sign-up,
+  body.diplomat .container .document .activate,
   body.diplomat .container .document .deactivate {
     width: 400px;
     margin: 0 auto;

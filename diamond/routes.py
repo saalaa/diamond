@@ -119,12 +119,12 @@ def edit(slug):
     body = request.form['body']
     comment = request.form['comment'] or None
 
-    document = Document(slug=slug, title=title, body=body, comment=comment)
+    page = Document(slug=slug, title=title, body=body, comment=comment)
 
     if current_user.is_authenticated:
-        document.author = current_user.slug
+        page.author = current_user.slug
 
-    document.save()
+    page.save()
 
     db.session.commit()
 
@@ -222,4 +222,34 @@ def deactivate(slug):
 
     db.session.commit()
 
-    return redirect(url_for('read'))
+    return redirect(url_for('read', slug=slug))
+
+@app.route('/activate/<slug>', methods=['GET', 'POST'])
+def activate(slug):
+    version = request.args.get('version')
+
+    if not version:
+        return render_template('error.j2', error='Missing version parameter')
+
+    if request.method == 'GET':
+        return render_template('activate.j2', menu=Document.get('main-menu'),
+                help=Document.get('activate-help'))
+
+    if not current_user.admin:
+        return render_template('error.j2', error='You are not allowed to '
+                'activate this page'), 403
+
+    page = Document.get(slug, version)
+
+    parsed = parse(page.body)
+
+    for key, values in parsed['meta'].items():
+        for value in values:
+            Metadata(slug=slug, key=key, value=value) \
+                    .save()
+
+    page.save()
+
+    db.session.commit()
+
+    return redirect(url_for('read', slug=slug))

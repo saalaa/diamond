@@ -17,12 +17,13 @@
       <a href="/edit/{{ page.slug }}">Create</a>
     {% endif %}
 
-    {% if current_user.admin %}
-
-      {% if page.id %}
+    {% if page.id and current_user.admin %}
+      {% if page.active %}
         | <a href="/deactivate/{{ page.slug }}">Deactivate</a>
+      {% else %}
+        | <a href="/activate/{{ page.slug }}?version={{ page.id}}">
+          Activate</a>
       {% endif %}
-
     {% endif %}
   </p>
 </div>
