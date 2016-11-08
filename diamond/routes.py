@@ -46,7 +46,7 @@ def set_globals():
 
 @app.before_request
 def csrf_check():
-    if request.method == "POST":
+    if request.method == "POST" and not request.path == '/preview':
         token = session.pop('_csrf_token', None)
         if not token == request.form.get('_csrf_token'):
             return render_template('error.j2', error='CSRF error'), 403

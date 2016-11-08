@@ -108,7 +108,9 @@
 
       $('.button-preview').on('click', function () {
         var pos = $(this).offset();
-        var payload = $('form.edit').serialize();
+        var val = $('form.edit textarea').val();
+
+        var payload = 'body=' + encodeURIComponent(val);
 
         $.post('/preview', payload, function (res, status) {
           if (status === 'success') {
