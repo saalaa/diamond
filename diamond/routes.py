@@ -127,6 +127,9 @@ def edit(slug):
         return render_template('error.j2', error='Edition is limited to '
                 'registered users only'), 403
 
+    Metadata.deactivate(slug)
+    Document.deactivate(slug)
+
     parsed = parse(request.form['body'])
 
     for key, values in parsed['meta'].items():

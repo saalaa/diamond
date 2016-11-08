@@ -151,9 +151,6 @@ class Document(db.Model):
         db.session.add(item)
 
     def save(self):
-        Document.deactivate(self.slug)
-        Metadata.deactivate(self.slug)
-
         self.active = True
         db.session.add(self)
 
