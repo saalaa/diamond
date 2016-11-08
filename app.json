@@ -1,10 +1,11 @@
 {
   "name": "Diamond Wiki on Heroku",
   "description": "The metadata enabled wiki engine",
-  "repository": "https://bitbucket.com/saalaa/diamond",
+  "repository": "https://github.com/saalaa/diamond",
   "success_url": "/",
   "keywords": [
-    "wiki"
+    "wiki",
+    "metadata"
   ],
   "addons": [
     "heroku-postgresql"
