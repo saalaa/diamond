@@ -5,6 +5,9 @@
 #   export FLASK_DEBUG=yes
 #   export SECRET_KEY=xxx
 if [ -e .env ]; then
+  echo ' * Reading .env'
+  cat .env | sed 's/^/   | /'
+
   source .env
 fi
 

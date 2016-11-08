@@ -68,4 +68,14 @@ through Python (`python -m diamond`), the following variables are taken into
 account: `HOST`, `PORT`.
 
 When using `scripts/diamond.sh run`, the host and port can be configured
-through command-line options.
+through command-line options. Furthermore, `scripts/diamond.sh` supports a
+`.env` file that is able to export environment variables, making development
+easier (it then prints its content):
+
+    $ scripts/diamond.sh run
+     * Reading .env
+       | export FLASK_DEBUG=
+       | export SECRET_KEY=xxx
+     * Serving Flask app "diamond"
+     * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
