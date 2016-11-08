@@ -16,10 +16,10 @@
 # this program; if not, write to the Free Software Foundation, Inc., 59 Temple
 # Place, Suite 330, Boston, MA 02111-1307 USA
 
+import diamond.cli
+import diamond.filters
 import diamond.auth
 import diamond.routes
-import diamond.filters
-import diamond.commands
 import diamond.errors
 
 from diamond.app import app
