@@ -17,8 +17,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
+import codecs
+
+from os import listdir, getcwd, path
 from diamond.app import app
 from diamond.db import db
+from diamond.models import Document, Metadata
+from diamond.formatter import parse
+
+FIXTURES_DIR = 'fixtures'
+DEFAULT_COMMENT = 'Fixtures import'
 
 @app.cli.command('init-db')
 def init_db():
@@ -29,3 +37,36 @@ def init_db():
 def drop_db():
     '''Destroy all database entities (and data).'''
     db.drop_all()
+
+@app.cli.command('load-fixtures')
+def load_fixtures():
+    '''Load fixtures into the database'''
+    cwd = getcwd()
+    dir = path.join(cwd, FIXTURES_DIR)
+
+    for filename in listdir(dir):
+        file = path.join(dir, filename)
+
+        if not path.isfile(file) or not file.endswith('.md'):
+            continue
+
+        body = codecs.open(file, 'r', 'utf-8') \
+                .read()
+
+        parsed = parse(body)
+
+        slug = filename[:3]
+        title = parsed['title'] or slug
+
+        Metadata.deactivate(slug)
+        Document.deactivate(slug)
+
+        for key, values in parsed['meta'].items():
+            for value in values:
+                Metadata(slug=slug, key=key, value=value) \
+                        .save()
+
+        Document(slug=slug, title=title, body=body, comment=DEFAULT_COMMENT) \
+            .save()
+
+        db.session.commit()

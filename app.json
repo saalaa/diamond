@@ -7,6 +7,9 @@
     "wiki",
     "metadata"
   ],
+  "scripts": {
+    "postdeploy": "scripts/diamond.sh load-fixtures"
+  },
   "addons": [
     "heroku-postgresql"
   ],
