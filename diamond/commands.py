@@ -1,5 +1,5 @@
-from app import app
-from db import db
+from diamond.app import app
+from diamond.db import db
 
 @app.cli.command('init-db')
 def init_db():

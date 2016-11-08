@@ -1,8 +1,8 @@
 import datetime
 
-from db import db
-from utils import cached_property
-from model_metadata import Metadata
+from diamond.db import db
+from diamond.utils import cached_property
+from diamond.model_metadata import Metadata
 
 DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
 

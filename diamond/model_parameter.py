@@ -1,6 +1,6 @@
 import time
 
-from db import db
+from diamond.db import db
 
 PARAMETER_DELAY = 300
 

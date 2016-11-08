@@ -1,12 +1,11 @@
 import markdown
 
 from markdown.extensions.codehilite import CodeHiliteExtension
-
-from md_link import LinkExtension
-from md_list import ListExtension
-from md_redirect import RedirectExtension
-from md_search import SearchExtension
-from md_title import TitleExtension
+from diamond.md_link import LinkExtension
+from diamond.md_list import ListExtension
+from diamond.md_redirect import RedirectExtension
+from diamond.md_search import SearchExtension
+from diamond.md_title import TitleExtension
 
 def convert(text):
     md = markdown.Markdown(extensions=[

@@ -1,8 +1,8 @@
 import json
 
-from model_document import Document
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
+from diamond.model_document import Document
 
 class ListProcessor(BlockProcessor):
     def test(self, parent, block):

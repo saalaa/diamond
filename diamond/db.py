@@ -1,4 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import app
+from diamond.app import app
 
 db = SQLAlchemy(app)

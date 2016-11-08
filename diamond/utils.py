@@ -1,4 +1,5 @@
-import os, random
+import os
+import random
 
 from werkzeug.utils import cached_property
 

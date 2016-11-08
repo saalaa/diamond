@@ -2,9 +2,9 @@ import datetime
 import bcrypt
 
 from flask_login import UserMixin
-from utils import cached_property
-from db import db
-from model_document import Document
+from diamond.utils import cached_property
+from diamond.db import db
+from diamond.model_document import Document
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'

@@ -1,15 +1,14 @@
 import json
 
 from flask import request, render_template, redirect, url_for, flash, g
-
-from app import app
-from md import convert, parse
-from auth import current_user
-from diff import unified_diff
-from db import db
-from model_document import Document
-from model_metadata import Metadata
-from model_parameter import Parameter, param
+from diamond.app import app
+from diamond.md import convert, parse
+from diamond.auth import current_user
+from diamond.diff import unified_diff
+from diamond.db import db
+from diamond.model_document import Document
+from diamond.model_metadata import Metadata
+from diamond.model_parameter import Parameter, param
 
 @app.before_first_request
 def auto_init():

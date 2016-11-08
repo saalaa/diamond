@@ -1,6 +1,5 @@
 from flask import render_template
-
-from app import app
+from diamond.app import app
 
 if not app.config['FLASK_DEBUG']:
     @app.errorhandler(Exception)

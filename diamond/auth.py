@@ -4,11 +4,11 @@ from slugify import slugify
 from flask_login import LoginManager, login_user, logout_user, current_user, \
         AnonymousUserMixin
 
-from app import app
-from db import db
-from model_user import User
-from model_document import Document
-from maths import hash, generate
+from diamond.app import app
+from diamond.db import db
+from diamond.model_user import User
+from diamond.model_document import Document
+from diamond.maths import hash, generate
 
 class AnonymousUser(AnonymousUserMixin):
     admin = False
