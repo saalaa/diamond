@@ -19,10 +19,12 @@
 
 import os
 import random
+import string
 
 from werkzeug.utils import cached_property
 
-DEFAULT_DOMAIN = [chr(i) for i in range(32, 127)]
+DEFAULT_DOMAIN = string.digits + string.ascii_uppercase + \
+        string.ascii_lowercase
 
 def env(variable, default=None, cast=None):
     value = os.environ.get(variable, default)
