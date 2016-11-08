@@ -91,7 +91,7 @@ def read(slug=None):
 def read_html(slug):
     page = Document.get(slug)
 
-    return format(page.body), 200 if page.id else 404, {
+    return convert(page.body), 200 if page.id else 404, {
             'Content-Type': 'text/html; charset=utf-8' }
 
 @app.route('/<slug>.md')
