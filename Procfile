@@ -1,1 +1,1 @@
-web: sh diamond.sh run
+web: sh scripts/diamond.sh run

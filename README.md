@@ -44,7 +44,7 @@ Now, let's install dependencies:
 
 Finally, we can run the wiki:
 
-    $ sh diamond.sh run
+    $ ./scripts/diamond.sh run
 
 
 ## Configuration
