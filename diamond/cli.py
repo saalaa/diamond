@@ -41,6 +41,8 @@ def drop_db():
 @app.cli.command('load-fixtures')
 def load_fixtures():
     '''Load fixtures into the database'''
+    db.create_all()
+
     cwd = getcwd()
     dir = path.join(cwd, FIXTURES_DIR)
 
