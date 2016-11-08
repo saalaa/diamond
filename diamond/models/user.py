@@ -4,7 +4,7 @@ import bcrypt
 from flask_login import UserMixin
 from diamond.utils import cached_property
 from diamond.db import db
-from diamond.model_document import Document
+from diamond.models.document import Document
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'

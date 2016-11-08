@@ -6,8 +6,7 @@ from flask_login import LoginManager, login_user, logout_user, current_user, \
 
 from diamond.app import app
 from diamond.db import db
-from diamond.model_user import User
-from diamond.model_document import Document
+from diamond.models import User, Document
 from diamond.maths import hash, generate
 
 class AnonymousUser(AnonymousUserMixin):

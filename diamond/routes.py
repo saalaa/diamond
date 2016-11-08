@@ -6,9 +6,7 @@ from diamond.md import convert, parse
 from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
-from diamond.model_document import Document
-from diamond.model_metadata import Metadata
-from diamond.model_parameter import Parameter, param
+from diamond.models import Document, Metadata, Parameter, param
 
 @app.before_first_request
 def auto_init():

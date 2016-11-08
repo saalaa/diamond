@@ -2,7 +2,7 @@ import datetime
 
 from diamond.db import db
 from diamond.utils import cached_property
-from diamond.model_metadata import Metadata
+from diamond.models.metadata import Metadata
 
 DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
 
