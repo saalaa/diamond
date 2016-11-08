@@ -31,3 +31,6 @@ class Metadata(db.Model):
 
     def save(self):
         db.session.add(self)
+
+db.Index('idx_metadata_slug', Metadata.slug)
+db.Index('idx_metadata_key_value', Metadata.key, Metadata.key)

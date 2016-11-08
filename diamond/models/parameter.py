@@ -59,3 +59,5 @@ class Parameter(db.Model):
 
     def save(self):
         db.session.add(self)
+
+db.Index('idx_parameter_key', Parameter.key)
