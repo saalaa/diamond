@@ -1,0 +1,50 @@
+# Release history
+
+All versions should also be git tags.
+
+
+## Version v0.4
+
+- Added generic database storage (SQLAlchemy)
+- Added indexes
+- Reworked metadata storage
+- Reworked metadata operations
+- Merged search and faceted navigation
+- Added database migrations
+- Smooth database initialization
+- Removed WikiWord butchery; use slugs
+- Added user accounts support
+- Added configurable edition rights restriction
+- Added in-database configuration
+- Added diff between revisions
+- Added Javascript sugar coating (preview, flash dismiss)
+- Added the possibility to deactivate pages
+- Added the possibility to activate previous page revisions
+- Added CSRF protection
+- Added a @list Markdown extension
+- Added a @search Markdown extensions
+- Added a @redirect Markdown extensions
+- Added a deploy to Heroku button
+- Tap in environment variables for configuration
+- Added robots.txt
+- Always use prefixed URLs (allows robots.txt)
+- Added colour schemes (purple, blue, pink, green), configurable layout and
+  improved typography
+- Added an advanced editor (CodeMirror), still early feature
+
+## Version v0.3 (2016-10-13)
+
+- Reworked page layout
+- Basic Markdown extensions
+- Fixed links and titles handling
+
+## Version v0.2 (2016-10-11)
+
+- Switched from CGI to WSGI through using Flask
+- Added Jinja2 templates and basic static files
+- Stylesheet still mostly that of legacy Diamond wiki
+- All legacy features working
+
+## Version v0.1 (2016-10-11)
+
+- Original Diamond wiki source import (incl. logo)
