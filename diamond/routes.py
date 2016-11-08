@@ -1,12 +1,20 @@
 import json
 
-from flask import request, render_template, redirect, url_for, flash, g
+from flask import request, render_template, redirect, url_for, flash, g, \
+        session
 from diamond.app import app
 from diamond.formatter import convert, parse
 from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
 from diamond.models import Document, Metadata, Parameter, param
+from utils import secret
+
+def generate_csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = secret(16)
+
+    return session['_csrf_token']
 
 @app.before_first_request
 def auto_init():
@@ -15,6 +23,14 @@ def auto_init():
 @app.before_request
 def set_globals():
     g.param = param
+    g.csrf_token = generate_csrf_token
+
+@app.before_request
+def csrf_check():
+    if request.method == "POST":
+        token = session.pop('_csrf_token', None)
+        if not token == request.form.get('_csrf_token'):
+            return render_template('error.j2', error='CSRF error'), 403
 
 @app.route('/robots.txt')
 def robots_txt():

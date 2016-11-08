@@ -7,7 +7,8 @@
 {% block body %}
   <div class="sign-up">
     <form method="POST">
-      <input type="hidden" name="checksum" value="{{ checksum}}">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+      <input type="hidden" name="checksum" value="{{ checksum }}">
 
       <fieldset>
         <legend>Sign up form</legend>
