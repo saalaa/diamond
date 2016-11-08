@@ -5,22 +5,22 @@
     {% if page.id %}
       {{ page.ymd_hm or 'never' }} –
 
-      <a href="/{{ page.name }}?version={{ page.id }}" class="wikilink">
+      <a href="/{{ page.slug }}?version={{ page.id }}" class="wikilink">
         {{ page.id }}{{ '*' if page.active else '' }}</a> |
 
-      <a href="/history/{{ page.name }}">History</a> |
+      <a href="/history/{{ page.slug }}">History</a> |
     {% endif %}
 
     {% if page.id %}
-      <a href="/edit/{{ page.name }}">Edit</a>
+      <a href="/edit/{{ page.slug }}">Edit</a>
     {% else %}
-      <a href="/edit/{{ page.name }}">Create</a>
+      <a href="/edit/{{ page.slug }}">Create</a>
     {% endif %}
 
     {% if current_user.admin %}
 
       {% if page.id %}
-        | <a href="/deactivate/{{ page.name }}">Deactivate</a>
+        | <a href="/deactivate/{{ page.slug }}">Deactivate</a>
       {% endif %}
 
     {% endif %}

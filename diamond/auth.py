@@ -65,7 +65,7 @@ def sign_up():
 
     login_user(user)
 
-    return redirect(url_for('read', name=slug))
+    return redirect(url_for('read', slug=slug))
 
 @app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
@@ -90,7 +90,7 @@ def sign_in():
 
     login_user(user)
 
-    return redirect(url_for('read', name=user.slug))
+    return redirect(url_for('read', slug=user.slug))
 
 @app.route('/sign-out')
 def sign_out():

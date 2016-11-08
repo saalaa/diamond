@@ -25,9 +25,9 @@ class ListProcessor(BlockProcessor):
 
         if items:
             if raw:
-                items = ['- [[' + item.name + ']]' for item in items]
+                items = ['- [[' + item.slug + ']]' for item in items]
             else:
-                items = ['- [' + item.title + '](' + item.name + ')'
+                items = ['- [' + item.title + '](' + item.slug + ')'
                             for item in items]
         else:
             items = ['- *No results found*']

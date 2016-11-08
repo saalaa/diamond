@@ -21,12 +21,12 @@
             {{ item.ymd_hm }}
           </td>
           <td>
-            <a href="/{{ item.name }}?version={{ item.id }}" class="wikilink">
+            <a href="/{{ item.slug }}?version={{ item.id }}" class="wikilink">
               {{ item.id }}{{ '*' if item.active else ''}}
             </a>
           </td>
           <td>
-            <a href="/{{ item.name }}" class="wikilink">{{ item.title }}</a>
+            <a href="/{{ item.slug }}" class="wikilink">{{ item.title }}</a>
           </td>
           <td>
             {% if item.user %}

@@ -26,10 +26,10 @@ def preview():
             'Content-Type': 'text/html; charset=utf-8' }
 
 @app.route('/')
-@app.route('/<name>')
-def read(name=None):
+@app.route('/<slug>')
+def read(slug=None):
     version = request.args.get('version', None)
-    page = Document.get(name or param('frontpage', 'front-page'),
+    page = Document.get(slug or param('frontpage', 'front-page'),
             version=version)
 
     if version:
@@ -45,47 +45,47 @@ def read(name=None):
     parsed = parse(page.body)
 
     if 'page' in parsed['redirect']:
-        flash('Redirected from %s' % (page.title or page.name))
+        flash('Redirected from %s' % (page.title or page.slug))
 
-        return redirect(url_for('read', name=parsed['redirect']['page']))
+        return redirect(url_for('read', slug=parsed['redirect']['page']))
 
     return render_template('read.j2', menu=Document.get('main-menu'),
             page=page), 200 if page.id else 404
 
-@app.route('/<name>.html')
-def read_html(name):
-    page = Document.get(name)
+@app.route('/<slug>.html')
+def read_html(slug):
+    page = Document.get(slug)
 
     return format(page.body), 200 if page.id else 404, {
             'Content-Type': 'text/html; charset=utf-8' }
 
-@app.route('/<name>.md')
-def read_md(name):
-    page = Document.get(name)
+@app.route('/<slug>.md')
+def read_md(slug):
+    page = Document.get(slug)
 
     return page.body, 200 if page.id else 404, {
             'Content-Type': 'text/markdown; charset=utf-8' }
 
-@app.route('/<name>.json')
-def read_json(name):
-    page = Document.get(name)
+@app.route('/<slug>.json')
+def read_json(slug):
+    page = Document.get(slug)
 
     page = {
-        'name': page.name,
+        'slug': page.slug,
         'title': page.title,
         'body': page.body,
         'active': page.active,
-        'mtime': page.mtime.isoformat() if page.mtime else None
+        'timestamp': page.timestamp.isoformat() if page.timestamp else None
     }
 
     return json.dumps(page, indent=2), 200 if page.id else 404, {
             'Content-Type': 'application/json; charset=utf-8' }
 
-@app.route('/edit/<name>', methods=['GET', 'POST'])
-def edit(name):
+@app.route('/edit/<slug>', methods=['GET', 'POST'])
+def edit(slug):
     if request.method == 'GET':
         return render_template('edit.j2', menu=Document.get('main-menu'),
-                help=Document.get('edit-help'), page=Document.get(name))
+                help=Document.get('edit-help'), page=Document.get(slug))
 
     auth_only = param('auth_only', False)
     if auth_only and not current_user.is_authenticated:
@@ -96,17 +96,17 @@ def edit(name):
 
     for key, values in parsed['meta'].items():
         for value in values:
-            Metadata(name=name, key=key, value=value) \
+            Metadata(slug=slug, key=key, value=value) \
                     .save()
 
-    title = parsed['title'] or name
+    title = parsed['title'] or slug
     body = request.form['body']
     comment = request.form['comment'] or None
 
-    document = Document(name=name, title=title, body=body, comment=comment)
+    document = Document(slug=slug, title=title, body=body, comment=comment)
 
     if current_user.is_authenticated:
-        document.user_slug = current_user.slug
+        document.author = current_user.slug
 
     document.save()
 
@@ -115,7 +115,7 @@ def edit(name):
     flash('Thank you for your changes. Your attention to detail is '
             'appreciated.')
 
-    return redirect(url_for('read', name=name))
+    return redirect(url_for('read', slug=slug))
 
 @app.route('/search')
 @app.route('/search/<path:path>')
@@ -145,10 +145,10 @@ def recent_changes():
             help=Document.get('recent-changes-help'),
             changes=Document.changes())
 
-@app.route('/history/<name>')
-def history(name):
+@app.route('/history/<slug>')
+def history(slug):
     return render_template('history.j2', menu=Document.get('main-menu'),
-            help=Document.get('history-help'), page=Document.get(name))
+            help=Document.get('history-help'), page=Document.get(slug))
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -175,24 +175,24 @@ def settings():
 
     return redirect(url_for('settings'))
 
-@app.route('/diff/<name>/<a>/<b>')
-def diff(name, a, b):
-    doc_a = Document.get(name, int(a))
-    doc_b = Document.get(name, int(b))
+@app.route('/diff/<slug>/<a>/<b>')
+def diff(slug, a, b):
+    doc_a = Document.get(slug, int(a))
+    doc_b = Document.get(slug, int(b))
 
     body_a = (doc_a.body or '').splitlines()
     body_b = (doc_b.body or '').splitlines()
 
-    name_a = '%s v%s' % (name, a)
-    name_b = '%s v%s' % (name, b)
+    name_a = '%s v%s' % (slug, a)
+    name_b = '%s v%s' % (slug, b)
 
     diff = unified_diff(body_a, body_b, name_a, name_b)
 
     return render_template('diff.j2', menu=Document.get('main-menu'),
-            help=Document.get('diff-help'), page=Document.get(name), diff=diff)
+            help=Document.get('diff-help'), page=Document.get(slug), diff=diff)
 
-@app.route('/deactivate/<name>', methods=['GET', 'POST'])
-def deactivate(name):
+@app.route('/deactivate/<slug>', methods=['GET', 'POST'])
+def deactivate(slug):
     if request.method == 'GET':
         return render_template('deactivate.j2', menu=Document.get('main-menu'),
                 help=Document.get('deactivate-help'))
@@ -201,8 +201,8 @@ def deactivate(name):
         return render_template('error.j2', error='You are not allowed to '
                 'deactivate this page'), 403
 
-    Document.deactivate(name)
-    Metadata.deactivate(name)
+    Document.deactivate(slug)
+    Metadata.deactivate(slug)
 
     db.session.commit()
 

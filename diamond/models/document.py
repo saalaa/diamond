@@ -4,20 +4,20 @@ from diamond.db import db
 from diamond.utils import cached_property
 from diamond.models.metadata import Metadata
 
-DEFAULT_BODY = '# %(name)s\n\nDescribe [[%(name)s]] here.'
+DEFAULT_BODY = '# %(slug)s\n\nDescribe [[%(slug)s]] here.'
 
 class Document(db.Model):
     __tablename__ = 'documents'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
-    user_slug = db.Column(db.String, db.ForeignKey('users.slug'))
-    mtime = db.Column(db.DateTime, nullable=False,
-            default=datetime.datetime.utcnow)
+    author = db.Column(db.String, db.ForeignKey('users.slug'))
     comment = db.Column(db.Text)
     active = db.Column(db.Boolean, nullable=False, default=0)
+    timestamp = db.Column(db.DateTime, nullable=False,
+            default=datetime.datetime.utcnow)
 
     user = db.relationship('User')
 
@@ -27,19 +27,20 @@ class Document(db.Model):
 
     @cached_property
     def ymd(self):
-        return self.mtime.strftime('%Y-%m-%d') if self.mtime else None
+        return self.timestamp.strftime('%Y-%m-%d') if self.timestamp else None
 
     @property
     def hm(self):
-        return self.mtime.strftime('%H:%M') if self.mtime else None
+        return self.timestamp.strftime('%H:%M') if self.timestamp else None
 
     @property
     def ymd_hm(self):
-        return self.mtime.strftime('%Y-%m-%d %H:%M') if self.mtime else None
+        return self.timestamp.strftime('%Y-%m-%d %H:%M') if self.timestamp \
+                else None
 
     @cached_property
     def meta(self):
-        return Metadata.get(self.name)
+        return Metadata.get(self.slug)
 
     @classmethod
     def count(cls):
@@ -48,28 +49,28 @@ class Document(db.Model):
                 .count()
 
     @classmethod
-    def get(cls, name, version=None):
+    def get(cls, slug, version=None):
         if version:
             return Document.query \
                     .filter(Document.id == version) \
-                    .filter(Document.name == name) \
+                    .filter(Document.slug == slug) \
                     .one_or_none()
 
         item = Document.query \
                 .filter(Document.active == True) \
-                .filter(Document.name == name) \
+                .filter(Document.slug == slug) \
                 .one_or_none()
 
         if not item:
-            item = Document(name=name, body=DEFAULT_BODY % {
-                'name': name.replace('_', ' ')})
+            item = Document(slug=slug, body=DEFAULT_BODY % {
+                'slug': slug.replace('_', ' ')})
 
         return item
 
     @classmethod
     def changes(cls):
         return Document.query \
-                .order_by(db.desc(Document.mtime)) \
+                .order_by(db.desc(Document.timestamp)) \
                 .limit(100)
 
     @classmethod
@@ -81,18 +82,18 @@ class Document(db.Model):
 
     @classmethod
     def search(cls, query=None, filters=None):
-        names = None
+        slugs = None
         if filters:
             filters = [Metadata.search(key, value) for key, value in filters]
-            names = reduce(lambda acc, x: acc if acc is None else \
+            slugs = reduce(lambda acc, x: acc if acc is None else \
                     acc.intersection(x), filters)
 
         items = Document.query \
                 .filter(Document.active == True) \
-                .order_by(Document.name)
+                .order_by(Document.slug)
 
-        if names is not None:
-            items = items.filter(Document.name.in_(names))
+        if slugs is not None:
+            items = items.filter(Document.slug.in_(slugs))
 
         if query:
             items = items.filter(Document.body.like('%' + query + '%'))
@@ -103,10 +104,10 @@ class Document(db.Model):
     def facets(cls, pages, ignores=None, all=False):
         ignores = ignores or []
 
-        names = [page.name for page in pages]
+        slugs = [page.slug for page in pages]
 
         items = db.session.query(Metadata.key, Metadata.value, db.func.count()) \
-                .filter(Metadata.name.in_(names)) \
+                .filter(Metadata.slug.in_(slugs)) \
                 .group_by(Metadata.key, Metadata.value) \
                 .order_by(Metadata.key, Metadata.value)
 
@@ -121,8 +122,8 @@ class Document(db.Model):
         return facets
 
     @classmethod
-    def deactivate(cls, name):
-        item = Document.get(name)
+    def deactivate(cls, slug):
+        item = Document.get(slug)
 
         if not item.id:
             return
@@ -131,14 +132,14 @@ class Document(db.Model):
         db.session.add(item)
 
     def save(self):
-        Document.deactivate(self.name)
-        Metadata.deactivate(self.name)
+        Document.deactivate(self.slug)
+        Metadata.deactivate(self.slug)
 
         self.active = True
         db.session.add(self)
 
     def history(self):
         return Document.query \
-                .filter(Document.name == self.name) \
-                .order_by(db.desc(Document.mtime)) \
+                .filter(Document.slug == self.slug) \
+                .order_by(db.desc(Document.timestamp)) \
                 .limit(100)
