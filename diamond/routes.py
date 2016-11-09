@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import json
+import diamond
 
 from flask import request, render_template, redirect, url_for, flash, g, \
         session
@@ -27,7 +28,7 @@ from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
 from diamond.models import Document, Metadata, Parameter, param
-from utils import secret
+from diamond.utils import secret
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
@@ -41,6 +42,7 @@ def auto_init():
 
 @app.before_request
 def set_globals():
+    g.version = diamond.__version__
     g.param = param
     g.csrf_token = generate_csrf_token
 
