@@ -25,7 +25,7 @@ import diamond.errors
 
 from diamond.app import app
 
-__version__ = '0.4'
+__version__ = '0.4.1'
 __all__ = ['app', 'main']
 
 def main():
