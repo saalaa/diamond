@@ -21,6 +21,7 @@ import os
 import random
 import string
 
+from flask import request
 from werkzeug.utils import cached_property
 
 DEFAULT_DOMAIN = string.digits + string.ascii_uppercase + \
@@ -36,3 +37,14 @@ def env(variable, default=None, cast=None):
 
 def secret(size=42, domain=DEFAULT_DOMAIN):
     return ''.join(random.sample(domain, size))
+
+def get_page_arg():
+    page = request.args.get('page')
+
+    if page:
+        try:
+            page = int(page)
+        except:
+            page = 1
+
+    return page or 1

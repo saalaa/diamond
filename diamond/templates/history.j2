@@ -1,54 +1,58 @@
 {% extends "skeleton.j2" %}
 
+{% import "macros.j2" as macros %}
+
 {% block title %}
   History
 {% endblock %}
 
 {% block body %}
-
-<form>
-  <table>
-    <tr>
-      <th>Timestamp</th>
-      <th>
-        <a href="/diff/{{ page.slug }}" class="diff-button">
-          Diff.
-        </a>
-      </th>
-      <th>V.</th>
-      <th>Author</th>
-      <th>Comment</th>
-    </tr>
-
-    {% for item in page.history() %}
-      <tr>
-        <td>
-          {{ item.ymd_hm }}
-        </td>
-        <td>
-          <input type="radio" value="{{ item.id }}" name="version-a"
-            {{ 'checked="checked"' if loop.index == 2 else '' }}>
-          <input type="radio" value="{{ item.id }}" name="version-b"
-            {{ 'checked="checked"' if loop.index == 1 else '' }}>
-        </td>
-        <td>
-          <a href="/{{ item.slug }}?version={{ item.id }}" class="wikilink">
-            {{ item.id }}{{ '*' if item.active else ''}}
-          </a>
-        </td>
-        <td>
-          {% if item.user %}
-            <a href="/{{ item.user.slug }}" class="wikilink">
-              {{ item.user.name }}
+  <div class="history">
+    <form>
+      <table>
+        <tr>
+          <th>Timestamp</th>
+          <th>
+            <a href="/diff/{{ page.slug }}" class="diff-button">
+              Diff.
             </a>
-          {% endif %}
-        </td>
-        <td>
-          {{ item.comment or '' }}
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
-</form>
+          </th>
+          <th>V.</th>
+          <th>Author</th>
+          <th>Comment</th>
+        </tr>
 
+        {% for item in history.items %}
+          <tr>
+            <td>
+              {{ item.ymd_hm }}
+            </td>
+            <td>
+              <input type="radio" value="{{ item.id }}" name="version-a"
+                {{ 'checked="checked"' if loop.index == 2 else '' }}>
+              <input type="radio" value="{{ item.id }}" name="version-b"
+                {{ 'checked="checked"' if loop.index == 1 else '' }}>
+            </td>
+            <td>
+              <a href="/{{ item.slug }}?version={{ item.id }}" class="wikilink">
+                {{ item.id }}{{ '*' if item.active else ''}}
+              </a>
+            </td>
+            <td>
+              {% if item.user %}
+                <a href="/{{ item.user.slug }}" class="wikilink">
+                  {{ item.user.name }}
+                </a>
+              {% endif %}
+            </td>
+            <td>
+              {{ item.comment or '' }}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </form>
+
+    {{ macros.render_pagination(history, 'recent_changes') }}
+  </div>
 {% endblock %}

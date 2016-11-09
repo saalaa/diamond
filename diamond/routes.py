@@ -28,7 +28,7 @@ from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
 from diamond.models import Document, Metadata, Parameter, param
-from diamond.utils import secret
+from diamond.utils import secret, get_page_arg
 from diamond.caching import cached, invalidator
 
 CACHE_DELAY = 3600 # 1 hour
@@ -186,14 +186,24 @@ def title_index():
 
 @app.route('/recent-changes')
 def recent_changes():
+    page_arg = get_page_arg()
+
+    changes = Document.changes() \
+            .paginate(page_arg, 100)
+
     return render_template('recent-changes.j2', menu=Document.get('main-menu'),
-            help=Document.get('recent-changes-help'),
-            changes=Document.changes())
+            help=Document.get('recent-changes-help'), changes=changes)
 
 @app.route('/history/<slug>')
 def history(slug):
+    page_arg = get_page_arg()
+
+    page = Document.get(slug)
+    history = page.history() \
+            .paginate(page_arg, 100)
+
     return render_template('history.j2', menu=Document.get('main-menu'),
-            help=Document.get('history-help'), page=Document.get(slug))
+            help=Document.get('history-help'), page=page, history=history)
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():

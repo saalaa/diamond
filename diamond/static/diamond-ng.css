@@ -430,6 +430,14 @@ body.diplomat .container {
   padding: 10px 15px;
   background-color: #fff;
 }
+body.diplomat .container .pagination {
+  margin-top: 1em;
+  text-align: center;
+}
+body.diplomat .container .pagination span {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
 body.diplomat .actions {
   text-align: right;
 }

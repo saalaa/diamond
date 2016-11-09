@@ -1,5 +1,7 @@
 {% extends "skeleton.j2" %}
 
+{% import "macros.j2" as macros %}
+
 {% block title %}
   Recent changes
 {% endblock %}
@@ -15,7 +17,7 @@
         <th>Comment</th>
       </tr>
 
-      {% for item in changes %}
+      {% for item in changes.items %}
         <tr>
           <td>
             {{ item.ymd_hm }}
@@ -41,5 +43,7 @@
         </tr>
       {% endfor %}
     </table>
+
+    {{ macros.render_pagination(changes, 'recent_changes') }}
   </div>
 {% endblock %}

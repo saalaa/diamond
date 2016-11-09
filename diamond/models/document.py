@@ -89,8 +89,7 @@ class Document(db.Model):
     @classmethod
     def changes(cls):
         return Document.query \
-                .order_by(db.desc(Document.timestamp)) \
-                .limit(100)
+                .order_by(db.desc(Document.timestamp))
 
     @classmethod
     def titles(cls):
@@ -157,8 +156,7 @@ class Document(db.Model):
     def history(self):
         return Document.query \
                 .filter(Document.slug == self.slug) \
-                .order_by(db.desc(Document.timestamp)) \
-                .limit(100)
+                .order_by(db.desc(Document.timestamp))
 
 db.Index('idx_document_slug', Document.slug)
 db.Index('idx_document_active', Document.active)
