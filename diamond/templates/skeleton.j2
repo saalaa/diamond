@@ -15,7 +15,7 @@
     'Diamond wiki, the metadata enabled wiki engine') }}">
 
   <link rel="shortcut icon" type="image/x-icon"
-    href="{{ g.param('favicon', '/static/diamond.ico') }}" />
+    href="{{ g.param('favicon', '/static/diamond.ico') }}">
 
   <link rel="stylesheet" href="/static/normalize.css">
   <link rel="stylesheet" href="/static/diamond-ng.css">
@@ -123,7 +123,7 @@
       });
 
       // Preview handling
-      $('.button-preview').on('click', function () {
+      $('.edit .button-preview').on('click', function () {
         var pos = $(this).offset();
         var val = $('form.edit textarea').val();
 
@@ -131,9 +131,19 @@
 
         $.post('/preview', payload, function (res, status) {
           if (status === 'success') {
-            $('.preview').html('<hr />' + res);
+            $('.preview').html('<hr>' + res);
             $('body').scrollTop(pos.top);
           }
+        });
+      });
+
+      // Compulsory preview
+      $('.edit').each(function () {
+        var $save = $('.edit .button-save');
+
+        $save.attr('disabled', 'disabled');
+        $('.edit .button-preview').on('click', function () {
+          $save.attr('disabled', null);
         });
       });
 
