@@ -38,13 +38,13 @@ def env(variable, default=None, cast=None):
 def secret(size=42, domain=DEFAULT_DOMAIN):
     return ''.join(random.sample(domain, size))
 
-def get_page_arg():
-    page = request.args.get('page')
+def get_int_arg(name, default=None):
+    value = request.args.get(name)
 
-    if page:
+    if value:
         try:
-            page = int(page)
+            value = int(value)
         except:
-            page = 1
+            value = default
 
-    return page or 1
+    return value or default

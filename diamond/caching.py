@@ -24,11 +24,13 @@ def cached(prefix, duration):
     def wrap(f):
         def cached_view(*args, **kwargs):
             slug = request.view_args.get('slug', '')
+            version = request.view_args.get('version')
 
-            cached_value = redis.get(prefix + slug)
+            if not version:
+                cached_value = redis.get(prefix + slug)
 
-            if cached_value:
-                return cached_value, 200
+                if cached_value:
+                    return cached_value, 200
 
             response = f(*args, **kwargs)
 

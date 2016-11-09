@@ -28,7 +28,7 @@ from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
 from diamond.models import Document, Metadata, Parameter, param
-from diamond.utils import secret, get_page_arg
+from diamond.utils import secret, get_int_arg
 from diamond.caching import cached, invalidator
 
 CACHE_DELAY = 3600 # 1 hour
@@ -69,7 +69,7 @@ def preview():
 @app.route('/<slug>')
 @cached('cache-', CACHE_DELAY)
 def read(slug=None):
-    version = request.args.get('version', None)
+    version = get_int_arg('version')
     page = Document.get(slug or param('frontpage', 'front-page'),
             version=version)
 
@@ -186,7 +186,7 @@ def title_index():
 
 @app.route('/recent-changes')
 def recent_changes():
-    page_arg = get_page_arg()
+    page_arg = get_int_arg('page', 1)
 
     changes = Document.changes() \
             .paginate(page_arg, 100)
@@ -196,7 +196,7 @@ def recent_changes():
 
 @app.route('/history/<slug>')
 def history(slug):
-    page_arg = get_page_arg()
+    page_arg = get_int_arg('page', 1)
 
     page = Document.get(slug)
     history = page.history() \
@@ -267,7 +267,7 @@ def deactivate(slug):
 @app.route('/activate/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')
 def activate(slug):
-    version = request.args.get('version')
+    version = get_int_arg('version')
 
     if not version:
         return render_template('error.j2', error='Missing version parameter')
