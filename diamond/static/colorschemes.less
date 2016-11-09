@@ -49,6 +49,15 @@
   .title a {
     color: @color-fg;
   }
+
+  a.backlink {
+    border: 0;
+    color: lightgray;
+
+    &:hover {
+      color: @color;
+    }
+  }
 }
 
 .make-colorscheme(@color-blue); // Default

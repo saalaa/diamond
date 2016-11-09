@@ -167,6 +167,11 @@ hr {
   border: 0;
   border-bottom: 1px solid #e6e6e6;
 }
+a.backlink {
+  font-size: 0.7em;
+  vertical-align: top;
+  line-height: 1em;
+}
 fieldset {
   padding: 0;
   margin: 0;
@@ -250,6 +255,13 @@ a.wikilink:hover {
 .title a {
   color: #333;
 }
+a.backlink {
+  border: 0;
+  color: lightgray;
+}
+a.backlink:hover {
+  color: #0645ad;
+}
 .green a {
   text-decoration: none;
 }
@@ -273,6 +285,13 @@ a.wikilink:hover {
 }
 .green .title a {
   color: #333;
+}
+.green a.backlink {
+  border: 0;
+  color: lightgray;
+}
+.green a.backlink:hover {
+  color: #93c090;
 }
 .pink a {
   text-decoration: none;
@@ -298,6 +317,13 @@ a.wikilink:hover {
 .pink .title a {
   color: #333;
 }
+.pink a.backlink {
+  border: 0;
+  color: lightgray;
+}
+.pink a.backlink:hover {
+  color: #bb6688;
+}
 .purple a {
   text-decoration: none;
 }
@@ -321,6 +347,13 @@ a.wikilink:hover {
 }
 .purple .title a {
   color: #333;
+}
+.purple a.backlink {
+  border: 0;
+  color: lightgray;
+}
+.purple a.backlink:hover {
+  color: #7050c0;
 }
 /*
  * Strings
