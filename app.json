@@ -11,7 +11,8 @@
     "postdeploy": "scripts/diamond.sh load-fixtures"
   },
   "addons": [
-    "heroku-postgresql"
+    "heroku-postgresql",
+    "heroku-redis"
   ],
   "env": {
     "SECRET_KEY": {

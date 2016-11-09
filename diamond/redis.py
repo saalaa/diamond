@@ -17,20 +17,20 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from flask import Flask
-from diamond.utils import env, secret
+from flask_redis import FlaskRedis
+from mockredis import MockRedis
+from diamond.app import app
 
-app = Flask(__name__)
+class MockRedisWrapper(MockRedis):
+    @classmethod
+    def from_url(cls, *args, **kwargs):
+        return cls()
 
-app.config.update({
-    'SQL_DEBUG': env('SQL_DEBUG', False, bool),
-    'FLASK_DEBUG': env('FLASK_DEBUG', False, bool),
-    'HOST': env('HOST', '0.0.0.0'),
-    'PORT': env('PORT', 5000, int),
-    'SQLALCHEMY_DATABASE_URI': env('DATABASE_URL', 'sqlite:////tmp/diamond.db'),
-    'REDIS_URL': env('REDIS_URL', 'redis://mock'),
-    'SECRET_KEY': env('SECRET_KEY', secret())
-})
+redis = None
 
-# Fix legacy default
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+if app.config['REDIS_URL'] == 'redis://mock':
+    redis = FlaskRedis.from_custom_provider(MockRedisWrapper)
+else:
+    redis = FlaskRedis()
+
+redis.init_app(app)

@@ -60,6 +60,8 @@ Here's a full list of supported environment variables:
   hacking Diamond Wiki. Set to `yes` to enable. Must not be set on production.
 - `DATABASE_URL`: Database connection credentials. Defaults to
   `sqlite:///diamond.db`.
+- `REDIS_URL`: Redis connection credentials. Defaults to `redis://mock` which
+  doesn't require Redis to work.
 - `SECRET_KEY`: Secret key for encrypting and signing things. Defaults to a
   random value.
 
@@ -78,4 +80,3 @@ easier (it then prints its content):
        | export SECRET_KEY=xxx
      * Serving Flask app "diamond"
      * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-

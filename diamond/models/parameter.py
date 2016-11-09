@@ -21,7 +21,7 @@ import time
 
 from diamond.db import db
 
-PARAMETER_DELAY = 300
+CACHE_DELAY = 300 # 5 minutes
 
 def param(key, default='', cast=None):
     return Parameter.get(key, default, cast)
@@ -49,7 +49,7 @@ class Parameter(db.Model):
     def get(cls, key, default='', cast=None):
         now = time.time()
 
-        if not cls.cache or cls.timestamp + PARAMETER_DELAY > now:
+        if not cls.cache or cls.timestamp + CACHE_DELAY > now:
             cls.cache = cls.get_all()
             cls.timestamp = now
 

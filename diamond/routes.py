@@ -29,6 +29,9 @@ from diamond.diff import unified_diff
 from diamond.db import db
 from diamond.models import Document, Metadata, Parameter, param
 from diamond.utils import secret
+from diamond.caching import cached, invalidator
+
+CACHE_DELAY = 3600 # 1 hour
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
@@ -64,6 +67,7 @@ def preview():
 
 @app.route('/')
 @app.route('/<slug>')
+@cached('cache-', CACHE_DELAY)
 def read(slug=None):
     version = request.args.get('version', None)
     page = Document.get(slug or param('frontpage', 'front-page'),
@@ -119,6 +123,7 @@ def read_json(slug):
             'Content-Type': 'application/json; charset=utf-8' }
 
 @app.route('/edit/<slug>', methods=['GET', 'POST'])
+@invalidator('cache-')
 def edit(slug):
     if request.method == 'GET':
         return render_template('edit.j2', menu=Document.get('main-menu'),
@@ -232,6 +237,7 @@ def diff(slug, a, b):
             help=Document.get('diff-help'), page=Document.get(slug), diff=diff)
 
 @app.route('/deactivate/<slug>', methods=['GET', 'POST'])
+@invalidator('cache-')
 def deactivate(slug):
     if request.method == 'GET':
         return render_template('deactivate.j2', menu=Document.get('main-menu'),
@@ -249,6 +255,7 @@ def deactivate(slug):
     return redirect(url_for('read', slug=slug))
 
 @app.route('/activate/<slug>', methods=['GET', 'POST'])
+@invalidator('cache-')
 def activate(slug):
     version = request.args.get('version')
 
