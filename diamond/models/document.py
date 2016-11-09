@@ -95,8 +95,7 @@ class Document(db.Model):
     def titles(cls):
         return Document.query \
                 .filter(Document.active == True) \
-                .order_by(Document.title) \
-                .all()
+                .order_by(Document.title)
 
     @classmethod
     def search(cls, query=None, filters=None):

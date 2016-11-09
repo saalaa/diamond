@@ -67,8 +67,7 @@ class Parameter(db.Model):
     @classmethod
     def set(cls, key, value):
         items = Parameter.query \
-                .filter(Parameter.key == key) \
-                .all()
+                .filter(Parameter.key == key)
 
         for item in items:
             db.session.delete(item)
