@@ -22,11 +22,17 @@ import codecs
 from os import listdir, getcwd, path
 from diamond.app import app
 from diamond.db import db
+from diamond.redis import redis
 from diamond.models import Document, Metadata
 from diamond.formatter import parse
 
 FIXTURES_DIR = 'fixtures'
 DEFAULT_COMMENT = 'Fixtures import'
+
+@app.cli.command('clear-cache')
+def clear_cache():
+    '''Clear all data from Redis.'''
+    redis.flushdb()
 
 @app.cli.command('init-db')
 def init_db():
