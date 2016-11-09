@@ -162,5 +162,4 @@ class Document(db.Model):
 
 db.Index('idx_document_slug', Document.slug)
 db.Index('idx_document_active', Document.active)
-db.Index('idx_document_slug_active', Document.slug, Document.active,
-        unique=True)
+db.Index('idx_document_slug_active', Document.slug, Document.active)
