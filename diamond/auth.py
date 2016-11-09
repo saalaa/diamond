@@ -75,6 +75,7 @@ def sign_up():
 
     if not page.id:
         page.title = name
+        page.author = slug
         page.comment = DEFAULT_COMMENT
         page.save()
 
