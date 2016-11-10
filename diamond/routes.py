@@ -294,3 +294,7 @@ def activate(slug):
     db.session.commit()
 
     return redirect(url_for('read', slug=slug))
+
+@app.route('/manifest')
+def manifest():
+    return render_template('manifest.j2', pages=Document.titles())
