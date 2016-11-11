@@ -19,6 +19,22 @@
 
 from flask import request
 from diamond.redis import redis
+from diamond.formatter import convert
+
+DEFAULT_DELAY = 3600 # 1 hour
+
+def cached_body(page, prefix, duration=DEFAULT_DELAY):
+    if not page.active:
+        return convert(page.body)
+
+    key = prefix + page.slug
+    value = redis.get(key)
+
+    if not value:
+        value = convert(page.body)
+        redis.set(key, value, duration)
+
+    return value
 
 def cached(prefix, duration):
     def wrap(f):

@@ -39,7 +39,7 @@
       </a>
 
       <div id="#menu" class="menu hidden-s visible-m">
-        {{ menu.body | format }}
+        {{ g.cached_body(menu, 'cache-') }}
       </div>
 
       <div class="auth">

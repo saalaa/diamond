@@ -6,7 +6,7 @@
 
 {% block body %}
   <div class="body">
-    {{ page.body | format }}
+    {{ g.cached_body(page, 'cache-') }}
   </div>
 
   {% include "menu.j2" %}

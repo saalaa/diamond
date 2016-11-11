@@ -29,9 +29,7 @@ from diamond.diff import unified_diff
 from diamond.db import db
 from diamond.models import Document, Metadata, Parameter, param
 from diamond.utils import secret, get_int_arg
-from diamond.caching import cached, invalidator
-
-CACHE_DELAY = 3600 # 1 hour
+from diamond.caching import cached_body, invalidator
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
@@ -45,6 +43,7 @@ def auto_init():
 
 @app.before_request
 def set_globals():
+    g.cached_body = cached_body
     g.version = diamond.__version__
     g.param = param
     g.csrf_token = generate_csrf_token
@@ -68,7 +67,6 @@ def preview():
 
 @app.route('/')
 @app.route('/<slug>')
-@cached('cache-', CACHE_DELAY)
 def read(slug=None):
     version = get_int_arg('version')
     page = Document.get(slug or param('frontpage', 'front-page'),
