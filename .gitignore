@@ -2,6 +2,7 @@
 .cache/
 .eggs/
 Diamond.egg-info/
+.coverage
 env/
 __pycache__/
 .DS_Store

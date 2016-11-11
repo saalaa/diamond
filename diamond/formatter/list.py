@@ -56,5 +56,5 @@ class ListProcessor(BlockProcessor):
 class ListExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         md.registerExtension(self)
-        md.parser.blockprocessors.add('list', ListProcessor( md.parser),
+        md.parser.blockprocessors.add('list', ListProcessor(md.parser),
                 '_begin')

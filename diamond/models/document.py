@@ -102,8 +102,8 @@ class Document(db.Model):
         slugs = None
         if filters:
             filters = [Metadata.search(key, value) for key, value in filters]
-            slugs = reduce(lambda acc, x: acc if acc is None else \
-                    acc.intersection(x), filters)
+            slugs = reduce(lambda acc, x: acc if acc is None
+                        else acc.intersection(x), filters)
 
         items = Document.query \
                 .filter(Document.active == True) \
@@ -123,7 +123,8 @@ class Document(db.Model):
 
         slugs = [page.slug for page in pages]
 
-        items = db.session.query(Metadata.key, Metadata.value, db.func.count()) \
+        count = db.func.count
+        items = db.session.query(Metadata.key, Metadata.value, count()) \
                 .filter(Metadata.slug.in_(slugs)) \
                 .group_by(Metadata.key, Metadata.value) \
                 .order_by(Metadata.key, Metadata.value)

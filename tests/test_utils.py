@@ -24,14 +24,16 @@ from diamond.utils import env, secret, get_int_arg
 
 def test_env():
     assert env('PATH')
-    #assert env('PATH', cast=int) is None
+
+    with pytest.raises(ValueError):
+        env('PATH', cast=int)
 
 def test_secret():
     assert secret(1, domain='a') == 'a'
 
 def test_get_int_arg():
     with app.test_request_context('/?xxx=42'):
-        assert get_int_arg('yyy') == None
+        assert get_int_arg('yyy') is None
         assert get_int_arg('yyy', 100) == 100
 
         assert get_int_arg('xxx') == 42

@@ -63,7 +63,8 @@ def robots_txt():
 @app.route('/preview', methods=['POST'])
 def preview():
     return convert(request.form['body'] or ''), 200, {
-            'Content-Type': 'text/html; charset=utf-8' }
+        'Content-Type': 'text/html; charset=utf-8'
+    }
 
 @app.route('/')
 @app.route('/<slug>')
@@ -98,14 +99,16 @@ def read_html(slug):
     page = Document.get(slug)
 
     return convert(page.body), 200 if page.id else 404, {
-            'Content-Type': 'text/html; charset=utf-8' }
+        'Content-Type': 'text/html; charset=utf-8'
+    }
 
 @app.route('/<slug>.md')
 def read_md(slug):
     page = Document.get(slug)
 
     return page.body, 200 if page.id else 404, {
-            'Content-Type': 'text/markdown; charset=utf-8' }
+        'Content-Type': 'text/markdown; charset=utf-8'
+    }
 
 @app.route('/<slug>.json')
 def read_json(slug):
@@ -120,7 +123,8 @@ def read_json(slug):
     }
 
     return json.dumps(data, indent=2), 200 if page.id else 404, {
-            'Content-Type': 'application/json; charset=utf-8' }
+        'Content-Type': 'application/json; charset=utf-8'
+    }
 
 @app.route('/edit/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')

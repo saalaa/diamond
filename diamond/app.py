@@ -27,7 +27,8 @@ app.config.update({
     'FLASK_DEBUG': env('FLASK_DEBUG', False, bool),
     'HOST': env('HOST', '0.0.0.0'),
     'PORT': env('PORT', 5000, int),
-    'SQLALCHEMY_DATABASE_URI': env('DATABASE_URL', 'sqlite:////tmp/diamond.db'),
+    'SQLALCHEMY_DATABASE_URI': env('DATABASE_URL',
+        'sqlite:////tmp/diamond.db'),
     'REDIS_URL': env('REDIS_URL', 'redis://mock'),
     'SECRET_KEY': env('SECRET_KEY', secret())
 })

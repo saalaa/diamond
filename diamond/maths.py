@@ -20,12 +20,12 @@
 import hashlib
 
 from random import choice
-from operator import add, sub#, mul
+from operator import add, sub# , mul
 
 OPERATORS = [
     (add, 'plus', '+'),
     (sub, 'minus', '-'),
-    #(mul, 'multiplied by', 'by', '*')
+    # (mul, 'multiplied by', 'by', '*')
 ]
 
 NUMBERS = [
