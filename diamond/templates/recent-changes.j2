@@ -23,8 +23,8 @@
             {{ item.ymd_hm }}
           </td>
           <td>
-            <a href="/{{ item.slug }}?version={{ item.id }}" class="wikilink">
-              {{ item.id }}{{ '*' if item.active else ''}}
+            <a href="/history/{{ item.slug }}?version={{ item.id }}"
+              class="wikilink">{{ item.id }}{{ '*' if item.active else ''}}
             </a>
           </td>
           <td>
