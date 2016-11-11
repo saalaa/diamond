@@ -1,3 +1,5 @@
+[![Build status](https://travis-ci.org/saalaa/diamond.svg?branch=master)](https://travis-ci.org/saalaa/diamond)
+
 # Diamond Wiki
 
 The metadata enabled wiki engine.
