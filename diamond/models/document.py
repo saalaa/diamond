@@ -119,16 +119,17 @@ class Document(db.Model):
 
     @classmethod
     def facets(cls, pages, ignores=None, all=False):
+        if not pages:
+            return {}
+
         ignores = ignores or []
 
         slugs = [page.slug for page in pages]
 
-        items = db.session.query(Metadata.key, Metadata.value, db.func.count())
-
-        if slugs:
-            items = items.filter(Metadata.slug.in_(slugs))
-
-        items = items.group_by(Metadata.key, Metadata.value) \
+        count = db.func.count
+        items = db.session.query(Metadata.key, Metadata.value, count()) \
+                .filter(Metadata.slug.in_(slugs)) \
+                .group_by(Metadata.key, Metadata.value) \
                 .order_by(Metadata.key, Metadata.value)
 
         facets = {}
