@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import pytest
-
 from diamond import app
 from diamond.diff import unified_diff
 
