@@ -37,7 +37,7 @@ class ListProcessor(BlockProcessor):
         raw = config.get('raw', False)
         filters = config.get('filters')
 
-        if config:
+        if filters:
             filters = filters.items()
 
         items = Document.search(filters=filters)
