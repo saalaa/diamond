@@ -32,13 +32,16 @@ def test_secret():
     assert secret(1, domain='a') == 'a'
 
 def test_get_int_arg():
-    with app.test_request_context('/?xxx=42'):
-        assert get_int_arg('yyy') is None
-        assert get_int_arg('yyy', 100) == 100
-
+    with app.test_request_context('/?xxx=42&yyy=yes'):
         assert get_int_arg('xxx') == 42
         assert get_int_arg('xxx', 100) == 42
 
         value = get_int_arg('xxx')
 
         assert type(value) is int
+
+        assert get_int_arg('yyy') is None
+        assert get_int_arg('yyy', 42) == 42
+
+        assert get_int_arg('zzz') is None
+        assert get_int_arg('zzz', 100) == 100
