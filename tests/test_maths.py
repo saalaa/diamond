@@ -18,7 +18,14 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 from diamond import app
-from diamond.maths import hash, generate
+from diamond.maths import pick, sub, hash, generate
+
+def test_pick():
+    op = (None, )
+    while op[0] is not sub:
+        a, op, b = pick()
+
+    assert b <= a
 
 def test_hash():
     assert hash(42) == '73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17' \
