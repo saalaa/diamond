@@ -37,11 +37,12 @@ def markup_inline(text, markup):
             .replace('\x00^', Markup('<span class="chunk-changed">')) \
             .replace('\x01', Markup('</span>'))
 
-def unified_diff(a, b, name_a, name_b):
-    yield markup_old(name_a)
-    yield markup_new(name_b)
+def unified_diff(a, b, name_a=None, name_b=None):
+    if name_a and name_b:
+        yield markup_old(name_a)
+        yield markup_new(name_b)
 
-    yield ''
+        yield ''
 
     for old, new, changed in difflib._mdiff(a, b):
         if changed:
