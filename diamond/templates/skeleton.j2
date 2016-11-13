@@ -65,7 +65,7 @@
       <div class="main">
         {% if help %}
           <div class="help">
-            {{ help.body | format }}
+            {{ g.cached_body(help, 'cache-') }}
           </div>
         {% endif %}
 
