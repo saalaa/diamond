@@ -24,7 +24,7 @@ def test_title_ext():
     extension = TitleExtension()
     markdown = Markdown(extensions=[extension])
 
-    html = markdown.convert('')
+    assert markdown.convert('') == ''
 
     assert not hasattr(markdown, 'Title')
     assert getattr(markdown, 'Title', 'xxx') == 'xxx'
