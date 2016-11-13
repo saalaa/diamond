@@ -29,22 +29,15 @@ from diamond.formatter import parse
 FIXTURES_DIR = 'fixtures'
 DEFAULT_COMMENT = 'Fixtures import'
 
-@app.cli.command('clear-cache')
 def clear_cache():
-    '''Clear all data from Redis.'''
     redis.flushdb()
 
-@app.cli.command('init-db')
 def init_db():
-    '''Create all database entities.'''
     db.create_all()
 
-@app.cli.command('drop-db')
 def drop_db():
-    '''Destroy all database entities (and data).'''
     db.drop_all()
 
-@app.cli.command('load-fixtures')
 def load_fixtures():
     '''Load fixtures into the database'''
     db.create_all()
@@ -55,26 +48,30 @@ def load_fixtures():
     for filename in listdir(dir):
         file = path.join(dir, filename)
 
-        if not path.isfile(file) or not file.endswith('.md'):
-            continue
+        if path.isfile(file) and file.endswith('.md'):
+            body = codecs.open(file, 'r', 'utf-8') \
+                    .read()
 
-        body = codecs.open(file, 'r', 'utf-8') \
-                .read()
+            parsed = parse(body)
 
-        parsed = parse(body)
+            slug = filename[:-3]
+            title = parsed['title'] or slug
 
-        slug = filename[:-3]
-        title = parsed['title'] or slug
+            Metadata.deactivate(slug)
+            Document.deactivate(slug)
 
-        Metadata.deactivate(slug)
-        Document.deactivate(slug)
+            for key, values in parsed['meta'].items():
+                for value in values:
+                    Metadata(slug=slug, key=key, value=value) \
+                            .save()
 
-        for key, values in parsed['meta'].items():
-            for value in values:
-                Metadata(slug=slug, key=key, value=value) \
-                        .save()
+            doc = Document(slug=slug, title=title, body=body,
+                    comment=DEFAULT_COMMENT) \
+                            .save()
 
-        Document(slug=slug, title=title, body=body, comment=DEFAULT_COMMENT) \
-            .save()
+            db.session.commit()
 
-        db.session.commit()
+app.cli.command('clear_cache')(clear_cache)
+app.cli.command('init-db')(init_db)
+app.cli.command('drop-db')(drop_db)
+app.cli.command('load-fixtures')(load_fixtures)
