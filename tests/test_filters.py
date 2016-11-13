@@ -17,10 +17,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import re
+import pytest
 
-from diamond.app import app
+from diamond import app
+from diamond.filters import pluralize
 
-@app.template_filter('pluralize')
-def pluralize(number, singular, plural):
-    return (singular if number <= 1 else plural) % number
+def test_pluralize():
+    assert pluralize(0, '%d a', '%d b') == '0 a'
+    assert pluralize(1, '%d a', '%d b') == '1 a'
+    assert pluralize(2, '%d a', '%d b') == '2 b'
+
+    assert pluralize(0.1, '%.2f a', '%.2f b') == '0.10 a'
+    assert pluralize(1.0, '%.2f a', '%.2f b') == '1.00 a'
+    assert pluralize(2.3, '%.2f a', '%.2f b') == '2.30 b'
