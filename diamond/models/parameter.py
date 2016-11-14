@@ -62,7 +62,7 @@ class Parameter(db.Model):
 
     @classmethod
     def clear_cache(cls):
-        cls.cache = None
+        cls.cache = cls.timestamp = None
 
     @classmethod
     def set(cls, key, value):
