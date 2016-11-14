@@ -1,4 +1,6 @@
 .sw?
+.tox/
+dist/
 .cache/
 .eggs/
 Diamond.egg-info/

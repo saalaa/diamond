@@ -1,0 +1,10 @@
+include README.md
+include CHANGES
+include LICENSE
+include COPYING
+include AUTHORS
+
+include requirements.txt
+include requirements-test.txt
+
+include fixtures/*.md
