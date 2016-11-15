@@ -157,6 +157,12 @@ def test_search(database):
     assert len(docs) == 1
 
 def test_facets(database):
+    docs = Document.search('')
+    facets = Document.facets(docs)
+
+    assert 'x' in facets
+    assert 'y' in facets
+
     docs = Document.search('', filters=[('x', '3')])
     facets = Document.facets(docs, ignores=['x'])
 
