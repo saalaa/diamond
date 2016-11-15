@@ -71,3 +71,5 @@ class User(UserMixin, db.Model):
 
     def save(self):
         db.session.add(self)
+
+        return self

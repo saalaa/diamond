@@ -156,6 +156,8 @@ class Document(db.Model):
         self.active = True
         db.session.add(self)
 
+        return self
+
     def history(self):
         return Document.query \
                 .filter(Document.slug == self.slug) \
