@@ -18,15 +18,10 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
-import datetime
 
 from diamond.db import db
 from diamond.cli import drop_db, init_db
 from diamond.models import Document, Metadata
-
-def strftime(f):
-    return datetime.datetime.utcnow()\
-            .strftime(f)
 
 @pytest.fixture
 def database():
