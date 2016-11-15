@@ -30,16 +30,19 @@ FIXTURES_DIR = 'fixtures'
 DEFAULT_COMMENT = 'Fixtures import'
 
 def clear_cache():
+    '''Clear all data from Redis.'''
     redis.flushdb()
 
 def init_db():
+    '''Create all database entities.'''
     db.create_all()
 
 def drop_db():
+    '''Destroy all database entities (and data).'''
     db.drop_all()
 
 def load_fixtures():
-    '''Load fixtures into the database'''
+    '''Load fixtures into the database.'''
     db.create_all()
 
     cwd = getcwd()
@@ -71,7 +74,7 @@ def load_fixtures():
 
             db.session.commit()
 
-app.cli.command('clear_cache')(clear_cache)
+app.cli.command('clear-cache')(clear_cache)
 app.cli.command('init-db')(init_db)
 app.cli.command('drop-db')(drop_db)
 app.cli.command('load-fixtures')(load_fixtures)
