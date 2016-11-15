@@ -19,6 +19,7 @@
 
 import pytest
 
+from diamond.db import db
 from diamond.cli import drop_db, init_db
 from diamond.models import Parameter, param
 
@@ -42,6 +43,8 @@ def test_all(database):
 
     Parameter.set('xxx', 666)
 
+    db.session.commit()
+
     assert len(Parameter.get_all()) == 1
 
     assert Parameter.cache is not None
@@ -56,6 +59,8 @@ def test_all(database):
     assert Parameter.timestamp is not None
 
     Parameter.set('xxx', 42)
+
+    db.session.commit()
 
     assert len(Parameter.get_all()) == 1
 
