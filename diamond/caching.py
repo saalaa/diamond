@@ -34,7 +34,7 @@ def cached_body(page, prefix, duration=DEFAULT_DELAY):
         value = convert(page.body)
         redis.set(key, value, duration)
 
-    return value
+    return value.encode('utf-8')
 
 def cached(prefix, duration):
     def wrap(f):
