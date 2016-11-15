@@ -36,36 +36,6 @@ def cached_body(page, prefix, duration=DEFAULT_DELAY):
 
     return value.decode('utf-8')
 
-def cached(prefix, duration):
-    def wrap(f):
-        def cached_view(*args, **kwargs):
-            slug = request.view_args.get('slug', '')
-            version = request.view_args.get('version')
-
-            if not version:
-                cached_value = redis.get(prefix + slug)
-
-                if cached_value:
-                    return cached_value, 200
-
-            response = f(*args, **kwargs)
-
-            if type(response) is tuple:
-                data, status_code = response
-
-                if not status_code == 200:
-                    return response
-
-                redis.set(prefix + slug, data, duration)
-
-            return response
-
-        cached_view.__name__ = f.__name__
-
-        return cached_view
-
-    return wrap
-
 def invalidator(prefix):
     def wrap(f):
         def invalidator_view(*args, **kwargs):
