@@ -40,7 +40,7 @@ class User(UserMixin, db.Model):
 
     @cached_property
     def name(self):
-        return self.document.title if self.document else self.slug
+        return self.document.title if self.document.id else self.slug
 
     @classmethod
     def is_first(self):
@@ -64,6 +64,8 @@ class User(UserMixin, db.Model):
     def set_password(self, password):
         self.password = bcrypt.hashpw(password.encode('utf8'),
                 bcrypt.gensalt())
+
+        return self
 
     def check_password(self, password):
         return bcrypt.checkpw(password.encode('utf8'),
