@@ -300,3 +300,7 @@ def activate(slug):
 @app.route('/manifest')
 def manifest():
     return render_template('manifest.j2', pages=Document.titles())
+
+@app.route('/errors')
+def errors():
+    raise Exception()

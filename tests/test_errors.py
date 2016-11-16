@@ -25,5 +25,5 @@ from diamond import app
 def client():
     return app.test_client()
 
-def test_get_int_arg(client):
-    assert 'version does not exist' in client.get('/junk?version=42').data
+def test_handler(client):
+    assert 'error' in client.get('/errors').data
