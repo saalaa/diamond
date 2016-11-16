@@ -33,13 +33,19 @@ def clear_cache():
     '''Clear all data from Redis.'''
     redis.flushdb()
 
+    print(' * Cache cleared (%s)' % app.config['REDIS_URL'])
+
 def init_db():
     '''Create all database entities.'''
     db.create_all()
 
+    print(' * Database created (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
+
 def drop_db():
     '''Destroy all database entities (and data).'''
     db.drop_all()
+
+    print(' * Database destroyed (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
 
 def load_fixtures():
     '''Load fixtures into the database.'''
@@ -52,6 +58,8 @@ def load_fixtures():
         file = path.join(dir, filename)
 
         if path.isfile(file) and file.endswith('.md'):
+            print(' * Loading %s' % filename)
+
             body = codecs.open(file, 'r', 'utf-8') \
                     .read()
 
@@ -73,6 +81,8 @@ def load_fixtures():
                             .save()
 
             db.session.commit()
+
+    print(' * Fixtures loaded (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
 
 app.cli.command('clear-cache')(clear_cache)
 app.cli.command('init-db')(init_db)
