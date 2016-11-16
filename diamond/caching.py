@@ -33,8 +33,10 @@ def cached_body(page, prefix, duration=DEFAULT_DELAY):
     if not value:
         value = convert(page.body)
         redis.set(key, value, duration)
+    else:
+        value = value.decode('utf-8')
 
-    return value.decode('utf-8')
+    return value
 
 def invalidator(prefix):
     def wrap(f):
