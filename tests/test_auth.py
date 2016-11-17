@@ -18,10 +18,8 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import re
-import urllib
 import pytest
 
-from flask import session
 from diamond.app import app
 from diamond.cli import init_db, drop_db
 from diamond.maths import hash
