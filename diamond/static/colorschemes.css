@@ -1,0 +1,144 @@
+/*
+ * Copyright (C) 1999, 2000 Martin Pool <mbp@humbug.org.au>
+ * Copyright (C) 2003 Kimberley Burchett <http://www.kimbly.com>
+ * Copyright (C) 2016 Benoit Myard <myardbenoit@gmail.com>
+ *
+ * This file is part of Diamond wiki.
+ *
+ * Diamond wiki is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * Diamond wiki is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
+ */
+a {
+  text-decoration: none;
+}
+a {
+  color: #333;
+  border-bottom: 1px solid #0645ad;
+}
+a:hover {
+  color: #0645ad;
+  border-bottom: 1px solid transparent;
+}
+.title a,
+a.wikilink {
+  color: #0645ad;
+  border-bottom: 1px solid transparent;
+}
+.title a:hover,
+a.wikilink:hover {
+  color: #333;
+  border-bottom: 1px solid #0645ad;
+}
+.title a {
+  color: #333;
+}
+a.backlink {
+  border: 0;
+  color: lightgray;
+}
+a.backlink:hover {
+  color: #0645ad;
+}
+.green a {
+  text-decoration: none;
+}
+.green a {
+  color: #333;
+  border-bottom: 1px solid #93c090;
+}
+.green a:hover {
+  color: #93c090;
+  border-bottom: 1px solid transparent;
+}
+.green .title a,
+.green a.wikilink {
+  color: #93c090;
+  border-bottom: 1px solid transparent;
+}
+.green .title a:hover,
+.green a.wikilink:hover {
+  color: #333;
+  border-bottom: 1px solid #93c090;
+}
+.green .title a {
+  color: #333;
+}
+.green a.backlink {
+  border: 0;
+  color: lightgray;
+}
+.green a.backlink:hover {
+  color: #93c090;
+}
+.pink a {
+  text-decoration: none;
+}
+.pink a {
+  color: #333;
+  border-bottom: 1px solid #bb6688;
+}
+.pink a:hover {
+  color: #bb6688;
+  border-bottom: 1px solid transparent;
+}
+.pink .title a,
+.pink a.wikilink {
+  color: #bb6688;
+  border-bottom: 1px solid transparent;
+}
+.pink .title a:hover,
+.pink a.wikilink:hover {
+  color: #333;
+  border-bottom: 1px solid #bb6688;
+}
+.pink .title a {
+  color: #333;
+}
+.pink a.backlink {
+  border: 0;
+  color: lightgray;
+}
+.pink a.backlink:hover {
+  color: #bb6688;
+}
+.purple a {
+  text-decoration: none;
+}
+.purple a {
+  color: #333;
+  border-bottom: 1px solid #7050c0;
+}
+.purple a:hover {
+  color: #7050c0;
+  border-bottom: 1px solid transparent;
+}
+.purple .title a,
+.purple a.wikilink {
+  color: #7050c0;
+  border-bottom: 1px solid transparent;
+}
+.purple .title a:hover,
+.purple a.wikilink:hover {
+  color: #333;
+  border-bottom: 1px solid #7050c0;
+}
+.purple .title a {
+  color: #333;
+}
+.purple a.backlink {
+  border: 0;
+  color: lightgray;
+}
+.purple a.backlink:hover {
+  color: #7050c0;
+}

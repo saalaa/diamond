@@ -21,8 +21,14 @@
 
 ROOT=diamond/static
 
+compile ()
+{
+  lessc $ROOT/$1.less $ROOT/$1.css
+}
+
 if [ "$1" = "watch" ]; then
   watch "sh $0" $ROOT --wait=1
 else
-  lessc $ROOT/diamond-ng.less $ROOT/diamond-ng.css
+  compile colorschemes
+  compile stylesheet-diplomat
 fi
