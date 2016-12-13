@@ -15,8 +15,6 @@
 {% endblock %}
 
 {% block meta %}
-  <hr>
-
   {% if page.meta('category') %}
     <div class="category">
       <h5>Category:</h5>
@@ -71,25 +69,26 @@
     </div>
   {% endif %}
 
-  {% if page.meta(ignores=['tag', 'subject', 'category'], structural=False) %}
-    <h5><a href="/metadata" class="wikilink">Metadata</a> for this page:</h5>
+  <div class="generic">
+    {% if page.meta(ignores=['tag', 'subject', 'category'], structural=False) %}
+      <h5>Custom <a href="/metadata" class="wikilink">metadata</a> for this page:</h5>
 
-    <table>
-      {% for item in page.meta(ignores=['tag', 'subject', 'category'], structural=False) %}
-        <tr {% if loop.last %} class="last-row" {% endif %}>
-          <th>{{ item.key }}:</th>
-          <td>
-            <a href="/search/{{ item.key }}={{ item.value }}">
-              {{ item.value }}</a>
-            <br>
-          </td>
-        </tr>
+      {% for key in page.keys(ignores=['tag', 'subject', 'category'], structural=False) %}
+        <div class="generic-item generic--{{ key }}">
+          <h5>{{ key }} :</h5>
+
+          <ul>
+            {% for value in page.meta(key) %}
+              <li><a href="/search/{{ key }}={{ value }}">{{ value }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
       {% endfor %}
-    </table>
-  {% else %}
-    {% if not page.meta(structural=False) %}
-      <h5><em>No <a href="/metadata" class="wikilink">metadata</a> for this
-          page.</em></h5>
+    {% else %}
+      {% if not page.meta(structural=False) %}
+        <h5><em>No <a href="/metadata" class="wikilink">metadata</a> for this
+            page.</em></h5>
+      {% endif %}
     {% endif %}
-  {% endif %}
+  </div>
 {% endblock %}

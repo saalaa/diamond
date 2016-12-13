@@ -61,6 +61,11 @@ class Document(db.Model):
     def meta(self, key=None, ignores=None, structural=True):
         return Metadata.get(self.slug, key, ignores, structural)
 
+    @memoized
+    def keys(self, ignores=None, structural=True):
+        return set([item.key for item in
+            self.meta(ignores=ignores, structural=structural)])
+
     @classmethod
     def count(cls):
         return Document.query \
