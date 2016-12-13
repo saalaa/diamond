@@ -172,6 +172,36 @@ a.backlink {
   vertical-align: top;
   line-height: 1em;
 }
+.meta {
+  font-size: 0.9em;
+}
+.meta h5 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+.meta ul {
+  margin: 0;
+}
+.meta .tags h5,
+.meta .subject h5,
+.meta .category h5 {
+  display: inline;
+}
+.meta .tags ul,
+.meta .subject ul,
+.meta .category ul {
+  padding: 0;
+  display: inline;
+  list-style-type: none;
+}
+.meta .tags ul li,
+.meta .subject ul li,
+.meta .category ul li {
+  display: inline;
+  margin: 0;
+  padding: 0 5px;
+}
 fieldset {
   padding: 0;
   margin: 0;

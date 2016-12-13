@@ -19,7 +19,12 @@
 
 import re
 
+from slugify import slugify
 from diamond.app import app
+
+@app.template_filter('slugify')
+def slugify_filter(text):
+    return slugify(text)
 
 @app.template_filter('pluralize')
 def pluralize(number, singular, plural):

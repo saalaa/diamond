@@ -77,6 +77,8 @@
           {% block meta %}{% endblock %}
         </div>
       </div>
+
+      {% block actions %}{% endblock %}
     </div>
 
   </div>
@@ -93,7 +95,7 @@
         var $h1 = $('.document h1').first();
 
         $h1.append(' '
-          + '<a class="backlink" href="/search?query=[[' + $h1.text() + ']]">'
+          + '<a class="backlink" href="/search?query=' + $h1.text() + '">'
             + '↩'
           + '</a>');
       });

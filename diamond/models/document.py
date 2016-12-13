@@ -20,7 +20,7 @@
 import datetime
 
 from diamond.db import db
-from diamond.utils import cached_property
+from diamond.utils import cached_property, memoized
 from diamond.models.metadata import Metadata
 
 DEFAULT_BODY = '# %(slug)s\n\nDescribe [[%(slug)s]] here.'
@@ -48,18 +48,18 @@ class Document(db.Model):
     def ymd(self):
         return self.timestamp.strftime('%Y-%m-%d') if self.timestamp else None
 
-    @property
+    @cached_property
     def hm(self):
         return self.timestamp.strftime('%H:%M') if self.timestamp else None
 
-    @property
+    @cached_property
     def ymd_hm(self):
         return self.timestamp.strftime('%Y-%m-%d %H:%M') if self.timestamp \
                 else None
 
-    @cached_property
-    def meta(self):
-        return Metadata.get(self.slug)
+    @memoized
+    def meta(self, key=None, ignores=None, structural=True):
+        return Metadata.get(self.slug, key, ignores, structural)
 
     @classmethod
     def count(cls):
@@ -123,6 +123,7 @@ class Document(db.Model):
             return {}
 
         ignores = ignores or []
+        ignores.extend(Metadata.structural_keys)
 
         slugs = [page.slug for page in pages]
 

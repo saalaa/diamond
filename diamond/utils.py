@@ -20,12 +20,27 @@
 import os
 import random
 import string
+import functools
 
 from flask import request
 from werkzeug.utils import cached_property
 
 DEFAULT_DOMAIN = string.digits + string.ascii_uppercase + \
         string.ascii_lowercase
+
+def memoized(obj):
+    obj.cache = {}
+
+    @functools.wraps(obj)
+    def memoizer(*args, **kwargs):
+        key = str(args) + str(kwargs)
+
+        if key not in obj.cache:
+            obj.cache[key] = obj(*args, **kwargs)
+
+        return obj.cache[key]
+
+    return memoizer
 
 def env(variable, default=None, cast=None):
     value = os.environ.get(variable, default)

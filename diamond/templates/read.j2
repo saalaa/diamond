@@ -8,18 +8,74 @@
   <div class="body">
     {{ g.cached_body(page, 'cache-') }}
   </div>
+{% endblock %}
 
+{% block actions %}
   {% include "menu.j2" %}
 {% endblock %}
 
 {% block meta %}
   <hr>
 
-  {% if page.meta %}
+  {% if page.meta('category') %}
+    <div class="category">
+      <h5>Category:</h5>
+
+      <ul>
+        {% for item in page.meta('category') %}
+          <li><a href="/search/category={{ item }}">{{ item }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if page.meta('tag') %}
+    <div class="tags">
+      <h5>Tags:</h5>
+
+      <ul>
+        {% for item in page.meta('tag') %}
+          <li><a href="/search/tag={{ item }}">{{ item }}</a></li>
+        {% endfor %}
+      <ul>
+    </div>
+  {% endif %}
+
+  {% if page.meta('subject') %}
+    <div class="subject">
+      <h5>Subject:</h5>
+
+      <ul>
+        {% for item in page.meta('subject') %}
+          <li><a href="/search/subject={{ item }}">{{ item }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if page.meta('previous') or page.meta('next') %}
+    <div class="navigation">
+      <h5>Navigation:</h5>
+
+      <ul>
+        {% if page.meta('previous') %}
+          <li>Previous: <a href="/{{ page.meta('previous')[0] | slugify }}">
+            {{ page.meta('previous')[0] }}</a></li>
+        {% endif %}
+
+        {% if page.meta('next') %}
+          <li>Next: <a href="/{{ page.meta('next')[0] | slugify }}">
+            {{ page.meta('next')[0] }}</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if page.meta(ignores=['tag', 'subject', 'category'], structural=False) %}
     <h5><a href="/metadata" class="wikilink">Metadata</a> for this page:</h5>
 
     <table>
-      {% for item in page.meta %}
+      {% for item in page.meta(ignores=['tag', 'subject', 'category'], structural=False) %}
         <tr {% if loop.last %} class="last-row" {% endif %}>
           <th>{{ item.key }}:</th>
           <td>
@@ -31,7 +87,9 @@
       {% endfor %}
     </table>
   {% else %}
-    <h5><em>No <a href="/metadata" class="wikilink">metadata</a> for this
-        page.</em></h5>
+    {% if not page.meta(structural=False) %}
+      <h5><em>No <a href="/metadata" class="wikilink">metadata</a> for this
+          page.</em></h5>
+    {% endif %}
   {% endif %}
 {% endblock %}

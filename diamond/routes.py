@@ -37,10 +37,6 @@ def generate_csrf_token():
 
     return session['_csrf_token']
 
-@app.before_first_request
-def auto_init():
-    db.create_all()
-
 @app.before_request
 def set_globals():
     g.cached_body = cached_body

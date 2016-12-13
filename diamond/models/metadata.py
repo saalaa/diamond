@@ -27,15 +27,30 @@ class Metadata(db.Model):
     key = db.Column(db.String, nullable=False)
     value = db.Column(db.String, nullable=False)
 
+    structural_keys = ('previous', 'next', 'type')
+
     @classmethod
-    def get(self, slug):
-        return Metadata.query \
+    def get(cls, slug, key=None, ignores=None, structural=True):
+        items = Metadata.query \
                 .filter(Metadata.slug == slug) \
-                .order_by(Metadata.key, Metadata.value) \
+
+        if key:
+            items = items.filter(Metadata.key == key) \
+                    .all()
+
+            return [item.value for item in items]
+
+        if ignores:
+            items = items.filter(Metadata.key.notin_(ignores))
+
+        if not structural:
+            items = items.filter(Metadata.key.notin_(Metadata.structural_keys))
+
+        return items.order_by(Metadata.key, Metadata.value) \
                 .all()
 
     @classmethod
-    def search(self, key, value):
+    def search(cls, key, value):
         items = db.session.query(Metadata.slug) \
                 .filter(Metadata.key == key) \
                 .filter(Metadata.value == value) \
