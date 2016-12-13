@@ -8,7 +8,7 @@
     "metadata"
   ],
   "scripts": {
-    "postdeploy": "scripts/diamond.sh load-fixtures"
+    "postdeploy": "scripts/bootstrap.sh"
   },
   "addons": [
     "heroku-postgresql",

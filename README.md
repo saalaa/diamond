@@ -24,9 +24,13 @@ plan, please refer to Heroku documentation for alternative plans):
 
     $ heroku addons:create heroku-postgresql:hobby-dev
 
-And finally deploy the repository to the Heroku app:
+You can now deploy the application to Heroku:
 
     $ git push heroku
+
+Finally it's time to initialize the database and load fixtures:
+
+    $ heroku run scripts/bootstrap.sh
 
 The following chapters should also provide plenty of information on how to
 further configure the installation.
@@ -43,6 +47,12 @@ creating a new environment and activating it:
 Now, let's install dependencies:
 
     $ pip install -r requirements.txt
+
+It's not time to initialize the database and load fixtures (this is strictly
+equivalent to running `scripts/bootstrap.sh`):
+
+    $ scripts/diamond.sh db upgrade
+    $ scripts/diamond.sh load-fixtures
 
 Finally, we can run the wiki:
 
@@ -72,7 +82,7 @@ through Python (`python -m diamond`), the following variables are taken into
 account: `HOST`, `PORT`.
 
 When using `scripts/diamond.sh run`, the host and port can be configured
-through command-line options. Furthermore, `scripts/diamond.sh` supports a
+through command-line options. Furthermore, `scripts/diamond.sh` supports an
 `.env` file that is able to export environment variables, making development
 easier (it then prints its content):
 
