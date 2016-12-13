@@ -92,3 +92,39 @@ easier (it then prints its content):
        | export SECRET_KEY=xxx
      * Serving Flask app "diamond"
      * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+
+## Testing
+
+Although full code base coverage is the goal, testing is a work in progress.
+
+The tests can be run through `setup.py`, which rely on `tox` which and
+dependencies automatically so that you don't need to be in a virtual
+environment for this method to work. In the future several Python version may
+be supported but currently only version 2.7 is supported:
+
+    $ python setup.py test
+
+Alternatively, the tests can be run through calling `pytest` directly in which
+case dependencies must be manually taken care of (note that whatever
+environment you setup is used).
+
+First, a virtual environment is needed:
+
+    $ virtualenv env
+    $ source env/bin/activate
+
+Now the Python dependencies:
+
+    $ pip install -r requirements.txt
+    $ pip install -r requirements-test.txt
+
+Finally, `pytest` can be called:
+
+    $ pytest
+
+Regardless of the development side of things, tests are automatically run
+whenever a push is made on the main repository. The repository test status is
+available at the following address:
+
+- https://travis-ci.org/saalaa/diamond

@@ -64,15 +64,6 @@ def test_invalidator(database):
     assert 'xxx' in data
     assert 'xxx' in redis.get('cache-c')
 
-    with app.test_request_context('/', method='POST'):
-        request.view_args['slug'] = 'c'
-
-        assert 'xxx' in redis.get('cache-c')
-
-        fake_endpoint()
-
-        assert 'xxx' in redis.get('cache-c')
-
     # with app.test_request_context('/', method='POST'):
     #     request.view_args['slug'] = 'c'
 
@@ -80,4 +71,4 @@ def test_invalidator(database):
 
     #     fake_endpoint()
 
-    #     assert not redis.get('cache-c')
+    #     assert 'xxx' in redis.get('cache-c')

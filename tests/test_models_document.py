@@ -65,10 +65,10 @@ def test_timestamp(database):
     assert Document.get('a').ymd_hm is not None
 
 def test_meta(database):
-    assert Document.get('a').meta != []
-    assert Document.get('b').meta != []
-    assert Document.get('c').meta == []
-    assert Document.get('d').meta == []
+    assert Document.get('a').meta() != []
+    assert Document.get('b').meta() != []
+    assert Document.get('c').meta() == []
+    assert Document.get('d').meta() == []
 
 def test_count(database):
     assert Document.count() == 3
