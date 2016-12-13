@@ -47,8 +47,6 @@
 
 body {
 
-  background-color: #eee;
-
   .flash {
     text-align: center;
     cursor: pointer;
@@ -80,10 +78,6 @@ body {
     }
   }
 
-  .actions {
-    text-align: right;
-  }
-
   @media (min-width: @screen-m) {
     .document {
       padding-top: 20px;
@@ -91,60 +85,23 @@ body {
   }
 
   @media (min-width: @screen-l) {
-    & {
-      padding: 40px 0;
-    }
+    .document {
+      position: relative;
 
-    .container {
+      max-width: 1280px;
       margin: 0 auto;
-      max-width: 1020px;
 
-      padding: 30px;
+      .main,
+      .actions {
+        margin-right: 250px + @gutters;
+      }
 
-      .document {
-        .sign-in,
-        .sign-up,
-        .activate,
-        .deactivate {
-          width: 400px;
-          margin: 0 auto;
-        }
+      .sidebar {
+        position: absolute;
+        top: 35px; // Compensate padding-top on .document
+        right: 0;
 
-        .meta {
-          margin-left: 100px;
-
-          table {
-            width: initial;
-          }
-        }
-
-        .help,
-        .settings,
-        .title-index,
-        .search,
-        .edit .standard-rows,
-        .actions,
-        .body {
-          & > * {
-            max-width: 650px;
-            margin-left: 100px;
-          }
-
-          & > blockquote { margin-left: 140px; }
-
-          & > .illustration {
-            max-width: none;
-            margin-left: 0px;
-            margin-right: 0px;
-          }
-
-          & > table,
-          & > .codehilite {
-            max-width: none;
-            width: 100%;
-            margin: 0;
-          }
-        }
+        width: 250px;
       }
     }
   }

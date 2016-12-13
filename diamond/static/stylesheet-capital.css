@@ -621,9 +621,6 @@ body.header-static {
  * Layout
  * ------
  */
-body {
-  background-color: #eee;
-}
 body .flash {
   text-align: center;
   cursor: pointer;
@@ -649,82 +646,25 @@ body .container .pagination span {
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
-body .actions {
-  text-align: right;
-}
 @media (min-width: 768px) {
   body .document {
     padding-top: 20px;
   }
 }
 @media (min-width: 1024px) {
-  body {
-    padding: 40px 0;
-  }
-  body .container {
-    margin: 0 auto;
-    max-width: 1020px;
-    padding: 30px;
-  }
-  body .container .document .sign-in,
-  body .container .document .sign-up,
-  body .container .document .activate,
-  body .container .document .deactivate {
-    width: 400px;
+  body .document {
+    position: relative;
+    max-width: 1280px;
     margin: 0 auto;
   }
-  body .container .document .meta {
-    margin-left: 100px;
+  body .document .main,
+  body .document .actions {
+    margin-right: 270px;
   }
-  body .container .document .meta table {
-    width: initial;
-  }
-  body .container .document .help > *,
-  body .container .document .settings > *,
-  body .container .document .title-index > *,
-  body .container .document .search > *,
-  body .container .document .edit .standard-rows > *,
-  body .container .document .actions > *,
-  body .container .document .body > * {
-    max-width: 650px;
-    margin-left: 100px;
-  }
-  body .container .document .help > blockquote,
-  body .container .document .settings > blockquote,
-  body .container .document .title-index > blockquote,
-  body .container .document .search > blockquote,
-  body .container .document .edit .standard-rows > blockquote,
-  body .container .document .actions > blockquote,
-  body .container .document .body > blockquote {
-    margin-left: 140px;
-  }
-  body .container .document .help > .illustration,
-  body .container .document .settings > .illustration,
-  body .container .document .title-index > .illustration,
-  body .container .document .search > .illustration,
-  body .container .document .edit .standard-rows > .illustration,
-  body .container .document .actions > .illustration,
-  body .container .document .body > .illustration {
-    max-width: none;
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-  body .container .document .help > table,
-  body .container .document .settings > table,
-  body .container .document .title-index > table,
-  body .container .document .search > table,
-  body .container .document .edit .standard-rows > table,
-  body .container .document .actions > table,
-  body .container .document .body > table,
-  body .container .document .help > .codehilite,
-  body .container .document .settings > .codehilite,
-  body .container .document .title-index > .codehilite,
-  body .container .document .search > .codehilite,
-  body .container .document .edit .standard-rows > .codehilite,
-  body .container .document .actions > .codehilite,
-  body .container .document .body > .codehilite {
-    max-width: none;
-    width: 100%;
-    margin: 0;
+  body .document .sidebar {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 250px;
   }
 }

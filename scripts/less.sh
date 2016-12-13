@@ -31,4 +31,5 @@ if [ "$1" = "watch" ]; then
 else
   compile colorschemes
   compile stylesheet-diplomat
+  compile stylesheet-capital
 fi
