@@ -48,7 +48,7 @@ Now, let's install dependencies:
 
     $ pip install -r requirements.txt
 
-It's not time to initialize the database and load fixtures (this is strictly
+It's now time to initialize the database and load fixtures (this is strictly
 equivalent to running `scripts/bootstrap.sh`):
 
     $ scripts/diamond.sh db upgrade
