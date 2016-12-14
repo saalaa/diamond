@@ -19,10 +19,29 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-if [ "$1" = "" ]; then
-  echo Usage: $0 HOSTNAME
-  exit
-fi
+ROOT=http://diamond-wiki.herokuapp.com
 
-(cd fixtures &&
-  wget -r -nd -A .md -e robots=off http://$1/manifest)
+FIXTURES="
+  activate-help.md
+  deactivate-help.md
+  diff-help.md
+  edit-help.md
+  front-page.md
+  history-help.md
+  main-menu.md
+  metadata.md
+  recent-changes-help.md
+  sandbox.md
+  search-help.md
+  settings-help.md
+  sign-in-help.md
+  sign-up-help.md
+  title-index-help.md
+"
+
+rm fixtures/*.md
+
+for fixture in $FIXTURES; do
+  echo $ROOT/$fixture
+  curl -so fixtures/$fixture $ROOT/$fixture
+done

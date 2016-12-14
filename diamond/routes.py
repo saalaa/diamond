@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import json
 import diamond
 
 from flask import request, render_template, redirect, url_for, flash, g, \
@@ -95,38 +94,12 @@ def read(slug=None):
             page=page), 200 if page.id else 404
 
 
-@app.route('/<slug>.html')
-def read_html(slug):
-    page = Document.get(slug)
-
-    return convert(page.body), 200 if page.id else 404, {
-        'Content-Type': 'text/html; charset=utf-8'
-    }
-
-
 @app.route('/<slug>.md')
 def read_md(slug):
     page = Document.get(slug)
 
     return page.body, 200 if page.id else 404, {
         'Content-Type': 'text/markdown; charset=utf-8'
-    }
-
-
-@app.route('/<slug>.json')
-def read_json(slug):
-    page = Document.get(slug)
-
-    data = {
-        'slug': page.slug,
-        'title': page.title,
-        'body': page.body,
-        'active': page.active,
-        'timestamp': page.timestamp.isoformat() if page.timestamp else None
-    }
-
-    return json.dumps(data, indent=2), 200 if page.id else 404, {
-        'Content-Type': 'application/json; charset=utf-8'
     }
 
 
@@ -310,11 +283,6 @@ def activate(slug):
     db.session.commit()
 
     return redirect(url_for('read', slug=slug))
-
-
-@app.route('/manifest')
-def manifest():
-    return render_template('manifest.j2', pages=Document.titles())
 
 
 @app.route('/errors')
