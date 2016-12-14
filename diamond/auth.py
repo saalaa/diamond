@@ -38,6 +38,7 @@ DEFAULT_COMMENT = 'Sign up'
 class AnonymousUser(AnonymousUserMixin):
     admin = False
 
+
 login_manager = LoginManager(app)
 login_manager.anonymous_user = AnonymousUser
 login_manager.login_view = 'sign-in'

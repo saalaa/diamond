@@ -27,6 +27,7 @@ class MockRedisWrapper(MockRedis):
     def from_url(cls, *args, **kwargs):
         return cls()
 
+
 redis = FlaskRedis()
 
 if app.config['REDIS_URL'] == 'redis://mock':

@@ -86,6 +86,7 @@ def load_fixtures():
 
     print(' * Fixtures loaded (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
 
+
 app.cli.command('clear-cache')(clear_cache)
 app.cli.command('init-db')(init_db)
 app.cli.command('drop-db')(drop_db)

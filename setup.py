@@ -23,6 +23,7 @@ from setuptools import setup
 
 VERSION_RE = re.compile(r"__version__ = '(.*)'")
 
+
 def version(filename):
     with open(filename) as file:
         source = file.read()
@@ -30,10 +31,12 @@ def version(filename):
         return VERSION_RE.search(source) \
                 .group(1)
 
+
 def requirements(filename):
     with open(filename) as file:
         return file.read() \
                 .split()
+
 
 setup(
     name='Diamond',

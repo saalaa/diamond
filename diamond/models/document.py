@@ -170,6 +170,7 @@ class Document(db.Model):
                 .filter(Document.slug == self.slug) \
                 .order_by(db.desc(Document.timestamp))
 
+
 db.Index('idx_document_slug', Document.slug)
 db.Index('idx_document_active', Document.active)
 db.Index('idx_document_slug_active', Document.slug, Document.active)

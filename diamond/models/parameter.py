@@ -82,4 +82,5 @@ class Parameter(db.Model):
 
         return self
 
+
 db.Index('idx_parameter_key', Parameter.key)
