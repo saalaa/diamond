@@ -30,7 +30,13 @@ def test_drop_db():
     inspector = db.inspect(db.engine)
     names = inspector.get_table_names()
 
-    assert len(names) == 0
+    # If the database was created through Alembic migrations, the marker table
+    # is never removed by SQLAlchemy.
+
+    if 'alembic_version' in names:
+        assert len(names) == 1
+    else:
+        assert len(names) == 0
 
 
 def test_init_db():
@@ -40,7 +46,13 @@ def test_init_db():
     inspector = db.inspect(db.engine)
     names = inspector.get_table_names()
 
-    assert len(names) == 4
+    # If the database was created through Alembic migrations, the marker table
+    # is never removed by SQLAlchemy.
+
+    if 'alembic_version' in names:
+        assert len(names) == 5
+    else:
+        assert len(names) == 4
 
 
 def test_clear_cache():
