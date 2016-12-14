@@ -21,6 +21,7 @@ from markdown import Extension
 from markdown.util import etree
 from markdown.blockprocessors import BlockProcessor
 
+
 class SearchProcessor(BlockProcessor):
     def test(self, parent, block):
         return block.startswith('@search')
@@ -47,6 +48,7 @@ class SearchProcessor(BlockProcessor):
         button = etree.SubElement(form, 'button')
         button.set('type', 'submit')
         button.text = 'Search'
+
 
 class SearchExtension(Extension):
     def extendMarkdown(self, md, md_globals):

@@ -23,10 +23,14 @@ import string
 import functools
 
 from flask import request
-from werkzeug.utils import cached_property
+
+# The import statement below allows exporting symbols, hence the NOQA marker.
+
+from werkzeug.utils import cached_property # NOQA
 
 DEFAULT_DOMAIN = string.digits + string.ascii_uppercase + \
         string.ascii_lowercase
+
 
 def memoized(obj):
     obj.cache = {}
@@ -42,6 +46,7 @@ def memoized(obj):
 
     return memoizer
 
+
 def env(variable, default=None, cast=None):
     value = os.environ.get(variable, default)
 
@@ -50,8 +55,10 @@ def env(variable, default=None, cast=None):
 
     return value
 
+
 def secret(size=42, domain=DEFAULT_DOMAIN):
     return ''.join(random.sample(domain, size))
+
 
 def get_int_arg(name, default=None):
     value = request.args.get(name)

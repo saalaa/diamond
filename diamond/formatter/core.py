@@ -26,6 +26,7 @@ from diamond.formatter.redirect import RedirectExtension
 from diamond.formatter.search import SearchExtension
 from diamond.formatter.title import TitleExtension
 
+
 def convert(text):
     md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
@@ -38,6 +39,7 @@ def convert(text):
     ])
 
     return md.convert(text)
+
 
 def parse(text):
     md = markdown.Markdown(extensions=[

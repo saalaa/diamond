@@ -21,14 +21,18 @@ import difflib
 
 from markupsafe import Markup, escape
 
+
 def markup_new(text):
     return Markup('<span class="line-new">') + escape(text) + Markup('</span>')
+
 
 def markup_old(text):
     return Markup('<span class="line-old">') + escape(text) + Markup('</span>')
 
+
 def markup_common(text):
     return escape(text)
+
 
 def markup_inline(text, markup):
     return markup(text) \
@@ -36,6 +40,7 @@ def markup_inline(text, markup):
             .replace('\x00-', Markup('<span class="chunk-deleted">')) \
             .replace('\x00^', Markup('<span class="chunk-changed">')) \
             .replace('\x01', Markup('</span>'))
+
 
 def unified_diff(a, b, name_a=None, name_b=None):
     if name_a and name_b:

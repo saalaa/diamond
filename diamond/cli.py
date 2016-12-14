@@ -29,11 +29,13 @@ from diamond.formatter import parse
 FIXTURES_DIR = 'fixtures'
 DEFAULT_COMMENT = 'Fixtures import'
 
+
 def clear_cache():
     '''Clear all data from Redis.'''
     redis.flushdb()
 
     print(' * Cache cleared (%s)' % app.config['REDIS_URL'])
+
 
 def init_db():
     '''Create all database entities.'''
@@ -41,11 +43,13 @@ def init_db():
 
     print(' * Database created (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
 
+
 def drop_db():
     '''Destroy all database entities (and data).'''
     db.drop_all()
 
     print(' * Database destroyed (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
+
 
 def load_fixtures():
     '''Load fixtures into the database.'''
@@ -74,7 +78,7 @@ def load_fixtures():
                     Metadata(slug=slug, key=key, value=value) \
                             .save()
 
-            doc = Document(slug=slug, title=title, body=body,
+            Document(slug=slug, title=title, body=body,
                     comment=DEFAULT_COMMENT) \
                             .save()
 

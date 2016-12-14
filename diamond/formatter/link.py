@@ -17,16 +17,15 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import re
-
-from random import random
 from slugify import slugify
 from markdown.extensions.wikilinks import WikiLinkExtension, WikiLinks
 
 LINK_PATTERN = r'\[\[([\w0-9\?\!\(\)\'_ -]+)\]\]'
 
+
 def build_url(label, base, end):
     return '/%s' % slugify(label)
+
 
 class LinkExtension(WikiLinkExtension):
     def __init__(self, *args, **kwargs):

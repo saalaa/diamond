@@ -25,6 +25,7 @@ from diamond.models.metadata import Metadata
 
 DEFAULT_BODY = '# %(slug)s\n\nDescribe [[%(slug)s]] here.'
 
+
 class Document(db.Model):
     __tablename__ = 'documents'
 

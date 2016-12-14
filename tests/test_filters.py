@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from diamond import app
 from diamond.filters import pluralize
+
 
 def test_pluralize():
     assert pluralize(0, '%d a', '%d b') == '0 a'

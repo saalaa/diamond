@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from diamond import app
 from diamond.maths import pick, sub, hash, generate
+
 
 def test_pick():
     op = (None, )
@@ -27,9 +27,11 @@ def test_pick():
 
     assert b <= a
 
+
 def test_hash():
     assert hash(42) == '73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17' \
             'dc651b3a8049'
+
 
 def test_generate():
     result, question = generate()

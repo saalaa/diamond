@@ -23,6 +23,7 @@ from diamond.formatter import convert
 
 DEFAULT_DELAY = 3600 # 1 hour
 
+
 def cached_body(page, prefix, duration=DEFAULT_DELAY):
     if not page.active:
         return convert(page.body)
@@ -37,6 +38,7 @@ def cached_body(page, prefix, duration=DEFAULT_DELAY):
         value = value.decode('utf-8')
 
     return value
+
 
 def invalidator(prefix):
     def wrap(f):

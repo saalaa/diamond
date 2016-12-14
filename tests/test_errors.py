@@ -21,9 +21,11 @@ import pytest
 
 from diamond import app
 
+
 @pytest.fixture
 def client():
     return app.test_client()
+
 
 def test_handler(client):
     assert 'error' in client.get('/errors').data

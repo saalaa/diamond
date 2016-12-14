@@ -22,6 +22,7 @@ from diamond.models import Document
 from diamond.redis import redis
 from diamond.cli import drop_db, init_db, clear_cache, load_fixtures
 
+
 def test_drop_db():
     init_db()
     drop_db()
@@ -30,6 +31,7 @@ def test_drop_db():
     names = inspector.get_table_names()
 
     assert len(names) == 0
+
 
 def test_init_db():
     drop_db()
@@ -40,12 +42,14 @@ def test_init_db():
 
     assert len(names) == 4
 
+
 def test_clear_cache():
     redis.set('xxx', 42)
 
     clear_cache()
 
     assert redis.get('xxx') is None
+
 
 def test_load_fixtures():
     init_db()

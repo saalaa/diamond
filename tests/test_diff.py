@@ -17,8 +17,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from diamond import app
 from diamond.diff import unified_diff
+
 
 def test_unified_diff():
     class run_unified_diff():

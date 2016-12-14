@@ -23,8 +23,10 @@ from diamond.db import db
 
 CACHE_DELAY = 300 # 5 minutes
 
+
 def param(key, default='', cast=None):
     return Parameter.get(key, default, cast)
+
 
 class Parameter(db.Model):
     __tablename__ = 'parameters'

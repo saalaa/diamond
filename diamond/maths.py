@@ -42,6 +42,7 @@ NUMBERS = [
     (10, 'ten', '10')
 ]
 
+
 def pick():
     a = choice(NUMBERS)
     op = choice(OPERATORS)
@@ -52,14 +53,18 @@ def pick():
 
     return a, op, b
 
+
 def compute(a, op, b):
     return op[0](a[0], b[0])
+
 
 def speak(a, op, b):
     return '%s %s %s' % (choice(a[1:]), choice(op[1:]), choice(b[1:]))
 
+
 def hash(result):
     return hashlib.sha256(str(result)).hexdigest()
+
 
 def generate():
     (a, op, b) = pick()

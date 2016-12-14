@@ -53,11 +53,13 @@ suspiratious [[Counterorganization[peripherical]] pout lateroversion [[cursed
 San]]
 '''.strip()
 
+
 @pytest.fixture
 def database():
     drop_db()
     init_db()
     load_fixtures()
+
 
 def test_title_convert(database):
     assert convert('') == ''
@@ -82,6 +84,7 @@ def test_title_convert(database):
     # 1 @search, 1 link and 15x2 @list
     assert html.count('href=') == 32
 
+
 def test_title_parse():
     data = parse('')
 
@@ -95,6 +98,7 @@ def test_title_parse():
     assert data['redirect'] == {'page': 'yyy'}
     assert data['meta']['aaa'] == ['1']
     assert data['meta']['bbb'] == ['2']
+
 
 def test_title_link():
     extension = LinkExtension()
@@ -123,6 +127,7 @@ def test_title_link():
     assert 'cursed San' not in html
     assert 'cursed-san' not in html
 
+
 def test_title_list(database):
     extension = ListExtension()
     markdown = Markdown(extensions=[extension])
@@ -133,6 +138,7 @@ def test_title_list(database):
 
     assert '@list' not in html
     assert '<li' in html
+
 
 def test_title_redirect():
     extension = RedirectExtension()
@@ -150,6 +156,7 @@ def test_title_redirect():
     assert hasattr(markdown, 'Redirect')
     assert getattr(markdown, 'Redirect', {}) == {'page': 'yyy'}
 
+
 def test_title_search():
     extension = SearchExtension()
     markdown = Markdown(extensions=[extension])
@@ -160,6 +167,7 @@ def test_title_search():
 
     assert '<input' in html
     assert '@search' not in html
+
 
 def test_title_ext():
     extension = TitleExtension()

@@ -31,11 +31,13 @@ from diamond.models import Document, Metadata, Parameter, param
 from diamond.utils import secret, get_int_arg
 from diamond.caching import cached_body, invalidator
 
+
 def generate_csrf_token():
     if '_csrf_token' not in session:
         session['_csrf_token'] = secret(16)
 
     return session['_csrf_token']
+
 
 @app.before_request
 def set_globals():
@@ -44,6 +46,7 @@ def set_globals():
     g.param = param
     g.csrf_token = generate_csrf_token
 
+
 @app.before_request
 def csrf_check():
     if request.method == "POST" and not request.path == '/preview':
@@ -51,15 +54,18 @@ def csrf_check():
         if not token == request.form.get('_csrf_token'):
             return render_template('error.j2', error='CSRF error'), 403
 
+
 @app.route('/robots.txt')
 def robots_txt():
     return app.send_static_file('robots.txt')
+
 
 @app.route('/preview', methods=['POST'])
 def preview():
     return convert(request.form['body'] or ''), 200, {
         'Content-Type': 'text/html; charset=utf-8'
     }
+
 
 @app.route('/')
 @app.route('/<slug>')
@@ -88,6 +94,7 @@ def read(slug=None):
     return render_template('read.j2', menu=Document.get('main-menu'),
             page=page), 200 if page.id else 404
 
+
 @app.route('/<slug>.html')
 def read_html(slug):
     page = Document.get(slug)
@@ -96,6 +103,7 @@ def read_html(slug):
         'Content-Type': 'text/html; charset=utf-8'
     }
 
+
 @app.route('/<slug>.md')
 def read_md(slug):
     page = Document.get(slug)
@@ -103,6 +111,7 @@ def read_md(slug):
     return page.body, 200 if page.id else 404, {
         'Content-Type': 'text/markdown; charset=utf-8'
     }
+
 
 @app.route('/<slug>.json')
 def read_json(slug):
@@ -119,6 +128,7 @@ def read_json(slug):
     return json.dumps(data, indent=2), 200 if page.id else 404, {
         'Content-Type': 'application/json; charset=utf-8'
     }
+
 
 @app.route('/edit/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')
@@ -160,6 +170,7 @@ def edit(slug):
 
     return redirect(url_for('read', slug=slug))
 
+
 @app.route('/search')
 @app.route('/search/<path:path>')
 def search(path=None):
@@ -177,10 +188,12 @@ def search(path=None):
             help=Document.get('search-help'), query=query, path=path,
             hits=hits, facets=facets, total=Document.count())
 
+
 @app.route('/title-index')
 def title_index():
     return render_template('title-index.j2', menu=Document.get('main-menu'),
             help=Document.get('title-index-help'), titles=Document.titles())
+
 
 @app.route('/recent-changes')
 def recent_changes():
@@ -192,6 +205,7 @@ def recent_changes():
     return render_template('recent-changes.j2', menu=Document.get('main-menu'),
             help=Document.get('recent-changes-help'), changes=changes)
 
+
 @app.route('/history/<slug>')
 def history(slug):
     page_arg = get_int_arg('page', 1)
@@ -202,6 +216,7 @@ def history(slug):
 
     return render_template('history.j2', menu=Document.get('main-menu'),
             help=Document.get('history-help'), page=page, history=history)
+
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -228,6 +243,7 @@ def settings():
 
     return redirect(url_for('settings'))
 
+
 @app.route('/diff/<slug>/<a>/<b>')
 def diff(slug, a, b):
     doc_a = Document.get(slug, int(a))
@@ -243,6 +259,7 @@ def diff(slug, a, b):
 
     return render_template('diff.j2', menu=Document.get('main-menu'),
             help=Document.get('diff-help'), page=Document.get(slug), diff=diff)
+
 
 @app.route('/deactivate/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')
@@ -261,6 +278,7 @@ def deactivate(slug):
     db.session.commit()
 
     return redirect(url_for('read', slug=slug))
+
 
 @app.route('/activate/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')
@@ -293,9 +311,11 @@ def activate(slug):
 
     return redirect(url_for('read', slug=slug))
 
+
 @app.route('/manifest')
 def manifest():
     return render_template('manifest.j2', pages=Document.titles())
+
 
 @app.route('/errors')
 def errors():

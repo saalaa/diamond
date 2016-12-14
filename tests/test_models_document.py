@@ -23,6 +23,7 @@ from diamond.db import db
 from diamond.cli import drop_db, init_db
 from diamond.models import Document, Metadata
 
+
 @pytest.fixture
 def database():
     drop_db()
@@ -47,6 +48,7 @@ def database():
 
     db.session.commit()
 
+
 def test_initial(database):
     assert Document(slug='awerty').initial == 'a'
     assert Document(title='QWERTY').initial == 'q'
@@ -54,6 +56,7 @@ def test_initial(database):
 
     assert Document.get('a').initial == 'a'
     assert Document.get('b').initial == 'b'
+
 
 def test_timestamp(database):
     assert Document().ymd is None
@@ -64,14 +67,17 @@ def test_timestamp(database):
     assert Document.get('a').hm is not None
     assert Document.get('a').ymd_hm is not None
 
+
 def test_meta(database):
     assert Document.get('a').meta() != []
     assert Document.get('b').meta() != []
     assert Document.get('c').meta() == []
     assert Document.get('d').meta() == []
 
+
 def test_count(database):
     assert Document.count() == 3
+
 
 def test_get(database):
     assert Document.get('a').id is not None
@@ -89,15 +95,18 @@ def test_get(database):
     assert '111' in doc.body
     assert not doc.active
 
+
 def test_titles(database):
     titles = Document.titles().all()
 
     assert len(titles) == 3
 
+
 def test_changes(database):
     changes = Document.changes().all()
 
     assert len(changes) == 4
+
 
 def test_history(database):
     history = Document.get('a') \
@@ -117,6 +126,7 @@ def test_history(database):
             .all()
 
     assert len(history) == 1
+
 
 def test_search(database):
     docs = Document.search('')
@@ -150,6 +160,7 @@ def test_search(database):
     docs = Document.search('111', filters=[('x', '1')])
 
     assert len(docs) == 1
+
 
 def test_facets(database):
     docs = Document.search('')

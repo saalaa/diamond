@@ -19,6 +19,7 @@
 
 from diamond.db import db
 
+
 class Metadata(db.Model):
     __tablename__ = 'metadata'
 

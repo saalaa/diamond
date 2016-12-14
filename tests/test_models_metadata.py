@@ -23,10 +23,12 @@ from diamond.db import db
 from diamond.cli import drop_db, init_db
 from diamond.models import Metadata
 
+
 @pytest.fixture
 def database():
     drop_db()
     init_db()
+
 
 def test_all(database):
     Metadata(slug='AAA', key='a', value='1').save()

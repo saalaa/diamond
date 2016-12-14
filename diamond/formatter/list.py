@@ -23,6 +23,7 @@ from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
 from diamond.models import Document
 
+
 class ListProcessor(BlockProcessor):
     def test(self, parent, block):
         return block.startswith('@list')
@@ -52,6 +53,7 @@ class ListProcessor(BlockProcessor):
             items = ['- *No results found*']
 
         blocks.insert(0, '\n'.join(items))
+
 
 class ListExtension(Extension):
     def extendMarkdown(self, md, md_globals):

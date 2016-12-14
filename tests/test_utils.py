@@ -22,14 +22,17 @@ import pytest
 from diamond import app
 from diamond.utils import env, secret, get_int_arg
 
+
 def test_env():
     assert env('PATH')
 
     with pytest.raises(ValueError):
         env('PATH', cast=int)
 
+
 def test_secret():
     assert secret(1, domain='a') == 'a'
+
 
 def test_get_int_arg():
     with app.test_request_context('/?xxx=42&yyy=yes'):

@@ -17,16 +17,19 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import diamond.cli
-import diamond.filters
-import diamond.auth
-import diamond.routes
-import diamond.errors
+# The import statements below allow exporting symbols, hence the NOQA markers.
+
+import diamond.cli      # NOQA
+import diamond.filters  # NOQA
+import diamond.auth     # NOQA
+import diamond.routes   # NOQA
+import diamond.errors   # NOQA
 
 from diamond.app import app
 
 __version__ = '0.4.1'
 __all__ = ['app', 'main']
+
 
 def main():
     app.run(host=app.config['HOST'], port=app.config['PORT'])

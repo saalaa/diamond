@@ -22,6 +22,7 @@ import json
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
 
+
 class RedirectProcessor(BlockProcessor):
     def __init__(self, md, parser):
         self.md = md
@@ -39,6 +40,7 @@ class RedirectProcessor(BlockProcessor):
         self.md.Redirect = json.loads(rest)
 
         blocks.insert(0, '    ' + block)
+
 
 class RedirectExtension(Extension):
     def extendMarkdown(self, md, md_globals):

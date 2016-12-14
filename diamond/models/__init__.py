@@ -17,7 +17,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from diamond.models.parameter import Parameter, param
-from diamond.models.document import Document
-from diamond.models.metadata import Metadata
-from diamond.models.user import User
+# The import statements below allow exporting symbols, hence the NOQA markers.
+
+from diamond.models.parameter import Parameter, param   # NOQA
+from diamond.models.document import Document            # NOQA
+from diamond.models.metadata import Metadata            # NOQA
+from diamond.models.user import User                    # NOQA

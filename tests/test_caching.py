@@ -19,13 +19,11 @@
 
 import pytest
 
-from flask import request
 from diamond.cli import init_db, drop_db, clear_cache
 from diamond.caching import cached_body, invalidator
 from diamond.models import Document
 from diamond.redis import redis
-from diamond.app import app
-from diamond.db import db
+
 
 @pytest.fixture
 def database():
@@ -33,6 +31,7 @@ def database():
     init_db()
 
     clear_cache()
+
 
 def test_cached_body(database):
     data = cached_body(Document(slug='a', title='A', body='xxx', active=False),
@@ -52,6 +51,7 @@ def test_cached_body(database):
 
     assert 'xxx' in data
     assert 'xxx' in redis.get('cache-b')
+
 
 def test_invalidator(database):
     @invalidator('cache-')

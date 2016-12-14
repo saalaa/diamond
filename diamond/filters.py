@@ -17,14 +17,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import re
-
 from slugify import slugify
 from diamond.app import app
+
 
 @app.template_filter('slugify')
 def slugify_filter(text):
     return slugify(text)
+
 
 @app.template_filter('pluralize')
 def pluralize(number, singular, plural):

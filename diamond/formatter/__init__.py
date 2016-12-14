@@ -17,4 +17,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from core import convert, parse
+# The import statement below allows exporting symbols, hence the NOQA marker.
+
+from core import convert, parse # NOQA

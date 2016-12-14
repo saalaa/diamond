@@ -26,6 +26,7 @@ from diamond.maths import hash
 
 CSRF_RE = re.compile(r'_csrf_token" value="(.*)">$', re.MULTILINE)
 
+
 @pytest.fixture
 def client():
     drop_db()
@@ -33,10 +34,12 @@ def client():
 
     return app.test_client()
 
+
 def extract_csrf_token(client, url):
     resp = client.get(url)
     return CSRF_RE.search(resp.data) \
             .group(1)
+
 
 def test_sign_up(client):
     csrf = extract_csrf_token(client, '/sign-up')

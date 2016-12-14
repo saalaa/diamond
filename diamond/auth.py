@@ -20,8 +20,12 @@
 from flask import request, render_template, redirect, url_for, flash
 
 from slugify import slugify
-from flask_login import LoginManager, login_user, logout_user, current_user, \
+from flask_login import LoginManager, login_user, logout_user, \
         AnonymousUserMixin
+
+# The import statement below allows exporting symbol, hence the NOQA marker.
+
+from flask_login import current_user # NOQA
 
 from diamond.app import app
 from diamond.db import db
@@ -30,6 +34,7 @@ from diamond.maths import hash, generate
 
 DEFAULT_COMMENT = 'Sign up'
 
+
 class AnonymousUser(AnonymousUserMixin):
     admin = False
 
@@ -37,9 +42,11 @@ login_manager = LoginManager(app)
 login_manager.anonymous_user = AnonymousUser
 login_manager.login_view = 'sign-in'
 
+
 @login_manager.user_loader
 def user_loader(slug):
     return User.get(slug) if slug else None
+
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
@@ -90,6 +97,7 @@ def sign_up():
 
     return redirect(url_for('read', slug=slug))
 
+
 @app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
     def respond(message=None):
@@ -114,6 +122,7 @@ def sign_in():
     login_user(user)
 
     return redirect(url_for('read', slug=user.slug))
+
 
 @app.route('/sign-out')
 def sign_out():

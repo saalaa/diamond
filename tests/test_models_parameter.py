@@ -23,10 +23,12 @@ from diamond.db import db
 from diamond.cli import drop_db, init_db
 from diamond.models import Parameter, param
 
+
 @pytest.fixture
 def database():
     drop_db()
     init_db()
+
 
 def test_all(database):
     Parameter.clear_cache()

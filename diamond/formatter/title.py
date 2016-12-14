@@ -20,6 +20,7 @@
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 
+
 class TitleTreeProcessor(Treeprocessor):
     def __init__(self, md):
         self.md = md
@@ -29,6 +30,7 @@ class TitleTreeProcessor(Treeprocessor):
             if child.tag == 'h1':
                 self.md.Title = (child.text or '').strip()
                 break
+
 
 class TitleExtension(Extension):
     def extendMarkdown(self, md, md_globals):

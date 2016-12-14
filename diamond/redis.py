@@ -21,6 +21,7 @@ from flask_redis import FlaskRedis
 from mockredis import MockRedis
 from diamond.app import app
 
+
 class MockRedisWrapper(MockRedis):
     @classmethod
     def from_url(cls, *args, **kwargs):
