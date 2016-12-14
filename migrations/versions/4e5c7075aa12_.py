@@ -18,7 +18,7 @@ def upgrade():
     op.create_index('idx_document_active', 'documents', ['active'], unique=False)
     op.create_index('idx_document_slug', 'documents', ['slug'], unique=False)
     op.create_index('idx_document_slug_active', 'documents', ['slug', 'active'], unique=True)
-    op.create_index('idx_metadata_key_value', 'metadata', ['key', 'key'], unique=False)
+    op.create_index('idx_metadata_key_value', 'metadata', ['key', 'value'], unique=False)
     op.create_index('idx_metadata_slug', 'metadata', ['slug'], unique=False)
     op.create_index('idx_parameter_key', 'parameters', ['key'], unique=False)
 
