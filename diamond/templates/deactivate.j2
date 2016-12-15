@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Deactivation
+  {{ _('Deactivation') }}
 {% endblock %}
 
 {% block body %}
@@ -10,10 +10,10 @@
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
 
       <fieldset>
-        <legend class="sr">Page deactivation</legend>
+        <legend class="sr">{{ _('Page deactivation') }}</legend>
 
         <div class="form-row">
-          <input type="submit" value="Deactivate" class="full-w">
+          <input type="submit" value="{{ _('Deactivate') }}" class="full-w">
         </div>
       </fieldset>
     </form>

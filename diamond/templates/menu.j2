@@ -3,26 +3,27 @@
 
   <p>
     {% if page.id %}
-      {{ page.ymd_hm or 'never' }} –
+      {{ page.ymd_hm or _('never') }} –
 
       <a href="/{{ page.slug }}?version={{ page.id }}" class="wikilink">
         {{ page.id }}{{ '*' if page.active else '' }}</a> |
 
-      <a href="/history/{{ page.slug }}">History</a> |
+      <a href="/history/{{ page.slug }}">{{ _('History') }}</a> |
     {% endif %}
 
     {% if page.id %}
-      <a href="/edit/{{ page.slug }}">Edit</a>
+      <a href="/edit/{{ page.slug }}">{{ _('Edit') }}</a>
     {% else %}
-      <a href="/edit/{{ page.slug }}">Create</a>
+      <a href="/edit/{{ page.slug }}">{{ _('Create') }}</a>
     {% endif %}
 
     {% if page.id and current_user.admin %}
       {% if page.active %}
-        | <a href="/deactivate/{{ page.slug }}">Deactivate</a>
+        | <a href="/deactivate/{{ page.slug }}">
+          {{ _('Deactivate') }}</a>
       {% else %}
         | <a href="/activate/{{ page.slug }}?version={{ page.id}}">
-          Activate</a>
+          {{ _('Activate') }}</a>
       {% endif %}
     {% endif %}
   </p>

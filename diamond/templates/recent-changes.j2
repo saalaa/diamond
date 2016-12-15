@@ -3,18 +3,18 @@
 {% import "macros.j2" as macros %}
 
 {% block title %}
-  Recent changes
+  {{ _('Recent changes') }}
 {% endblock %}
 
 {% block body %}
   <div class="recent-changes">
     <table>
       <tr>
-        <th>Timestamp</th>
-        <th>V.</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Comment</th>
+        <th>{{ _('Timestamp') }}</th>
+        <th>{{ _('V.') }}</th>
+        <th>{{ _('Title') }}</th>
+        <th>{{ _('Author') }}</th>
+        <th>{{ _('Comment') }}</th>
       </tr>
 
       {% for item in changes.items %}

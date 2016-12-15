@@ -17,35 +17,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-import re
+from flask import request
+from flask_babel import Babel
+from diamond.app import app
 
-from setuptools import setup
-
-VERSION_RE = re.compile(r"__version__ = '(.*)'")
-
-
-def version(filename):
-    with open(filename) as file:
-        source = file.read()
-
-        return VERSION_RE.search(source) \
-                .group(1)
+babel = Babel(app)
 
 
-def requirements(filename):
-    with open(filename) as file:
-        return file.read() \
-                .split()
-
-
-setup(
-    name='Diamond',
-    version=version('diamond/__init__.py'),
-    url='http://github.com/saalaa/diamond',
-    license='GPL',
-    author='Benoit Myard',
-    author_email='myardbenoit@gmail.com',
-    description='The metadata enabled wiki engine',
-    install_requires=requirements('requirements.txt'),
-    setup_requires=['pytest-runner']
-)
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match([
+        'en',
+        'fr'
+    ])

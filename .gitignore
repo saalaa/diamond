@@ -13,3 +13,4 @@ __pycache__/
 .*.sw?
 *.pyc
 *.db
+diamond/i18n/messages.pot

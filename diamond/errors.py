@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 from flask import render_template
+from flask_babel import gettext as _
 from diamond.app import app
 
 if not app.config['FLASK_DEBUG']:
@@ -25,5 +26,6 @@ if not app.config['FLASK_DEBUG']:
     def default_error_handler(e):
         app.log_exception(e)
 
-        return render_template('error.j2', error='An error has occured; '
-                'please contact the administrator or try again later.'), 500
+        error = _('An error has occured; please contact the administrator or '
+            'try again later.')
+        return render_template('error.j2', error=error), 500

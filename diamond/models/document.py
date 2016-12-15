@@ -19,11 +19,12 @@
 
 import datetime
 
+from flask_babel import lazy_gettext
 from diamond.db import db
 from diamond.utils import cached_property, memoized
 from diamond.models.metadata import Metadata
 
-DEFAULT_BODY = '# %(slug)s\n\nDescribe [[%(slug)s]] here.'
+DEFAULT_BODY = lazy_gettext('# %(slug)s\n\nDescribe [[%(slug)s]] here.')
 
 
 class Document(db.Model):

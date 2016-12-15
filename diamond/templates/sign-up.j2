@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Sign up
+  {{ _('Sign up') }}
 {% endblock %}
 
 {% block body %}
@@ -11,29 +11,29 @@
       <input type="hidden" name="checksum" value="{{ checksum }}">
 
       <fieldset>
-        <legend>Sign up form</legend>
+        <legend>{{ _('Sign up form') }}</legend>
 
         <div class="form-row">
-          <label for="field-name">User name</label>
+          <label for="field-name">{{ _('User name') }}</label>
           <input type="text" id="field-name" name="name" class="full-w"
-            placeholder="Your full name, eg.: John Doe">
+            placeholder="{{ _('Your full name, eg.: John Doe') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-password">Password</label>
+          <label for="field-password">{{ _('Password') }}</label>
           <input type="password" id="field-password" name="password"
-            class="full-w" placeholder="Choose a password">
+            class="full-w" placeholder="{{ _('Choose a password') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-answer">Confirm you're human: <em>
+          <label for="field-answer">{{ _('Confirm you're human:') }} <em>
               {{ question }}</em></label>
           <input type="text" id="field-answer" name="answer" class="full-w"
-            placeholder="Answer using numbers only">
+            placeholder="{{ _('Answer using numbers only') }}">
         </div>
 
         <div class="form-row">
-          <input type="submit" value="Go" class="full-w">
+          <input type="submit" value="{{ _('Go') }}" class="full-w">
         </div>
       </fieldset>
     </form>

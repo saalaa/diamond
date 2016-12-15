@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Activation
+  {{ _('Activation') }}
 {% endblock %}
 
 {% block body %}
@@ -10,10 +10,10 @@
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
 
       <fieldset>
-        <legend class="sr">Page activation</legend>
+        <legend class="sr">{{ _('Page activation') }}</legend>
 
         <div class="form-row">
-          <input type="submit" value="activate" class="full-w">
+          <input type="submit" value="{{ _('Activate') }}" class="full-w">
         </div>
       </fieldset>
     </form>

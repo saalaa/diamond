@@ -1,25 +1,27 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Search
+  {{ _('Search') }}
 {% endblock %}
 
 {% block body %}
   <div class="search">
     <form>
       <fieldset>
-        <legend>Search through the wiki</legend>
+        <legend>{{ _('Search through the wiki') }}</legend>
 
         <div class="grid">
           <div class="row">
             <div class="col-s-9-12">
-              <label class="hidden" for="field-query">Query term</label>
+              <label class="hidden" for="field-query">
+                {{ _('Query term') }}
+              </label>
               <input type="text" id="field-query" name="query"
                 value="{{ query }}" class="full-w">
             </div>
 
             <div class="col-s-3-12">
-              <input type="submit" value="Search" class="full-w">
+              <input type="submit" value="{{ _('Search') }}" class="full-w">
             </div>
           </div>
         </div>
@@ -46,7 +48,7 @@
                 </td>
               </tr>
             {% else %}
-              <em>No further faceting available.</em>
+              <em>{{ _('No further faceting available.') }}</em>
             {% endfor %}
           </table>
         </div>

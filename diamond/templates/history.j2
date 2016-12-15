@@ -3,7 +3,7 @@
 {% import "macros.j2" as macros %}
 
 {% block title %}
-  History
+  {{ _('History') }}
 {% endblock %}
 
 {% block body %}
@@ -11,15 +11,15 @@
     <form>
       <table>
         <tr>
-          <th>Timestamp</th>
+          <th>{{ _('Timestamp') }}</th>
           <th>
             <a href="/diff/{{ page.slug }}" class="diff-button">
-              Diff.
+              {{ _('Diff.') }}
             </a>
           </th>
-          <th>V.</th>
-          <th>Author</th>
-          <th>Comment</th>
+          <th>{{ _('V.') }}</th>
+          <th>{{ _('Author') }}</th>
+          <th>{{ _('Comment') }}</th>
         </tr>
 
         {% for item in history.items %}

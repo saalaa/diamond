@@ -17,7 +17,7 @@
 {% block meta %}
   {% if page.meta('category') %}
     <div class="category">
-      <h5>Category:</h5>
+      <h5>{{ _('Category:') }}</h5>
 
       <ul>
         {% for item in page.meta('category') %}
@@ -29,7 +29,7 @@
 
   {% if page.meta('tag') %}
     <div class="tags">
-      <h5>Tags:</h5>
+      <h5>{{ _('Tags:') }}</h5>
 
       <ul>
         {% for item in page.meta('tag') %}
@@ -41,7 +41,7 @@
 
   {% if page.meta('subject') %}
     <div class="subject">
-      <h5>Subject:</h5>
+      <h5>{{ _('Subject:') }}</h5>
 
       <ul>
         {% for item in page.meta('subject') %}
@@ -53,16 +53,16 @@
 
   {% if page.meta('previous') or page.meta('next') %}
     <div class="navigation">
-      <h5>Navigation:</h5>
+      <h5>{{ _('Navigation:') }}</h5>
 
       <ul>
         {% if page.meta('previous') %}
-          <li>Previous: <a href="/{{ page.meta('previous')[0] | slugify }}">
+          <li>{{ _('Previous:') }} <a href="/{{ page.meta('previous')[0] | slugify }}">
             {{ page.meta('previous')[0] }}</a></li>
         {% endif %}
 
         {% if page.meta('next') %}
-          <li>Next: <a href="/{{ page.meta('next')[0] | slugify }}">
+          <li>{{ _('Next:') }} <a href="/{{ page.meta('next')[0] | slugify }}">
             {{ page.meta('next')[0] }}</a></li>
         {% endif %}
       </ul>
@@ -71,7 +71,9 @@
 
   <div class="generic">
     {% if page.meta(ignores=['tag', 'subject', 'category'], structural=False) %}
-      <h5>Custom <a href="/metadata" class="wikilink">metadata</a> for this page:</h5>
+      <h5>
+        {{ _('Custom <a href="/metadata" class="wikilink">metadata</a> for this page:') }}
+      </h5>
 
       {% for key in page.keys(ignores=['tag', 'subject', 'category'], structural=False) %}
         <div class="generic-item generic--{{ key }}">
@@ -86,8 +88,11 @@
       {% endfor %}
     {% else %}
       {% if not page.meta(structural=False) %}
-        <h5><em>No <a href="/metadata" class="wikilink">metadata</a> for this
-            page.</em></h5>
+        <h5>
+          <em>
+            {{ _('No <a href="/metadata" class="wikilink">metadata</a> for this page.') }}
+          </em>
+        </h5>
       {% endif %}
     {% endif %}
   </div>

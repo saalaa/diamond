@@ -27,12 +27,14 @@ from flask_login import LoginManager, login_user, logout_user, \
 
 from flask_login import current_user # NOQA
 
+from flask_babel import lazy_gettext
+from flask_babel import gettext as _
 from diamond.app import app
 from diamond.db import db
 from diamond.models import User, Document
 from diamond.maths import hash, generate
 
-DEFAULT_COMMENT = 'Sign up'
+DEFAULT_COMMENT = lazy_gettext('Sign up')
 
 
 class AnonymousUser(AnonymousUserMixin):
@@ -73,10 +75,12 @@ def sign_up():
     slug = slugify(name)
 
     if hash(answer) != checksum:
-        return respond('You failed to answer the simple maths question')
+        message = _('You failed to answer the simple maths question')
+        return respond(message)
 
     if User.exists(slug):
-        return respond('This user name is unavailable')
+        message = _('This user name is unavailable')
+        return respond(message)
 
     is_first = User.is_first()
     page = Document.get(slug)
@@ -118,7 +122,8 @@ def sign_in():
     user = User.get(slug)
 
     if not user or not user.check_password(password):
-        return respond('Wrong user name or password')
+        message = _('Wrong user name or password')
+        return respond(message)
 
     login_user(user)
 

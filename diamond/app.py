@@ -23,6 +23,7 @@ from diamond.utils import env, secret
 app = Flask(__name__)
 
 app.config.update({
+    'BABEL_TRANSLATION_DIRECTORIES': 'i18n',
     'SQL_DEBUG': env('SQL_DEBUG', False, bool),
     'FLASK_DEBUG': env('FLASK_DEBUG', False, bool),
     'HOST': env('HOST', '0.0.0.0'),

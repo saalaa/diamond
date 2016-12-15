@@ -21,6 +21,7 @@ import diamond
 
 from flask import request, render_template, redirect, url_for, flash, g, \
         session
+from flask_babel import gettext as _
 from diamond.app import app
 from diamond.formatter import convert, parse
 from diamond.auth import current_user
@@ -44,6 +45,7 @@ def set_globals():
     g.version = diamond.__version__
     g.param = param
     g.csrf_token = generate_csrf_token
+    g._ = _
 
 
 @app.before_request
@@ -51,7 +53,8 @@ def csrf_check():
     if request.method == "POST" and not request.path == '/preview':
         token = session.pop('_csrf_token', None)
         if not token == request.form.get('_csrf_token'):
-            return render_template('error.j2', error='CSRF error'), 403
+            error = _('CSRF error')
+            return render_template('error.j2', error=error), 403
 
 
 @app.route('/robots.txt')
@@ -75,10 +78,12 @@ def read(slug=None):
 
     if version:
         if not page:
-            return render_template('error.j2', error='This version does not '
-                    'exist'), 404
+            error = _('This version does not exist')
+            return render_template('error.j2', error=error), 404
 
-        flash('You are viewing version %s of this page' % version)
+        message = _('You are viewing version %(version)s of this page',
+                version=version)
+        flash(message)
 
         return render_template('read.j2', menu=Document.get('main-menu'),
                 page=page)
@@ -86,7 +91,9 @@ def read(slug=None):
     parsed = parse(page.body)
 
     if 'page' in parsed['redirect']:
-        flash('Redirected from %s' % (page.title or page.slug))
+        page_name = page.title or page.slug
+        message = _('Redirected from %(page_name)s', page_name=page_name)
+        flash(message)
 
         return redirect(url_for('read', slug=parsed['redirect']['page']))
 
@@ -112,8 +119,8 @@ def edit(slug):
 
     auth_only = param('auth_only', False)
     if auth_only and not current_user.is_authenticated:
-        return render_template('error.j2', error='Edition is limited to '
-                'registered users only'), 403
+        error = _('Edition is limited to registered users only')
+        return render_template('error.j2', error=error), 403
 
     Metadata.deactivate(slug)
     Document.deactivate(slug)
@@ -138,8 +145,9 @@ def edit(slug):
 
     db.session.commit()
 
-    flash('Thank you for your changes. Your attention to detail is '
-            'appreciated.')
+    message = _('Thank you for your changes. Your attention to detail '
+            'is appreciated.')
+    flash(message)
 
     return redirect(url_for('read', slug=slug))
 
@@ -194,8 +202,8 @@ def history(slug):
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if not current_user.admin:
-        return render_template('error.j2', error='You are not allowed to '
-                'change settings'), 403
+        error = _('You are not allowed to change settings')
+        return render_template('error.j2', error=error), 403
 
     if request.method == 'GET':
         return render_template('settings.j2', menu=Document.get('main-menu'),
@@ -212,7 +220,8 @@ def settings():
 
     Parameter.clear_cache()
 
-    flash('Your changes have been saved')
+    message = _('Your changes have been saved')
+    flash(message)
 
     return redirect(url_for('settings'))
 
@@ -242,8 +251,8 @@ def deactivate(slug):
                 help=Document.get('deactivate-help'))
 
     if not current_user.admin:
-        return render_template('error.j2', error='You are not allowed to '
-                'deactivate this page'), 403
+        error = _('You are not allowed to deactivate this page')
+        return render_template('error.j2', error=error), 403
 
     Document.deactivate(slug)
     Metadata.deactivate(slug)
@@ -259,15 +268,16 @@ def activate(slug):
     version = get_int_arg('version')
 
     if not version:
-        return render_template('error.j2', error='Missing version parameter')
+        error = _('Missing version parameter')
+        return render_template('error.j2', error=error)
 
     if request.method == 'GET':
         return render_template('activate.j2', menu=Document.get('main-menu'),
                 help=Document.get('activate-help'))
 
     if not current_user.admin:
-        return render_template('error.j2', error='You are not allowed to '
-                'activate this page'), 403
+        error = _('You are not allowed to activate this page')
+        return render_template('error.j2', error=error), 403
 
     page = Document.get(slug, version)
 

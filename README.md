@@ -117,7 +117,6 @@ First, a virtual environment is needed:
 Now the Python dependencies:
 
     $ pip install -r requirements.txt
-    $ pip install -r requirements-test.txt
 
 Finally, `pytest` can be called:
 

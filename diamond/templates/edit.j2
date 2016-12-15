@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Edit
+  {{ _('Edit') }}
 {% endblock %}
 
 {% block body %}
@@ -10,31 +10,31 @@
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
 
       <fieldset>
-        <legend>Page edition</legend>
+        <legend>{{ _('Page edition') }}</legend>
 
         <div class="form-row">
-          <label for="field-body" class="hidden">Page body</label>
+          <label for="field-body" class="hidden">{{ _('Page body') }}</label>
           <textarea name="body" id="field-body" cols="80" rows="24"
             class="full-w editor">{{ page.body }}</textarea>
         </div>
 
         <div class="standard-rows">
           <div class="form-row">
-            <label for="field-comment">Comment</label>
+            <label for="field-comment">{{ _('Comment') }}</label>
             <input name="comment" id="field-comment" type="text" class="full-w"
-              placeholder="Describe your changes unless it's a minor edit">
+              placeholder="{{ _('Describe your changes unless it\'s a minor edit') }}">
           </div>
 
           <div class="form-row grid gutters">
             <dic class="row">
               <div class="col-s-6-12">
                 <button type="button" class="full-w button-preview">
-                  Preview
+                  {{ _('Preview') }}
                 </button>
               </div>
 
               <div class="col-s-6-12">
-                <input type="submit" value="Save" class="full-w button-save">
+                <input type="submit" value="{{ _('Save') }}" class="full-w button-save">
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Settings
+  {{ _('Settings') }}
 {% endblock %}
 
 {% block body %}
@@ -10,71 +10,71 @@
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
 
       <fieldset>
-        <legend>Settings</legend>
+        <legend>{{ _('Settings') }}</legend>
 
         <input value="lang dir title description frontpage auth_only classes css favicon editor stylesheet"
           type="hidden" name="params">
 
-        <h2>Locale</h2>
+        <h2>{{ _('Locale') }}</h2>
 
         <div class="form-row">
-          <label for="field-lang">Language</label>
+          <label for="field-lang">{{ _('Language') }}</label>
           <input name="lang" id="field-lang" class="full-w" type="text"
             value="{{ g.param('lang', 'en') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-dir">Text direction</label>
+          <label for="field-dir">{{ _('Text direction') }}</label>
           <select name="dir" id="field-dir" class="full-w">
             <option {{ 'selected' if g.param('dir', '') == 'ltr' else '' }}
-              value="ltr">Left to right</option>
+              value="ltr">{{ _('Left to right') }}</option>
             <option {{ 'selected' if g.param('dir', '') == 'rtl' else '' }}
-              value="rtl">Right to left</option>
+              value="rtl">{{ _('Right to left') }}</option>
           </select>
         </div>
 
-        <h2>Configuration</h2>
+        <h2>{{ _('Configuration') }}</h2>
 
         <div class="form-row">
-          <label for="field-title">Title</label>
+          <label for="field-title">{{ _('Title') }}</label>
           <input name="title" id="field-title" class="full-w" type="text"
             value="{{ g.param('title', 'Diamond wiki') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-description">Description</label>
+          <label for="field-description">{{ _('Description') }}</label>
           <input name="description" id="field-description" class="full-w"
             type="text" value="{{ g.param('description',
               'Diamond wiki, the metadata enabled wiki engine') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-frontpage">Front page slug</label>
+          <label for="field-frontpage">{{ _('Front page slug') }}</label>
           <input name="frontpage" id="field-frontpage" class="full-w"
             type="text" value="{{ g.param('frontpage', 'front-page') }}">
         </div>
 
-        <h2>Security</h2>
+        <h2>{{ _('Security') }}</h2>
 
         <div class="form-row">
-          <label for="field-auth_only">Edition policy</label>
+          <label for="field-auth_only">{{ _('Edition policy') }}</label>
           <select name="auth_only" id="field-auth_only" class="full-w">
-            <option value="">Everyone</option>
+            <option value="">{{ _('Everyone') }}</option>
             <option {{ 'selected' if g.param('auth_only', '') else '' }}
-              value="yes">Registered users only</option>
+              value="yes">{{ _('Registered users only') }}</option>
           </select>
         </div>
 
-        <h2>Appearance</h2>
+        <h2>{{ _('Appearance') }}</h2>
 
         <div class="form-row">
-          <label for="field-favicon">Favicon</label>
+          <label for="field-favicon">{{ _('Favicon') }}</label>
           <input name="favicon" id="field-favicon" class="full-w" type="text"
             value="{{ g.param('favicon', '/static/diamond.ico') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-stylesheet">Stylesheet</label>
+          <label for="field-stylesheet">{{ _('Stylesheet') }}</label>
           <input name="stylesheet" id="field-stylesheet" class="full-w"
             placeholder="Example: /static/stylesheet-diplomat.css" type="text"
             value="{{ g.param('stylesheet',
@@ -88,7 +88,7 @@
         </div>
 
         <div class="form-row">
-          <label for="field-classes">Body classes</label>
+          <label for="field-classes">{{ _('Body classes') }}</label>
           <input name="classes" id="field-classes" class="full-w" type="text"
             placeholder="Example: purple fixed-menu"
             value="{{ g.param('classes', '') }}">
@@ -100,22 +100,22 @@
         </div>
 
         <div class="form-row">
-          <label for="field-editor">Editor</label>
+          <label for="field-editor">{{ _('Editor') }}</label>
           <select name="editor" id="field-editor" class="full-w">
-            <option value="">Default editor</option>
+            <option value="">{{ _('Default editor') }}</option>
             <option {{ 'selected' if g.param('editor', '') else '' }}
-              value="codemirror">CodeMirror</option>
+              value="codemirror">{{ _('CodeMirror') }}</option>
           </select>
         </div>
 
         <div class="form-row">
-          <label for="field-css">Custom CSS</label>
+          <label for="field-css">{{ _('Custom CSS') }}</label>
           <textarea name="css" id="field-css" class="full-w editor"
             cols="80" rows="6">{{ g.param('css', '') }}</textarea>
         </div>
 
         <div class="form-row">
-          <input type="submit" value="Save" class="full-w">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
         </div>
       </fieldset>
     </form>

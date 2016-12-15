@@ -1,7 +1,7 @@
 {% extends "skeleton.j2" %}
 
 {% block title %}
-  Sign in
+  {{ _('Sign in') }}
 {% endblock %}
 
 {% block body %}
@@ -10,22 +10,22 @@
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
 
       <fieldset>
-        <legend>Sign in form</legend>
+        <legend>{{ _('Sign in form') }}</legend>
 
         <div class="form-row">
-          <label for="field-name">User name</label>
+          <label for="field-name">{{ _('User name') }}</label>
           <input type="text" id="field-name" name="name" class="full-w"
-            placeholder="Your full name, eg.: John Doe">
+            placeholder="{{ _('Your full name, eg.: John Doe') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-password">Password</label>
+          <label for="field-password">{{ _('Password') }}</label>
           <input type="password" id="field-password" name="password"
-            class="full-w" placeholder="Your password">
+            class="full-w" placeholder="{{ _('Your password') }}">
         </div>
 
         <div class="form-row">
-          <input type="submit" value="Go" class="full-w">
+          <input type="submit" value="{{ _('Go') }}" class="full-w">
         </div>
       </fieldset>
     </form>
