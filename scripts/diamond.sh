@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Copyright (C) 1999, 2000 Martin Pool <mbp@humbug.org.au>
 # Copyright (C) 2003 Kimberley Burchett <http://www.kimbly.com>
