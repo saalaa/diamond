@@ -30,6 +30,7 @@ if [ "$1" = "watch" ]; then
   watch "sh $0" $ROOT --wait=1
 else
   compile colorschemes
+  compile headers
   compile stylesheet-diplomat
   compile stylesheet-capital
 fi

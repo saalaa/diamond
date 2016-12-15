@@ -1,26 +1,25 @@
-// Copyright (C) 1999, 2000 Martin Pool <mbp@humbug.org.au>
-// Copyright (C) 2003 Kimberley Burchett <http://www.kimbly.com>
-// Copyright (C) 2016 Benoit Myard <myardbenoit@gmail.com>
-//
-// This file is part of Diamond wiki.
-//
-// Diamond wiki is free software: you can redistribute it and/or modify it under
-// the terms of the GNU General Public License as published by the Free Software
-// Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// Diamond wiki is distributed in the hope that it will be useful, but WITHOUT
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-// details.
-//
-// You should have received a copy of the GNU General Public License along with
-// Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
-
 /*
- * Headers
- * -------
+ * Copyright (C) 1999, 2000 Martin Pool <mbp@humbug.org.au>
+ * Copyright (C) 2003 Kimberley Burchett <http://www.kimbly.com>
+ * Copyright (C) 2016 Benoit Myard <myardbenoit@gmail.com>
+ *
+ * This file is part of Diamond wiki.
+ *
+ * Diamond wiki is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * Diamond wiki is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
  */
+
+@import "variables.less";
 
 .menu-link {
   background: #000;
@@ -135,26 +134,12 @@
   }
 }
 
-
-/*
-body.header-fixed,
-body.header-static {
-  .header {
-    .search {
-      float: none;
-    }
-  }
-}
-
-body.header-fixed {
+body.fixed-header,
+body.static-header {
   padding-top: 75px;
 
   .header {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
+    z-index: 1000;
     width: 100%;
 
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
@@ -171,8 +156,16 @@ body.header-fixed {
   }
 }
 
-body.header-static {
-  padding-top: 150px;
+body.fixed-header {
+  .header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+  }
+}
+
+body.static-header {
   position: relative;
 
   .header {
@@ -180,8 +173,5 @@ body.header-static {
 
     top: 0;
     left: 0;
-
-    width: 100%;
   }
 }
-*/
