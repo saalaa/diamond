@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-14 23:56+0100\n"
+"POT-Creation-Date: 2016-12-16 19:40+0100\n"
 "PO-Revision-Date: 2016-12-14 22:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,19 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: diamond/auth.py:37 diamond/templates/skeleton.j2:59
-msgid "Sign up"
-msgstr "Créer un compte"
-
-#: diamond/auth.py:78
+#: diamond/auth.py:77
 msgid "You failed to answer the simple maths question"
 msgstr "Vous n'avez pas réussi le test mathématique"
 
-#: diamond/auth.py:82
+#: diamond/auth.py:81
 msgid "This user name is unavailable"
 msgstr "Ce nom d'utilisateur n'est pas disponible"
 
-#: diamond/auth.py:125
+#: diamond/auth.py:124
 msgid "Wrong user name or password"
 msgstr "Mauvais nom d'utilisateur ou mot de passe"
 
@@ -86,26 +82,6 @@ msgstr "Paramètre de version manquant"
 msgid "You are not allowed to activate this page"
 msgstr "Vous n'êtes pas autorisé à activer la page"
 
-#: diamond/formatter/list.py:54
-msgid "- *No results found*"
-msgstr "- *Aucun résultat*"
-
-#: diamond/formatter/search.py:39 diamond/formatter/search.py:51
-#: diamond/templates/search.j2:4 diamond/templates/search.j2:24
-msgid "Search"
-msgstr "Rechercher"
-
-#: diamond/models/document.py:27
-#, python-format
-msgid ""
-"# %(slug)s\n"
-"\n"
-"Describe [[%(slug)s]] here."
-msgstr ""
-"# %(slug)s\n"
-"\n"
-"Décrivez [[%(slug)s]] ici."
-
 #: diamond/templates/activate.j2:4
 msgid "Activation"
 msgstr "Activation de la page"
@@ -159,7 +135,7 @@ msgstr "Décrivez vos modification sauf si elles sont mineures"
 msgid "Preview"
 msgstr "Prévisualiser"
 
-#: diamond/templates/edit.j2:37 diamond/templates/settings.j2:118
+#: diamond/templates/edit.j2:37 diamond/templates/settings.j2:121
 msgid "Save"
 msgstr "Sauvergarder"
 
@@ -238,6 +214,10 @@ msgstr "Modifications récentes"
 #: diamond/templates/recent-changes.j2:15 diamond/templates/settings.j2:39
 msgid "Title"
 msgstr "Titre"
+
+#: diamond/templates/search.j2:4 diamond/templates/search.j2:24
+msgid "Search"
+msgstr "Rechercher"
 
 #: diamond/templates/search.j2:11
 msgid "Search through the wiki"
@@ -319,23 +299,23 @@ msgstr "Feuille de style"
 msgid "Body classes"
 msgstr "Classes CSS"
 
-#: diamond/templates/settings.j2:103
+#: diamond/templates/settings.j2:106
 msgid "Editor"
 msgstr "Éditeur"
 
-#: diamond/templates/settings.j2:105
+#: diamond/templates/settings.j2:108
 msgid "Default editor"
 msgstr "Éditeur par défaut"
 
-#: diamond/templates/settings.j2:107
+#: diamond/templates/settings.j2:110
 msgid "CodeMirror"
 msgstr "CodeMirror"
 
-#: diamond/templates/settings.j2:112
+#: diamond/templates/settings.j2:115
 msgid "Custom CSS"
 msgstr "CSS personnalisé"
 
-#: diamond/templates/sign-in.j2:4 diamond/templates/skeleton.j2:56
+#: diamond/templates/sign-in.j2:4 diamond/templates/skeleton.j2:57
 msgid "Sign in"
 msgstr "Connexion"
 
@@ -343,15 +323,15 @@ msgstr "Connexion"
 msgid "Sign in form"
 msgstr "Formulaire de connexion"
 
-#: diamond/templates/sign-in.j2:16
+#: diamond/templates/sign-in.j2:16 diamond/templates/sign-up.j2:17
 msgid "User name"
 msgstr "Nom d'utilisateur"
 
-#: diamond/templates/sign-in.j2:18
+#: diamond/templates/sign-in.j2:18 diamond/templates/sign-up.j2:19
 msgid "Your full name, eg.: John Doe"
 msgstr "Votre nom complet, par exemple : Jean Colle"
 
-#: diamond/templates/sign-in.j2:22
+#: diamond/templates/sign-in.j2:22 diamond/templates/sign-up.j2:23
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -359,15 +339,34 @@ msgstr "Mot de passe"
 msgid "Your password"
 msgstr "Votre mot de passe"
 
-#: diamond/templates/sign-in.j2:28
+#: diamond/templates/sign-in.j2:28 diamond/templates/sign-up.j2:36
 msgid "Go"
 msgstr "Envoyer"
 
-#: diamond/templates/skeleton.j2:53
+#: diamond/templates/sign-up.j2:4 diamond/templates/skeleton.j2:60
+msgid "Sign up"
+msgstr "Créer un compte"
+
+#: diamond/templates/sign-up.j2:14
+msgid "Sign up form"
+msgstr "Formulaire de connexion"
+
+#: diamond/templates/sign-up.j2:25
+msgid "Choose a password"
+msgstr "Choisissez un mot de passe"
+
+#: diamond/templates/sign-up.j2:29
+msgid "Confirm you're human:"
+msgstr "Confirmez que vous êtes un humain"
+
+#: diamond/templates/sign-up.j2:32
+msgid "Answer using numbers only"
+msgstr "Répondez avec des chiffres uniquement"
+
+#: diamond/templates/skeleton.j2:54
 msgid "Sign out"
 msgstr "Déconnexion"
 
 #: diamond/templates/title-index.j2:4
 msgid "Title index"
 msgstr "Index des titres"
-

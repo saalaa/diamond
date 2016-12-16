@@ -28,7 +28,7 @@ CONFIG=babel.cfg
 
 show_help ()
 {
-  if [ "x$1x" != "xx" ]; then
+  if [ "$1" ]; then
     echo "Error: $1"
   fi
 
@@ -49,10 +49,10 @@ show_help ()
   echo "  compile"
   echo "    Compile all existing language translations files for release."
 
-  if [ "x$1x" = "xx" ]; then
-    exit 0
-  else
+  if [ "$1" ]; then
     exit 1
+  else
+    exit 0
   fi
 }
 
