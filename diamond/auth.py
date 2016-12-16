@@ -27,14 +27,13 @@ from flask_login import LoginManager, login_user, logout_user, \
 
 from flask_login import current_user # NOQA
 
-from flask_babel import lazy_gettext
 from flask_babel import gettext as _
 from diamond.app import app
 from diamond.db import db
 from diamond.models import User, Document
 from diamond.maths import hash, generate
 
-DEFAULT_COMMENT = lazy_gettext('Sign up')
+DEFAULT_COMMENT = 'Sign up'
 
 
 class AnonymousUser(AnonymousUserMixin):
