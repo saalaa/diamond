@@ -1,0 +1,4 @@
+[run]
+omit =
+  diamond/__init__.py,
+  diamond/__main__.py

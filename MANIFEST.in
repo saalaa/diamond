@@ -1,9 +1,11 @@
-include README.md
-include CHANGES
-include LICENSE
-include COPYING
 include AUTHORS
+include CHANGES
+include COPYING
+include LICENSE
+include README.md
 
 include requirements.txt
 
-include fixtures/*.md
+graft fixtures
+graft diamond
+graft migrations

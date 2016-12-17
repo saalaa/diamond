@@ -98,32 +98,54 @@ easier (it then prints its content):
 
 Although full code base coverage is the goal, testing is a work in progress.
 
-The tests can be run through `setup.py`, which rely on `tox` which and
-dependencies automatically so that you don't need to be in a virtual
-environment for this method to work. In the future several Python version may
-be supported but currently only version 2.7 is supported:
+### Manual tests using `pytest`
 
-    $ python setup.py test
+The simplest way to run the tests is through calling `pytest` in which case
+whatever environment you have setup is used. This is what developpers do more
+often than not, reusing their development environment:
 
-Alternatively, the tests can be run through calling `pytest` directly in which
-case dependencies must be manually taken care of (note that whatever
-environment you setup is used).
-
-First, a virtual environment is needed:
+First, a virtual environment with the project's dependencies is needed:
 
     $ virtualenv env
     $ source env/bin/activate
-
-Now the Python dependencies:
-
     $ pip install -r requirements.txt
 
-Finally, `pytest` can be called:
+Then, `pytest` can be called:
 
     $ pytest
 
-Regardless of the development side of things, tests are automatically run
-whenever a push is made on the main repository. The repository test status is
-available at the following address:
+### Manual tests using `tox`
+
+A more complex way to run the tests is through calling `tox` in which case
+environment and dependencies are handled automatically. In `tox.ini` several
+Python versions can be configured as test environments but currently only
+Python 2.7 is supported.
+
+Using this method still relies on `pytest` so these must be configured
+properly. It also expects the project to be `setuptools` -ready so that must be
+configured properly as well.
+
+You'll need `tox` installed (in this case in a virtual environment to avoid
+polluting your system):
+
+    $ virtualenv env
+    $ source env/bin/activate
+    $ pip install tox
+
+Then, `tox` can be called:
+
+    $ tox
+
+### Automated tests using [Travis CI](https://travis-ci.org)
+
+Similar to `tox`, Travis CI leverages our `pytest` test suite and runs it under
+several Python environments. In `.travis.yml` several Python versions can be
+configured as test environments but currently only Python 2.7 is supported.
+
+Using this method still relies on `pytest` so these must be configured
+properly.
+
+Pushing code to the Github repository automatically triggers this system. The
+repository test status is available at the following address:
 
 - https://travis-ci.org/saalaa/diamond
