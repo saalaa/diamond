@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+  <div class="help">
+    <h1>{{ _('Diff') }}</h1>
+
+    <p>{{ _('Below is a compiled list of differences between two page versions.
+      Use it to review changes that were made.') }}</p>
+  </div>
+
   <div class="diff">
     <pre class="diff">{% for line in diff %}{{ line + '\n' }}{% endfor %}</pre>
   </div>

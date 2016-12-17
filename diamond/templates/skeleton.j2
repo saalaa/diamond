@@ -69,12 +69,6 @@
     <div {{ 'data-slug="' + page.slug + '"' if page is defined else '' }}
       class="document">
       <div class="main">
-        {% if help %}
-          <div class="help">
-            {{ g.cached_body(help, 'cache-') }}
-          </div>
-        {% endif %}
-
         {% block body %}{% endblock %}
       </div>
 

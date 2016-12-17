@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+  <div class="help">
+    <h1>{{ _('Settings') }}</h1>
+  </div>
+
   <div class="settings">
     <form method="POST">
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">

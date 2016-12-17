@@ -115,7 +115,7 @@ def read_md(slug):
 def edit(slug):
     if request.method == 'GET':
         return render_template('edit.j2', menu=Document.get('main-menu'),
-                help=Document.get('edit-help'), page=Document.get(slug))
+                page=Document.get(slug))
 
     auth_only = param('auth_only', False)
     if auth_only and not current_user.is_authenticated:
@@ -166,14 +166,14 @@ def search(path=None):
     facets = Document.facets(hits, ignores=ignores)
 
     return render_template('search.j2', menu=Document.get('main-menu'),
-            help=Document.get('search-help'), query=query, path=path,
-            hits=hits, facets=facets, total=Document.count())
+            query=query, path=path, hits=hits, facets=facets,
+            total=Document.count())
 
 
 @app.route('/title-index')
 def title_index():
     return render_template('title-index.j2', menu=Document.get('main-menu'),
-            help=Document.get('title-index-help'), titles=Document.titles())
+            titles=Document.titles())
 
 
 @app.route('/recent-changes')
@@ -184,7 +184,7 @@ def recent_changes():
             .paginate(page_arg, 100)
 
     return render_template('recent-changes.j2', menu=Document.get('main-menu'),
-            help=Document.get('recent-changes-help'), changes=changes)
+            changes=changes)
 
 
 @app.route('/history/<slug>')
@@ -196,7 +196,7 @@ def history(slug):
             .paginate(page_arg, 100)
 
     return render_template('history.j2', menu=Document.get('main-menu'),
-            help=Document.get('history-help'), page=page, history=history)
+            page=page, history=history)
 
 
 @app.route('/settings', methods=['GET', 'POST'])
@@ -206,8 +206,7 @@ def settings():
         return render_template('error.j2', error=error), 403
 
     if request.method == 'GET':
-        return render_template('settings.j2', menu=Document.get('main-menu'),
-                help=Document.get('settings-help'))
+        return render_template('settings.j2', menu=Document.get('main-menu'))
 
     params = request.form.get('params', '')
     for key in params.split():
@@ -240,15 +239,14 @@ def diff(slug, a, b):
     diff = unified_diff(body_a, body_b, name_a, name_b)
 
     return render_template('diff.j2', menu=Document.get('main-menu'),
-            help=Document.get('diff-help'), page=Document.get(slug), diff=diff)
+            page=Document.get(slug), diff=diff)
 
 
 @app.route('/deactivate/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')
 def deactivate(slug):
     if request.method == 'GET':
-        return render_template('deactivate.j2', menu=Document.get('main-menu'),
-                help=Document.get('deactivate-help'))
+        return render_template('deactivate.j2', menu=Document.get('main-menu'))
 
     if not current_user.admin:
         error = _('You are not allowed to deactivate this page')
@@ -272,8 +270,7 @@ def activate(slug):
         return render_template('error.j2', error=error)
 
     if request.method == 'GET':
-        return render_template('activate.j2', menu=Document.get('main-menu'),
-                help=Document.get('activate-help'))
+        return render_template('activate.j2', menu=Document.get('main-menu'))
 
     if not current_user.admin:
         error = _('You are not allowed to activate this page')

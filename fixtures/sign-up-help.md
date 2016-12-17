@@ -1,5 +1,0 @@
----
-category: Help
----
-
-# Sign up

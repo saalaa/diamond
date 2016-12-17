@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+  <div class="help">
+    <h1>{{ _('Activation') }}</h1>
+
+    <p>{{ _('This will make this version of the page active. It will then
+      become visible to all users through links and searches.') }}</p>
+  </div>
+
   <div class="activate">
     <form method="POST">
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">

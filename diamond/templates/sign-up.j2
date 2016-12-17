@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block body %}
+  <div class="help">
+    <h1>{{ _('Sign up') }}</h1>
+  </div>
+
   <div class="sign-up">
     <form method="POST">
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">

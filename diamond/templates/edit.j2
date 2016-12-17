@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block body %}
+  <div class="help">
+    <h1>{{ _('Edit') }}</h1>
+
+    <p>{{ _('Before contributing, you may want to read the <a class="wikilink"
+      href="/editing-guidelines">editing guidelines</a>.  This Wiki uses <a
+      class="wikilink" href="/markdown">Markdown</a> with various extensions to
+      render text.') }}</p>
+  </div>
+
   <div class="edit">
     <form method="POST" class="edit">
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">

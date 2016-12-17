@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+  <div class="help">
+    <h1>{{ _('Deactivation') }}</h1>
+
+    <p>{{ _('If you deactivate this page, it will become completely invisible.
+      No data is lost though so you can always activate it at a later stage.') }}</p>
+  </div>
+
   <div class="deactivate">
     <form method="POST">
       <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">

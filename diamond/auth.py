@@ -60,8 +60,7 @@ def sign_up():
         checksum = hash(result)
 
         return render_template('sign-up.j2', menu=Document.get('main-menu'),
-                help=Document.get('sign-up-help'), question=question,
-                checksum=checksum)
+                question=question, checksum=checksum)
 
     if request.method == 'GET':
         return respond()
@@ -108,8 +107,7 @@ def sign_in():
         if message:
             flash(message)
 
-        return render_template('sign-in.j2', menu=Document.get('main-menu'),
-                help=Document.get('sign-in-help'))
+        return render_template('sign-in.j2', menu=Document.get('main-menu'))
 
     if request.method == 'GET':
         return respond()

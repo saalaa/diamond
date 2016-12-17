@@ -22,21 +22,10 @@
 ROOT=http://diamond-wiki.herokuapp.com
 
 FIXTURES="
-  activate-help.md
-  deactivate-help.md
-  diff-help.md
-  edit-help.md
   front-page.md
-  history-help.md
   main-menu.md
   metadata.md
-  recent-changes-help.md
   sandbox.md
-  search-help.md
-  settings-help.md
-  sign-in-help.md
-  sign-up-help.md
-  title-index-help.md
 "
 
 rm fixtures/*.md
