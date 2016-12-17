@@ -118,8 +118,8 @@ Then, `pytest` can be called:
 
 A more complex way to run the tests is through calling `tox` in which case
 environment and dependencies are handled automatically. In `tox.ini` several
-Python versions can be configured as test environments but currently only
-Python 2.7 is supported.
+Python versions can be configured as test environments (currently Python 2.7
+and 3.5 are supported).
 
 Using this method still relies on `pytest` so these must be configured
 properly. It also expects the project to be `setuptools` -ready so that must be
@@ -140,7 +140,7 @@ Then, `tox` can be called:
 
 Similar to `tox`, Travis CI leverages our `pytest` test suite and runs it under
 several Python environments. In `.travis.yml` several Python versions can be
-configured as test environments but currently only Python 2.7 is supported.
+configured as test environments (currently Python 2.7 and 3.5 are supported).
 
 Using this method still relies on `pytest` so these must be configured
 properly.

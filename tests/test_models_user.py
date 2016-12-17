@@ -1,3 +1,5 @@
+# coding=utf-8
+
 # Copyright (C) 1999, 2000 Martin Pool <mbp@humbug.org.au>
 # Copyright (C) 2003 Kimberley Burchett <http://www.kimbly.com>
 # Copyright (C) 2016 Benoit Myard <myardbenoit@gmail.com>
@@ -44,9 +46,9 @@ def test_all(database):
 
     assert not User.is_first()
 
-    User(slug='b', admin=False).save()
-    User(slug='c', admin=False).save()
-    User(slug='d', admin=False).save()
+    User(slug='b').save()
+    User(slug='c').save()
+    User(slug='d').save()
 
     Document(body='', slug='b', title='B').save()
     Document(body='', slug='c', title='C').save()
@@ -65,12 +67,43 @@ def test_all(database):
 
     assert not User.get('e')
 
-    user = User.get('a') \
-            .set_password('hello123') \
+
+def test_u_string(database):
+    user = User(slug='u-string') \
+            .set_password(u'é') \
             .save()
 
     db.session.commit()
 
-    assert user.get_id() == 'a'
+    user = User.get('u-string')
 
-    assert user.check_password('hello123')
+    assert user.check_password('é')
+    assert user.check_password(u'é')
+    assert user.check_password(b'\xc3\xa9')
+
+def test_b_string(database):
+    user = User(slug='b-string') \
+            .set_password(b'\xc3\xa9') \
+            .save()
+
+    db.session.commit()
+
+    user = User.get('b-string')
+
+    assert user.check_password('é')
+    assert user.check_password(u'é')
+    assert user.check_password(b'\xc3\xa9')
+
+
+def test_string(database):
+    user = User(slug='string') \
+            .set_password('é') \
+            .save()
+
+    db.session.commit()
+
+    user = User.get('string')
+
+    assert user.check_password('é')
+    assert user.check_password(u'é')
+    assert user.check_password(b'\xc3\xa9')

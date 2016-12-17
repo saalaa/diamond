@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import hashlib
+import six
 
 from random import choice
 from operator import add, sub# , mul
@@ -63,7 +64,12 @@ def speak(a, op, b):
 
 
 def hash(result):
-    return hashlib.sha256(str(result)).hexdigest()
+    if type(result) is int:
+        result = str(result)
+
+    result = six.b(result)
+
+    return hashlib.sha256(result).hexdigest()
 
 
 def generate():

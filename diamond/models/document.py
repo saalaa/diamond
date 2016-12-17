@@ -108,8 +108,13 @@ class Document(db.Model):
         slugs = None
         if filters:
             filters = [Metadata.search(key, value) for key, value in filters]
-            slugs = reduce(lambda acc, x: acc if acc is None
-                        else acc.intersection(x), filters)
+
+            slugs = None
+            for filter in filters:
+                if slugs is None:
+                    slugs = filter
+                else:
+                    slugs = slugs.intersection(filter)
 
         items = Document.query \
                 .filter(Document.active == True) \

@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
+import six
 
 from diamond.cli import init_db, drop_db, clear_cache
 from diamond.caching import cached_body, invalidator
@@ -44,13 +45,13 @@ def test_cached_body(database):
             'cache-')
 
     assert 'xxx' in data
-    assert 'xxx' in redis.get('cache-b')
+    assert six.b('xxx') in redis.get('cache-b')
 
     data = cached_body(Document(slug='b', title='B', body='xxx', active=True),
             'cache-')
 
     assert 'xxx' in data
-    assert 'xxx' in redis.get('cache-b')
+    assert six.b('xxx') in redis.get('cache-b')
 
 
 def test_invalidator(database):
@@ -62,7 +63,7 @@ def test_invalidator(database):
             'cache-')
 
     assert 'xxx' in data
-    assert 'xxx' in redis.get('cache-c')
+    assert six.b('xxx') in redis.get('cache-c')
 
     # with app.test_request_context('/', method='POST'):
     #     request.view_args['slug'] = 'c'

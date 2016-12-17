@@ -19,4 +19,4 @@
 
 # The import statement below allows exporting symbols, hence the NOQA marker.
 
-from core import convert, parse # NOQA
+from diamond.formatter.core import convert, parse # NOQA

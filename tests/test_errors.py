@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import pytest
+import six
 
 from diamond import app
 
@@ -28,4 +29,4 @@ def client():
 
 
 def test_handler(client):
-    assert 'error' in client.get('/errors').data
+    assert six.b('error') in client.get('/errors').data

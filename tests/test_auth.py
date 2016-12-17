@@ -19,6 +19,7 @@
 
 import re
 import pytest
+import six
 
 from diamond.app import app
 from diamond.cli import init_db, drop_db
@@ -36,9 +37,18 @@ def client():
 
 
 def extract_csrf_token(client, url):
-    resp = client.get(url)
-    return CSRF_RE.search(resp.data) \
-            .group(1)
+    data = client.get(url).data
+
+    # Python 3 compatibility
+    if type(data) is not str:
+        data = data.decode("utf-8")
+
+    match = CSRF_RE.search(data)
+
+    if not match:
+        raise Exception('URL does not contain a CSRF token')
+
+    return match.group(1)
 
 
 def test_sign_up(client):
@@ -46,7 +56,7 @@ def test_sign_up(client):
     resp = client.post('/sign-up', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'xxx', 'checksum': 'nope', 'answer': 'nope'})
 
-    assert 'You failed to answer the simple maths question' in resp.data
+    assert six.b('You failed to answer the simple maths question') in resp.data
 
     csrf = extract_csrf_token(client, '/sign-up')
     resp = client.post('/sign-up', data={'_csrf_token': csrf, 'name': 'A',
@@ -60,13 +70,13 @@ def test_sign_up(client):
     resp = client.post('/sign-up', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'xxx', 'checksum': hash('1'), 'answer': '1'})
 
-    assert 'This user name is unavailable' in resp.data
+    assert six.b('This user name is unavailable') in resp.data
 
     csrf = extract_csrf_token(client, '/sign-in')
     resp = client.post('/sign-in', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'yyy'})
 
-    assert 'Wrong user name or password' in resp.data
+    assert six.b('Wrong user name or password') in resp.data
 
     csrf = extract_csrf_token(client, '/sign-in')
     resp = client.post('/sign-in', data={'_csrf_token': csrf, 'name': 'A',

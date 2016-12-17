@@ -19,6 +19,7 @@
 
 import datetime
 import bcrypt
+import six
 
 from flask_login import UserMixin
 from diamond.utils import cached_property
@@ -31,7 +32,7 @@ class User(UserMixin, db.Model):
 
     slug = db.Column(db.String, primary_key=True)
     password = db.Column(db.String)
-    admin = db.Column(db.Boolean, nullable=False)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
     timestamp = db.Column(db.DateTime, nullable=False,
             default=datetime.datetime.utcnow)
 
@@ -63,14 +64,23 @@ class User(UserMixin, db.Model):
         return self.slug
 
     def set_password(self, password):
-        self.password = bcrypt.hashpw(password.encode('utf8'),
-                bcrypt.gensalt())
+        if isinstance(password, six.text_type):
+            password = password.encode('utf-8')
+
+        self.password = bcrypt.hashpw(password, bcrypt.gensalt())
 
         return self
 
     def check_password(self, password):
-        return bcrypt.checkpw(password.encode('utf8'),
-                self.password.encode('utf8'))
+        self_password = self.password
+
+        if isinstance(password, six.text_type):
+            password = password.encode('utf-8')
+
+        if isinstance(self_password, six.text_type):
+            self_password = self_password.encode('utf-8')
+
+        return bcrypt.checkpw(password, self_password)
 
     def save(self):
         db.session.add(self)
