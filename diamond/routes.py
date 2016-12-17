@@ -27,7 +27,7 @@ from diamond.formatter import convert, parse
 from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
-from diamond.models import Document, Metadata, Parameter, param
+from diamond.models import Document, Metadata, param
 from diamond.utils import secret, get_int_arg
 from diamond.caching import cached_body, invalidator
 
@@ -197,32 +197,6 @@ def history(slug):
 
     return render_template('history.j2', menu=Document.get('main-menu'),
             page=page, history=history)
-
-
-@app.route('/settings', methods=['GET', 'POST'])
-def settings():
-    if not current_user.admin:
-        error = _('You are not allowed to change settings')
-        return render_template('error.j2', error=error), 403
-
-    if request.method == 'GET':
-        return render_template('settings.j2', menu=Document.get('main-menu'))
-
-    params = request.form.get('params', '')
-    for key in params.split():
-        if not key:
-            pass
-
-        Parameter.set(key, request.form.get(key, ''))
-
-    db.session.commit()
-
-    Parameter.clear_cache()
-
-    message = _('Your changes have been saved')
-    flash(message)
-
-    return redirect(url_for('settings'))
 
 
 @app.route('/diff/<slug>/<a>/<b>')

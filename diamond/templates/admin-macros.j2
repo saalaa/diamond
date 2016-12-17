@@ -1,0 +1,18 @@
+{% macro render_menu(active) %}
+  <div class="navbar">
+    <ul>
+      <li>
+        <a {{ 'active' if active == 'settings' else '' }}
+          href="/admin/settings">{{ _('Settings') }}</a>
+      </li>
+      <li>
+        <a {{ 'active' if active == 'appearance' else '' }}
+          href="/admin/appearance">{{ _('Appearance') }}</a>
+      </li>
+      <li>
+        <a {{ 'active' if active == 'security' else '' }}
+          href="/admin/security">{{ _('Security') }}</a>
+      </li>
+    </ul>
+  </div>
+{% endmacro %}

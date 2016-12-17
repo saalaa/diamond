@@ -30,12 +30,14 @@ a:hover {
   border-bottom: 1px solid transparent;
 }
 .title a,
-a.wikilink {
+a.wikilink,
+a[active] {
   color: #0645ad;
   border-bottom: 1px solid transparent;
 }
 .title a:hover,
-a.wikilink:hover {
+a.wikilink:hover,
+a[active]:hover {
   color: #333;
   border-bottom: 1px solid #0645ad;
 }
@@ -61,12 +63,14 @@ a.backlink:hover {
   border-bottom: 1px solid transparent;
 }
 .green .title a,
-.green a.wikilink {
+.green a.wikilink,
+.green a[active] {
   color: #93c090;
   border-bottom: 1px solid transparent;
 }
 .green .title a:hover,
-.green a.wikilink:hover {
+.green a.wikilink:hover,
+.green a[active]:hover {
   color: #333;
   border-bottom: 1px solid #93c090;
 }
@@ -92,12 +96,14 @@ a.backlink:hover {
   border-bottom: 1px solid transparent;
 }
 .pink .title a,
-.pink a.wikilink {
+.pink a.wikilink,
+.pink a[active] {
   color: #bb6688;
   border-bottom: 1px solid transparent;
 }
 .pink .title a:hover,
-.pink a.wikilink:hover {
+.pink a.wikilink:hover,
+.pink a[active]:hover {
   color: #333;
   border-bottom: 1px solid #bb6688;
 }
@@ -123,12 +129,14 @@ a.backlink:hover {
   border-bottom: 1px solid transparent;
 }
 .purple .title a,
-.purple a.wikilink {
+.purple a.wikilink,
+.purple a[active] {
   color: #7050c0;
   border-bottom: 1px solid transparent;
 }
 .purple .title a:hover,
-.purple a.wikilink:hover {
+.purple a.wikilink:hover,
+.purple a[active]:hover {
   color: #333;
   border-bottom: 1px solid #7050c0;
 }

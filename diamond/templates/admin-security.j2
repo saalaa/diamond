@@ -1,0 +1,39 @@
+{% extends "skeleton.j2" %}
+
+{% import "admin-macros.j2" as macros %}
+
+{% block title %}
+  {{ _('Security') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ macros.render_menu('security') }}
+  </div>
+
+  <div class="settings">
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+
+      <fieldset>
+        <legend>{{ _('Security form') }}</legend>
+
+        <input value="auth_only" type="hidden"
+          name="params">
+
+        <div class="form-row">
+          <label for="field-auth_only">{{ _('Edition policy') }}</label>
+          <select name="auth_only" id="field-auth_only" class="full-w">
+            <option value="">{{ _('Everyone') }}</option>
+            <option {{ 'selected' if g.param('auth_only', '') else '' }}
+              value="yes">{{ _('Registered users only') }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}

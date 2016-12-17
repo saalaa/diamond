@@ -1,0 +1,82 @@
+{% extends "skeleton.j2" %}
+
+{% import "admin-macros.j2" as macros %}
+
+{% block title %}
+  {{ _('Appearance') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ macros.render_menu('appearance') }}
+  </div>
+
+  <div class="settings">
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+
+      <fieldset>
+        <legend>{{ _('Appearance form') }}</legend>
+
+        <input value="favicon stylesheet classes css" type="hidden"
+          name="params">
+
+        <div class="form-row">
+          <label for="field-favicon">{{ _('Favicon') }}</label>
+          <input name="favicon" id="field-favicon" class="full-w" type="text"
+            value="{{ g.param('favicon', '/static/diamond.ico') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-stylesheet">{{ _('Stylesheet') }}</label>
+          <input name="stylesheet" id="field-stylesheet" class="full-w"
+            placeholder="Example: /static/stylesheet-diplomat.css" type="text"
+            value="{{ g.param('stylesheet',
+              '/static/stylesheet-diplomat.css') }}">
+
+          <div class="form-help">
+            <p>Available stylesheets:
+              <code>/static/stylesheet-diplomat.css</code>,
+              <code>/static/stylesheet-capital.css</code>.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="field-classes">{{ _('Body classes') }}</label>
+          <input name="classes" id="field-classes" class="full-w" type="text"
+            placeholder="Example: purple fixed-menu"
+            value="{{ g.param('classes', '') }}">
+
+          <div class="form-help">
+            <p>
+              Available color schemes: <code>green</code>, <code>pink</code>,
+              <code>purple</code>. <br>
+              Available headers: <code>static-header</code>,
+              <code>fixed-header</code>.
+            </p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="field-css">{{ _('Custom CSS') }}</label>
+          <textarea name="css" id="field-css" class="full-w editor"
+            cols="80" rows="6">{{ g.param('css', '') }}</textarea>
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}
+
+{% block extra %}
+  {% if g.param('editor', '') == 'codemirror' %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.css"
+      rel="stylesheet">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/mode/css/css.min.js"></script>
+  {% endif %}
+{% endblock %}

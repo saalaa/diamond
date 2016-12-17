@@ -1,0 +1,74 @@
+{% extends "skeleton.j2" %}
+
+{% import "admin-macros.j2" as macros %}
+
+{% block title %}
+  {{ _('Settings') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ macros.render_menu('settings') }}
+  </div>
+
+  <div class="settings">
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+
+      <fieldset>
+        <legend>{{ _('Settings form') }}</legend>
+
+        <input value="title description frontpage lang dir editor" type="hidden"
+          name="params">
+
+        <div class="form-row">
+          <label for="field-title">{{ _('Title') }}</label>
+          <input name="title" id="field-title" class="full-w" type="text"
+            value="{{ g.param('title', 'Diamond wiki') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-description">{{ _('Description') }}</label>
+          <input name="description" id="field-description" class="full-w"
+            type="text" value="{{ g.param('description',
+              'Diamond wiki, the metadata enabled wiki engine') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-frontpage">{{ _('Front page slug') }}</label>
+          <input name="frontpage" id="field-frontpage" class="full-w"
+            type="text" value="{{ g.param('frontpage', 'front-page') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-lang">{{ _('Language') }}</label>
+          <input name="lang" id="field-lang" class="full-w" type="text"
+            value="{{ g.param('lang', 'en') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-dir">{{ _('Text direction') }}</label>
+          <select name="dir" id="field-dir" class="full-w">
+            <option {{ 'selected' if g.param('dir', '') == 'ltr' else '' }}
+              value="ltr">{{ _('Left to right') }}</option>
+            <option {{ 'selected' if g.param('dir', '') == 'rtl' else '' }}
+              value="rtl">{{ _('Right to left') }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="field-editor">{{ _('Editor') }}</label>
+          <select name="editor" id="field-editor" class="full-w">
+            <option value="">{{ _('Default editor') }}</option>
+            <option {{ 'selected' if g.param('editor', '') else '' }}
+              value="codemirror">{{ _('CodeMirror') }}</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}

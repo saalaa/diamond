@@ -208,6 +208,30 @@ a.backlink {
   margin: 0;
   padding: 0 5px;
 }
+.navbar {
+  margin-bottom: 1.5em;
+}
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
+.navbar ul li a,
+.navbar ul li a:hover {
+  display: block;
+  padding: 10px 10px;
+  border: 0;
+}
+@media (min-width: 768px) {
+  .navbar ul {
+    text-align: center;
+  }
+  .navbar ul li {
+    display: inline-block;
+  }
+}
 fieldset {
   padding: 0;
   margin: 0;

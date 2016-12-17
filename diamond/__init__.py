@@ -24,6 +24,7 @@ import diamond.filters  # NOQA
 import diamond.i18n     # NOQA
 import diamond.auth     # NOQA
 import diamond.routes   # NOQA
+import diamond.admin    # NOQA
 import diamond.errors   # NOQA
 
 from diamond.app import app
