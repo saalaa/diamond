@@ -2,7 +2,7 @@
 
 If you're reading this, [[Diamond wiki]] has been successfully installed.
 
-Here's a list of things you should to make this more personal:
+Here's a list of things you should do to make this more personal:
 
 - [Create an admin account](/auth/sign-up)
 - [Tweak the settings](/admin)
