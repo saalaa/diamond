@@ -50,13 +50,13 @@
           <a href="/{{ current_user.slug }}" class="wikilink signed-in">
             {{ current_user.name }}</a>
           <span>/</span>
-          <a href="/sign-out" class="sign-out">
+          <a href="/auth/sign-out" class="sign-out">
             {{ _('Sign out') }}</a>
         {% else %}
-          <a href="/sign-in" class="sign-in">
+          <a href="/auth/sign-in" class="sign-in">
             {{ _('Sign in') }}</a>
           <span>/</span>
-          <a href="/sign-up" class="sign-up">
+          <a href="/auth/sign-up" class="sign-up">
             {{ _('Sign up') }}</a>
         {% endif %}
       </div>

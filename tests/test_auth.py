@@ -52,34 +52,34 @@ def extract_csrf_token(client, url):
 
 
 def test_sign_up(client):
-    csrf = extract_csrf_token(client, '/sign-up')
-    resp = client.post('/sign-up', data={'_csrf_token': csrf, 'name': 'A',
+    csrf = extract_csrf_token(client, '/auth/sign-up')
+    resp = client.post('/auth/sign-up', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'xxx', 'checksum': 'nope', 'answer': 'nope'})
 
     assert six.b('You failed to answer the simple maths question') in resp.data
 
-    csrf = extract_csrf_token(client, '/sign-up')
-    resp = client.post('/sign-up', data={'_csrf_token': csrf, 'name': 'A',
+    csrf = extract_csrf_token(client, '/auth/sign-up')
+    resp = client.post('/auth/sign-up', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'xxx', 'checksum': hash('1'), 'answer': '1'})
 
     assert resp.status_code == 302
 
-    resp = client.get('/sign-out')
+    resp = client.get('/auth/sign-out')
 
-    csrf = extract_csrf_token(client, '/sign-up')
-    resp = client.post('/sign-up', data={'_csrf_token': csrf, 'name': 'A',
+    csrf = extract_csrf_token(client, '/auth/sign-up')
+    resp = client.post('/auth/sign-up', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'xxx', 'checksum': hash('1'), 'answer': '1'})
 
     assert six.b('This user name is unavailable') in resp.data
 
-    csrf = extract_csrf_token(client, '/sign-in')
-    resp = client.post('/sign-in', data={'_csrf_token': csrf, 'name': 'A',
+    csrf = extract_csrf_token(client, '/auth/sign-in')
+    resp = client.post('/auth/sign-in', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'yyy'})
 
     assert six.b('Wrong user name or password') in resp.data
 
-    csrf = extract_csrf_token(client, '/sign-in')
-    resp = client.post('/sign-in', data={'_csrf_token': csrf, 'name': 'A',
+    csrf = extract_csrf_token(client, '/auth/sign-in')
+    resp = client.post('/auth/sign-in', data={'_csrf_token': csrf, 'name': 'A',
         'password': 'xxx'})
 
     assert resp.status_code == 302

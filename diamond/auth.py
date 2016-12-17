@@ -50,7 +50,7 @@ def user_loader(slug):
     return User.get(slug) if slug else None
 
 
-@app.route('/sign-up', methods=['GET', 'POST'])
+@app.route('/auth/sign-up', methods=['GET', 'POST'])
 def sign_up():
     def respond(message=None):
         if message:
@@ -101,7 +101,7 @@ def sign_up():
     return redirect(url_for('read', slug=slug))
 
 
-@app.route('/sign-in', methods=['GET', 'POST'])
+@app.route('/auth/sign-in', methods=['GET', 'POST'])
 def sign_in():
     def respond(message=None):
         if message:
@@ -127,7 +127,7 @@ def sign_in():
     return redirect(url_for('read', slug=user.slug))
 
 
-@app.route('/sign-out')
+@app.route('/auth/sign-out')
 def sign_out():
     logout_user()
     return redirect(url_for('read'))
