@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-16 19:40+0100\n"
+"POT-Creation-Date: 2016-12-17 22:01+0100\n"
 "PO-Revision-Date: 2016-12-14 22:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: diamond/auth.py:77
+#: diamond/auth.py:76
 msgid "You failed to answer the simple maths question"
 msgstr "Vous n'avez pas réussi le test mathématique"
 
-#: diamond/auth.py:81
+#: diamond/auth.py:80
 msgid "This user name is unavailable"
 msgstr "Ce nom d'utilisateur n'est pas disponible"
 
-#: diamond/auth.py:124
+#: diamond/auth.py:122
 msgid "Wrong user name or password"
 msgstr "Mauvais nom d'utilisateur ou mot de passe"
 
@@ -66,76 +66,116 @@ msgstr "Merci pour votre contribution. Votre attention aux détails est appréci
 msgid "You are not allowed to change settings"
 msgstr "Vous n'êtes pas autorisé à modifier la configuration"
 
-#: diamond/routes.py:223
+#: diamond/routes.py:222
 msgid "Your changes have been saved"
 msgstr "Vos modifications ont été sauvegardées"
 
-#: diamond/routes.py:254
+#: diamond/routes.py:252
 msgid "You are not allowed to deactivate this page"
 msgstr "Vous n'êtes pas autorisé à désactiver la page"
 
-#: diamond/routes.py:271
+#: diamond/routes.py:269
 msgid "Missing version parameter"
 msgstr "Paramètre de version manquant"
 
-#: diamond/routes.py:279
+#: diamond/routes.py:276
 msgid "You are not allowed to activate this page"
 msgstr "Vous n'êtes pas autorisé à activer la page"
 
-#: diamond/templates/activate.j2:4
+#: diamond/templates/activate.j2:4 diamond/templates/activate.j2:9
 msgid "Activation"
 msgstr "Activation de la page"
 
-#: diamond/templates/activate.j2:13
+#: diamond/templates/activate.j2:11
+msgid ""
+"This will make this version of the page active. It will then\n"
+"      become visible to all users through links and searches."
+msgstr ""
+"Si vous activez cette révision de la page, elle deviendra la révision "
+"courante et deviendra visible sur le wiki."
+
+#: diamond/templates/activate.j2:20
 msgid "Page activation"
 msgstr "Activation de la page"
 
-#: diamond/templates/activate.j2:16 diamond/templates/menu.j2:26
+#: diamond/templates/activate.j2:23 diamond/templates/menu.j2:26
 msgid "Activate"
 msgstr "Activer"
 
-#: diamond/templates/deactivate.j2:4
+#: diamond/templates/deactivate.j2:4 diamond/templates/deactivate.j2:9
 msgid "Deactivation"
 msgstr "Désactivation de la page"
 
-#: diamond/templates/deactivate.j2:13
+#: diamond/templates/deactivate.j2:11
+msgid ""
+"If you deactivate this page, it will become completely invisible.\n"
+"      No data is lost though so you can always activate it at a later "
+"stage."
+msgstr ""
+"Si vous désactivez cette page, elle deviendra complètement invisible. Il sera"
+"possible de réactiver la page utlérieurement."
+
+#: diamond/templates/deactivate.j2:20
 msgid "Page deactivation"
 msgstr "Désactivation de la page"
 
-#: diamond/templates/deactivate.j2:16 diamond/templates/menu.j2:23
+#: diamond/templates/deactivate.j2:23 diamond/templates/menu.j2:23
 msgid "Deactivate"
 msgstr "Désactiver"
 
-#: diamond/templates/diff.j2:4
+#: diamond/templates/diff.j2:4 diamond/templates/diff.j2:9
 msgid "Diff"
 msgstr "Différences"
 
-#: diamond/templates/edit.j2:4 diamond/templates/menu.j2:15
+#: diamond/templates/diff.j2:11
+msgid ""
+"Below is a compiled list of differences between two page versions.\n"
+"      Use it to review changes that were made."
+msgstr ""
+"Cette page liste les différences entre deux révision de la page. Elle vous "
+"permet de savoir ce qui a changé avec précision."
+
+#: diamond/templates/edit.j2:4 diamond/templates/edit.j2:9
+#: diamond/templates/menu.j2:15
 msgid "Edit"
 msgstr "Éditer"
 
-#: diamond/templates/edit.j2:13
+#: diamond/templates/edit.j2:11
+msgid ""
+"Before contributing, you may want to read the <a class=\"wikilink\"\n"
+"      href=\"/editing-guidelines\">editing guidelines</a>.  This Wiki "
+"uses <a\n"
+"      class=\"wikilink\" href=\"/markdown\">Markdown</a> with various "
+"extensions to\n"
+"      render text."
+msgstr ""
+"N'hésitez pas à consulter la <a class=\"wikilink\" "
+"href=\"/politique-editoriale\">politique éditoriale</a> avant de contribuer. "
+"Ce wiki utilise le <a class=\"wikilink\" href=\"/markdown\">Markdown</a> pour "
+"la mise en forme du texte."
+
+#: diamond/templates/edit.j2:22
 msgid "Page edition"
 msgstr "Édition de la page"
 
-#: diamond/templates/edit.j2:16
+#: diamond/templates/edit.j2:25
 msgid "Page body"
 msgstr "Corps de la page"
 
-#: diamond/templates/edit.j2:23 diamond/templates/history.j2:22
-#: diamond/templates/recent-changes.j2:17
+#: diamond/templates/edit.j2:32 diamond/templates/history.j2:28
+#: diamond/templates/recent-changes.j2:25
 msgid "Comment"
 msgstr "Commentaire"
 
-#: diamond/templates/edit.j2:25
+#: diamond/templates/edit.j2:34
 msgid "Describe your changes unless it's a minor edit"
 msgstr "Décrivez vos modification sauf si elles sont mineures"
 
-#: diamond/templates/edit.j2:32
+#: diamond/templates/edit.j2:41
 msgid "Preview"
 msgstr "Prévisualiser"
 
-#: diamond/templates/edit.j2:37 diamond/templates/settings.j2:121
+#: diamond/templates/edit.j2:46 diamond/templates/settings.j2:125
 msgid "Save"
 msgstr "Sauvergarder"
 
@@ -143,23 +183,28 @@ msgstr "Sauvergarder"
 msgid "Error"
 msgstr "Erreur"
 
-#: diamond/templates/history.j2:6 diamond/templates/menu.j2:11
+#: diamond/templates/history.j2:6 diamond/templates/history.j2:11
+#: diamond/templates/menu.j2:11
 msgid "History"
 msgstr "Historique"
 
-#: diamond/templates/history.j2:14 diamond/templates/recent-changes.j2:13
+#: diamond/templates/history.j2:13
+msgid "Below is a list of all changes that were made to the page."
+msgstr "Cette page liste tous les changements survenus sur cette page."
+
+#: diamond/templates/history.j2:20 diamond/templates/recent-changes.j2:21
 msgid "Timestamp"
 msgstr "Horodatage"
 
-#: diamond/templates/history.j2:17
+#: diamond/templates/history.j2:23
 msgid "Diff."
 msgstr "Diff."
 
-#: diamond/templates/history.j2:20 diamond/templates/recent-changes.j2:14
+#: diamond/templates/history.j2:26 diamond/templates/recent-changes.j2:22
 msgid "V."
 msgstr "V."
 
-#: diamond/templates/history.j2:21 diamond/templates/recent-changes.j2:16
+#: diamond/templates/history.j2:27 diamond/templates/recent-changes.j2:24
 msgid "Author"
 msgstr "Auteur"
 
@@ -207,159 +252,174 @@ msgstr ""
 "Aucune <a href=\"/metadata\" class=\"wikilink\">métadonnée</a> pour cette"
 " page."
 
-#: diamond/templates/recent-changes.j2:6
+#: diamond/templates/recent-changes.j2:6 diamond/templates/recent-changes.j2:11
 msgid "Recent changes"
 msgstr "Modifications récentes"
 
-#: diamond/templates/recent-changes.j2:15 diamond/templates/settings.j2:39
+#: diamond/templates/recent-changes.j2:13
+msgid ""
+"This page lists the most recent edits made to the wiki. Use this\n"
+"      page to monitor and review the latest contributions, to discover "
+"and\n"
+"      correct mistakes and to spot and revert vandalism."
+msgstr ""
+"Cette page liste les dernières modifications qui ont été faites sur le wiki. "
+"Elle vous permet d'être au courant des dernières contributions, de découvrir "
+"et de corriger les erreurs ainsi que de corriger le vandalisme."
+
+#: diamond/templates/recent-changes.j2:23 diamond/templates/settings.j2:43
 msgid "Title"
 msgstr "Titre"
 
-#: diamond/templates/search.j2:4 diamond/templates/search.j2:24
+#: diamond/templates/search.j2:4 diamond/templates/search.j2:9
+#: diamond/templates/search.j2:28
 msgid "Search"
 msgstr "Rechercher"
 
-#: diamond/templates/search.j2:11
+#: diamond/templates/search.j2:15
 msgid "Search through the wiki"
-msgstr "Rechercher sur le site"
+msgstr "Rechercher dans le wiki"
 
-#: diamond/templates/search.j2:17
+#: diamond/templates/search.j2:21
 msgid "Query term"
 msgstr "Terme de recherche"
 
-#: diamond/templates/search.j2:51
+#: diamond/templates/search.j2:55
 msgid "No further faceting available."
 msgstr "Aucune facette supplémentaire disponible."
 
-#: diamond/templates/settings.j2:4 diamond/templates/settings.j2:13
+#: diamond/templates/settings.j2:4 diamond/templates/settings.j2:9
+#: diamond/templates/settings.j2:17
 msgid "Settings"
 msgstr "Configuration"
 
-#: diamond/templates/settings.j2:18
+#: diamond/templates/settings.j2:22
 msgid "Locale"
 msgstr "Localisation"
 
-#: diamond/templates/settings.j2:21
+#: diamond/templates/settings.j2:25
 msgid "Language"
 msgstr "Langue"
 
-#: diamond/templates/settings.j2:27
+#: diamond/templates/settings.j2:31
 msgid "Text direction"
 msgstr "Sens d'écriture"
 
-#: diamond/templates/settings.j2:30
+#: diamond/templates/settings.j2:34
 msgid "Left to right"
 msgstr "De gauche à droite"
 
-#: diamond/templates/settings.j2:32
+#: diamond/templates/settings.j2:36
 msgid "Right to left"
 msgstr "De droite à gauche"
 
-#: diamond/templates/settings.j2:36
+#: diamond/templates/settings.j2:40
 msgid "Configuration"
 msgstr "Configuration"
 
-#: diamond/templates/settings.j2:45
+#: diamond/templates/settings.j2:49
 msgid "Description"
 msgstr "Description"
 
-#: diamond/templates/settings.j2:52
+#: diamond/templates/settings.j2:56
 msgid "Front page slug"
 msgstr "Adresse de page d'accueil"
 
-#: diamond/templates/settings.j2:57
+#: diamond/templates/settings.j2:61
 msgid "Security"
 msgstr "Sécurité"
 
-#: diamond/templates/settings.j2:60
+#: diamond/templates/settings.j2:64
 msgid "Edition policy"
 msgstr "Politique d'édition"
 
-#: diamond/templates/settings.j2:62
+#: diamond/templates/settings.j2:66
 msgid "Everyone"
 msgstr "Tout le monde"
 
-#: diamond/templates/settings.j2:64
+#: diamond/templates/settings.j2:68
 msgid "Registered users only"
 msgstr "Utilisateurs enregistrés seulement"
 
-#: diamond/templates/settings.j2:68
+#: diamond/templates/settings.j2:72
 msgid "Appearance"
 msgstr "Apparence"
 
-#: diamond/templates/settings.j2:71
+#: diamond/templates/settings.j2:75
 msgid "Favicon"
 msgstr "Icône du site"
 
-#: diamond/templates/settings.j2:77
+#: diamond/templates/settings.j2:81
 msgid "Stylesheet"
 msgstr "Feuille de style"
 
-#: diamond/templates/settings.j2:91
+#: diamond/templates/settings.j2:95
 msgid "Body classes"
 msgstr "Classes CSS"
 
-#: diamond/templates/settings.j2:106
+#: diamond/templates/settings.j2:110
 msgid "Editor"
 msgstr "Éditeur"
 
-#: diamond/templates/settings.j2:108
+#: diamond/templates/settings.j2:112
 msgid "Default editor"
 msgstr "Éditeur par défaut"
 
-#: diamond/templates/settings.j2:110
+#: diamond/templates/settings.j2:114
 msgid "CodeMirror"
 msgstr "CodeMirror"
 
-#: diamond/templates/settings.j2:115
+#: diamond/templates/settings.j2:119
 msgid "Custom CSS"
 msgstr "CSS personnalisé"
 
-#: diamond/templates/sign-in.j2:4 diamond/templates/skeleton.j2:57
+#: diamond/templates/sign-in.j2:4 diamond/templates/sign-in.j2:9
+#: diamond/templates/skeleton.j2:57
 msgid "Sign in"
 msgstr "Connexion"
 
-#: diamond/templates/sign-in.j2:13
+#: diamond/templates/sign-in.j2:17
 msgid "Sign in form"
 msgstr "Formulaire de connexion"
 
-#: diamond/templates/sign-in.j2:16 diamond/templates/sign-up.j2:17
+#: diamond/templates/sign-in.j2:20 diamond/templates/sign-up.j2:21
 msgid "User name"
 msgstr "Nom d'utilisateur"
 
-#: diamond/templates/sign-in.j2:18 diamond/templates/sign-up.j2:19
+#: diamond/templates/sign-in.j2:22 diamond/templates/sign-up.j2:23
 msgid "Your full name, eg.: John Doe"
 msgstr "Votre nom complet, par exemple : Jean Colle"
 
-#: diamond/templates/sign-in.j2:22 diamond/templates/sign-up.j2:23
+#: diamond/templates/sign-in.j2:26 diamond/templates/sign-up.j2:27
 msgid "Password"
 msgstr "Mot de passe"
 
-#: diamond/templates/sign-in.j2:24
+#: diamond/templates/sign-in.j2:28
 msgid "Your password"
 msgstr "Votre mot de passe"
 
-#: diamond/templates/sign-in.j2:28 diamond/templates/sign-up.j2:36
+#: diamond/templates/sign-in.j2:32 diamond/templates/sign-up.j2:40
 msgid "Go"
 msgstr "Envoyer"
 
-#: diamond/templates/sign-up.j2:4 diamond/templates/skeleton.j2:60
+#: diamond/templates/sign-up.j2:4 diamond/templates/sign-up.j2:9
+#: diamond/templates/skeleton.j2:60
 msgid "Sign up"
 msgstr "Créer un compte"
 
-#: diamond/templates/sign-up.j2:14
+#: diamond/templates/sign-up.j2:18
 msgid "Sign up form"
 msgstr "Formulaire de connexion"
 
-#: diamond/templates/sign-up.j2:25
+#: diamond/templates/sign-up.j2:29
 msgid "Choose a password"
 msgstr "Choisissez un mot de passe"
 
-#: diamond/templates/sign-up.j2:29
+#: diamond/templates/sign-up.j2:33
 msgid "Confirm you're human:"
 msgstr "Confirmez que vous êtes un humain"
 
-#: diamond/templates/sign-up.j2:32
+#: diamond/templates/sign-up.j2:36
 msgid "Answer using numbers only"
 msgstr "Répondez avec des chiffres uniquement"
 
@@ -367,6 +427,14 @@ msgstr "Répondez avec des chiffres uniquement"
 msgid "Sign out"
 msgstr "Déconnexion"
 
-#: diamond/templates/title-index.j2:4
+#: diamond/templates/title-index.j2:4 diamond/templates/title-index.j2:9
 msgid "Title index"
 msgstr "Index des titres"
+
+#: diamond/templates/title-index.j2:11
+msgid ""
+"This page lists all existing pages in the wiki. Use this page to\n"
+"      discover pages."
+msgstr ""
+"Cette page liste toutes les pages du wiki; elle vous permet de découvrir "
+"de nouvelles pages."
