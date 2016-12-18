@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import time
+import json
 
 from diamond.db import db
 
@@ -25,6 +26,9 @@ CACHE_DELAY = 300 # 5 minutes
 
 
 def param(key, default='', cast=None):
+    if cast == 'json':
+        cast = json.loads
+
     return Parameter.get(key, default, cast)
 
 

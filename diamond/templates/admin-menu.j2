@@ -1,0 +1,115 @@
+{% extends "skeleton.j2" %}
+
+{% import "admin-macros.j2" as macros %}
+
+<!--
+
+  Babel bait: {{ _('Sandbox') }} {{ _('link') }} {{ _('search') }}
+
+ -->
+
+{% block title %}
+  {{ _('Appearance') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ macros.render_menu('menu') }}
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>{{ _('Type') }}</th>
+        <th>{{ _('Title') }}</th>
+        <th>{{ _('URL') }}</th>
+      </tr>
+    </thead>
+
+    {% for item in g.param('menu', g.DEFAULT_MENU, 'json')['items'] %}
+      <tr>
+        <td>
+          <a class="button" href="/admin/menu/remove/{{ loop.index - 1 }}">
+            ×
+          </a>
+
+          <a class="button" href="/admin/menu/move-up/{{ loop.index - 1}}"
+            {{ 'disabled' if loop.first else '' }}>&uarr;</a>
+
+          <a class="button" href="/admin/menu/move-down/{{ loop.index - 1}}"
+            {{ 'disabled' if loop.last else '' }}>&darr;</a>
+        </td>
+
+        <td>
+          <code>{{ _(item['type']) }}</code>
+        </td>
+
+        <td>
+          {% if item['type'] == 'link' %}
+            {{ _(item['title']) }}
+          {% endif %}
+        </td>
+
+        <td>
+          {% if item['type'] == 'link' %}
+            <a href="{{ item['url'] }}">
+              {{ item['url'] }}
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <div class="settings">
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+
+      <fieldset>
+        <legend>{{ _('New entry form') }}</legend>
+
+        <h2>{{ _('New entry') }}</h2>
+
+        <div class="form-row">
+          <label for="field-type">{{ _('Type') }}</label>
+          <select name="type" id="field-type" class="full-w">
+            <option value="link">{{ _('Link') }}</option>
+            <option value="search">{{ _('Search bar') }}</option>
+          </select>
+        </div>
+
+        <div class="hidden-search">
+          <div class="form-row">
+            <label for="field-title">{{ _('Title') }}</label>
+            <input name="title" id="field-title" class="full-w" type="text">
+          </div>
+
+          <div class="form-row">
+            <label for="field-url">{{ _('URL') }}</label>
+            <input name="url" id="field-url" class="full-w" type="text">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block extra %}
+  <script>
+    $(function($) {
+      $('select').on('change', function () {
+        var value = $(this).val();
+
+        if (value === 'search') {
+          $('.hidden-search').hide();
+        } else {
+          $('.hidden-search').show();
+        }
+      });
+    });
+  </script>
+{% endblock %}

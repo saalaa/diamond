@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-17 22:01+0100\n"
+"POT-Creation-Date: 2016-12-18 01:30+0100\n"
 "PO-Revision-Date: 2016-12-14 22:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -17,6 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
+
+#: diamond/admin.py:32 diamond/admin.py:79
+msgid "You are not allowed to access this page"
+msgstr "Vous n'êtes pas autorisé à accéder à cette page"
+
+#: diamond/admin.py:50 diamond/admin.py:103 diamond/admin.py:121
+#: diamond/admin.py:143 diamond/admin.py:165
+msgid "Your changes have been saved"
+msgstr "Vos modifications ont été sauvegardées"
 
 #: diamond/auth.py:76
 msgid "You failed to answer the simple maths question"
@@ -36,49 +45,41 @@ msgstr ""
 "Une erreur est survenue, veuillez contacter l'administrateur ou réessayer"
 " plus tard."
 
-#: diamond/routes.py:56
+#: diamond/routes.py:68
 msgid "CSRF error"
 msgstr "Erreur de protection CSRF"
 
-#: diamond/routes.py:81
+#: diamond/routes.py:93
 msgid "This version does not exist"
 msgstr "Cette version n'existe pas"
 
-#: diamond/routes.py:84
+#: diamond/routes.py:96
 #, python-format
 msgid "You are viewing version %(version)s of this page"
 msgstr "Vous visualisez la version %(version)s de cette page"
 
-#: diamond/routes.py:95
+#: diamond/routes.py:107
 #, python-format
 msgid "Redirected from %(page_name)s"
 msgstr "Redirigé depuis %(page_name)s"
 
-#: diamond/routes.py:122
+#: diamond/routes.py:134
 msgid "Edition is limited to registered users only"
 msgstr "L'édition est limitée aux utilisateurs enregistrés"
 
-#: diamond/routes.py:148
+#: diamond/routes.py:160
 msgid "Thank you for your changes. Your attention to detail is appreciated."
 msgstr "Merci pour votre contribution. Votre attention aux détails est appréciée."
 
-#: diamond/routes.py:205
-msgid "You are not allowed to change settings"
-msgstr "Vous n'êtes pas autorisé à modifier la configuration"
-
-#: diamond/routes.py:222
-msgid "Your changes have been saved"
-msgstr "Vos modifications ont été sauvegardées"
-
-#: diamond/routes.py:252
+#: diamond/routes.py:238
 msgid "You are not allowed to deactivate this page"
 msgstr "Vous n'êtes pas autorisé à désactiver la page"
 
-#: diamond/routes.py:269
+#: diamond/routes.py:255
 msgid "Missing version parameter"
 msgstr "Paramètre de version manquant"
 
-#: diamond/routes.py:276
+#: diamond/routes.py:262
 msgid "You are not allowed to activate this page"
 msgstr "Vous n'êtes pas autorisé à activer la page"
 
@@ -102,6 +103,147 @@ msgstr "Activation de la page"
 msgid "Activate"
 msgstr "Activer"
 
+#: diamond/templates/admin-appearance.j2:6 diamond/templates/admin-macros.j2:10
+#: diamond/templates/admin-menu.j2:12
+msgid "Appearance"
+msgstr "Apparence"
+
+#: diamond/templates/admin-appearance.j2:19
+msgid "Appearance form"
+msgstr "Formulaire d'apparence"
+
+#: diamond/templates/admin-appearance.j2:25
+msgid "Favicon"
+msgstr "Icône du site"
+
+#: diamond/templates/admin-appearance.j2:31
+msgid "Stylesheet"
+msgstr "Feuille de style"
+
+#: diamond/templates/admin-appearance.j2:45
+msgid "Body classes"
+msgstr "Classes CSS"
+
+#: diamond/templates/admin-appearance.j2:61
+msgid "Custom CSS"
+msgstr "CSS personnalisé"
+
+#: diamond/templates/admin-appearance.j2:67 diamond/templates/admin-menu.j2:95
+#: diamond/templates/admin-security.j2:34
+#: diamond/templates/admin-settings.j2:69 diamond/templates/edit.j2:46
+msgid "Save"
+msgstr "Sauvergarder"
+
+#: diamond/templates/admin-macros.j2:6 diamond/templates/admin-settings.j2:6
+msgid "Settings"
+msgstr "Configuration"
+
+#: diamond/templates/admin-macros.j2:14 diamond/templates/admin-security.j2:6
+msgid "Security"
+msgstr "Sécurité"
+
+#: diamond/templates/admin-macros.j2:18
+msgid "Menu"
+msgstr "Menu"
+
+#: diamond/templates/admin-menu.j2:7
+msgid "Sandbox"
+msgstr "Bac à sable"
+
+#: diamond/templates/admin-menu.j2:7
+msgid "link"
+msgstr "Lien"
+
+#: diamond/templates/admin-menu.j2:7
+msgid "search"
+msgstr "Recherche"
+
+#: diamond/templates/admin-menu.j2:24 diamond/templates/admin-menu.j2:75
+msgid "Type"
+msgstr "Type"
+
+#: diamond/templates/admin-menu.j2:25 diamond/templates/admin-menu.j2:84
+#: diamond/templates/admin-settings.j2:25
+#: diamond/templates/recent-changes.j2:23
+msgid "Title"
+msgstr "Titre"
+
+#: diamond/templates/admin-menu.j2:26 diamond/templates/admin-menu.j2:89
+msgid "URL"
+msgstr "URL"
+
+#: diamond/templates/admin-menu.j2:70
+msgid "New entry form"
+msgstr "Formulaire de nouvelle entrée"
+
+#: diamond/templates/admin-menu.j2:72
+msgid "New entry"
+msgstr "Nouvelle entrée"
+
+#: diamond/templates/admin-menu.j2:77
+msgid "Link"
+msgstr "Lien"
+
+#: diamond/templates/admin-menu.j2:78
+msgid "Search bar"
+msgstr "Barre de recherche"
+
+#: diamond/templates/admin-security.j2:19
+msgid "Security form"
+msgstr "Formulaire de sécurité"
+
+#: diamond/templates/admin-security.j2:25
+msgid "Edition policy"
+msgstr "Politique d'édition"
+
+#: diamond/templates/admin-security.j2:27
+msgid "Everyone"
+msgstr "Tout le monde"
+
+#: diamond/templates/admin-security.j2:29
+msgid "Registered users only"
+msgstr "Utilisateurs enregistrés seulement"
+
+#: diamond/templates/admin-settings.j2:19
+msgid "Settings form"
+msgstr "Formulaire de configuration"
+
+#: diamond/templates/admin-settings.j2:31
+msgid "Description"
+msgstr "Description"
+
+#: diamond/templates/admin-settings.j2:38
+msgid "Front page slug"
+msgstr "Adresse de page d'accueil"
+
+#: diamond/templates/admin-settings.j2:44
+msgid "Language"
+msgstr "Langue"
+
+#: diamond/templates/admin-settings.j2:50
+msgid "Text direction"
+msgstr "Sens d'écriture"
+
+#: diamond/templates/admin-settings.j2:53
+msgid "Left to right"
+msgstr "De gauche à droite"
+
+#: diamond/templates/admin-settings.j2:55
+msgid "Right to left"
+msgstr "De droite à gauche"
+
+#: diamond/templates/admin-settings.j2:60
+msgid "Editor"
+msgstr "Éditeur"
+
+#: diamond/templates/admin-settings.j2:62
+msgid "Default editor"
+msgstr "Éditeur par défaut"
+
+#: diamond/templates/admin-settings.j2:64
+msgid "CodeMirror"
+msgstr "CodeMirror"
+
 #: diamond/templates/deactivate.j2:4 diamond/templates/deactivate.j2:9
 msgid "Deactivation"
 msgstr "Désactivation de la page"
@@ -112,8 +254,8 @@ msgid ""
 "      No data is lost though so you can always activate it at a later "
 "stage."
 msgstr ""
-"Si vous désactivez cette page, elle deviendra complètement invisible. Il sera"
-"possible de réactiver la page utlérieurement."
+"Si vous désactivez cette page, elle deviendra complètement invisible. Il "
+"serapossible de réactiver la page utlérieurement."
 
 #: diamond/templates/deactivate.j2:20
 msgid "Page deactivation"
@@ -132,8 +274,8 @@ msgid ""
 "Below is a compiled list of differences between two page versions.\n"
 "      Use it to review changes that were made."
 msgstr ""
-"Cette page liste les différences entre deux révision de la page. Elle vous "
-"permet de savoir ce qui a changé avec précision."
+"Cette page liste les différences entre deux révision de la page. Elle "
+"vous permet de savoir ce qui a changé avec précision."
 
 #: diamond/templates/edit.j2:4 diamond/templates/edit.j2:9
 #: diamond/templates/menu.j2:15
@@ -149,10 +291,10 @@ msgid ""
 "extensions to\n"
 "      render text."
 msgstr ""
-"N'hésitez pas à consulter la <a class=\"wikilink\" "
-"href=\"/politique-editoriale\">politique éditoriale</a> avant de contribuer. "
-"Ce wiki utilise le <a class=\"wikilink\" href=\"/markdown\">Markdown</a> pour "
-"la mise en forme du texte."
+"N'hésitez pas à consulter la <a class=\"wikilink\" href=\"/politique-"
+"editoriale\">politique éditoriale</a> avant de contribuer. Ce wiki "
+"utilise le <a class=\"wikilink\" href=\"/markdown\">Markdown</a> pour la "
+"mise en forme du texte."
 
 #: diamond/templates/edit.j2:22
 msgid "Page edition"
@@ -174,10 +316,6 @@ msgstr "Décrivez vos modification sauf si elles sont mineures"
 #: diamond/templates/edit.j2:41
 msgid "Preview"
 msgstr "Prévisualiser"
-
-#: diamond/templates/edit.j2:46 diamond/templates/settings.j2:125
-msgid "Save"
-msgstr "Sauvergarder"
 
 #: diamond/templates/error.j2:8
 msgid "Error"
@@ -207,6 +345,12 @@ msgstr "V."
 #: diamond/templates/history.j2:27 diamond/templates/recent-changes.j2:24
 msgid "Author"
 msgstr "Auteur"
+
+#: diamond/templates/main-menu.j2:10 diamond/templates/main-menu.j2:14
+#: diamond/templates/search.j2:4 diamond/templates/search.j2:9
+#: diamond/templates/search.j2:28
+msgid "Search"
+msgstr "Rechercher"
 
 #: diamond/templates/menu.j2:6
 msgid "never"
@@ -263,18 +407,9 @@ msgid ""
 "and\n"
 "      correct mistakes and to spot and revert vandalism."
 msgstr ""
-"Cette page liste les dernières modifications qui ont été faites sur le wiki. "
-"Elle vous permet d'être au courant des dernières contributions, de découvrir "
-"et de corriger les erreurs ainsi que de corriger le vandalisme."
-
-#: diamond/templates/recent-changes.j2:23 diamond/templates/settings.j2:43
-msgid "Title"
-msgstr "Titre"
-
-#: diamond/templates/search.j2:4 diamond/templates/search.j2:9
-#: diamond/templates/search.j2:28
-msgid "Search"
-msgstr "Rechercher"
+"Cette page liste les dernières modifications qui ont été faites sur le "
+"wiki. Elle vous permet d'être au courant des dernières contributions, de "
+"découvrir et de corriger les erreurs ainsi que de corriger le vandalisme."
 
 #: diamond/templates/search.j2:15
 msgid "Search through the wiki"
@@ -287,91 +422,6 @@ msgstr "Terme de recherche"
 #: diamond/templates/search.j2:55
 msgid "No further faceting available."
 msgstr "Aucune facette supplémentaire disponible."
-
-#: diamond/templates/settings.j2:4 diamond/templates/settings.j2:9
-#: diamond/templates/settings.j2:17
-msgid "Settings"
-msgstr "Configuration"
-
-#: diamond/templates/settings.j2:22
-msgid "Locale"
-msgstr "Localisation"
-
-#: diamond/templates/settings.j2:25
-msgid "Language"
-msgstr "Langue"
-
-#: diamond/templates/settings.j2:31
-msgid "Text direction"
-msgstr "Sens d'écriture"
-
-#: diamond/templates/settings.j2:34
-msgid "Left to right"
-msgstr "De gauche à droite"
-
-#: diamond/templates/settings.j2:36
-msgid "Right to left"
-msgstr "De droite à gauche"
-
-#: diamond/templates/settings.j2:40
-msgid "Configuration"
-msgstr "Configuration"
-
-#: diamond/templates/settings.j2:49
-msgid "Description"
-msgstr "Description"
-
-#: diamond/templates/settings.j2:56
-msgid "Front page slug"
-msgstr "Adresse de page d'accueil"
-
-#: diamond/templates/settings.j2:61
-msgid "Security"
-msgstr "Sécurité"
-
-#: diamond/templates/settings.j2:64
-msgid "Edition policy"
-msgstr "Politique d'édition"
-
-#: diamond/templates/settings.j2:66
-msgid "Everyone"
-msgstr "Tout le monde"
-
-#: diamond/templates/settings.j2:68
-msgid "Registered users only"
-msgstr "Utilisateurs enregistrés seulement"
-
-#: diamond/templates/settings.j2:72
-msgid "Appearance"
-msgstr "Apparence"
-
-#: diamond/templates/settings.j2:75
-msgid "Favicon"
-msgstr "Icône du site"
-
-#: diamond/templates/settings.j2:81
-msgid "Stylesheet"
-msgstr "Feuille de style"
-
-#: diamond/templates/settings.j2:95
-msgid "Body classes"
-msgstr "Classes CSS"
-
-#: diamond/templates/settings.j2:110
-msgid "Editor"
-msgstr "Éditeur"
-
-#: diamond/templates/settings.j2:112
-msgid "Default editor"
-msgstr "Éditeur par défaut"
-
-#: diamond/templates/settings.j2:114
-msgid "CodeMirror"
-msgstr "CodeMirror"
-
-#: diamond/templates/settings.j2:119
-msgid "Custom CSS"
-msgstr "CSS personnalisé"
 
 #: diamond/templates/sign-in.j2:4 diamond/templates/sign-in.j2:9
 #: diamond/templates/skeleton.j2:57
@@ -438,3 +488,4 @@ msgid ""
 msgstr ""
 "Cette page liste toutes les pages du wiki; elle vous permet de découvrir "
 "de nouvelles pages."
+

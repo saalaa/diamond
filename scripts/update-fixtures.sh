@@ -23,7 +23,6 @@ ROOT=http://diamond-wiki.herokuapp.com
 
 FIXTURES="
   front-page.md
-  main-menu.md
   metadata.md
   sandbox.md
 "

@@ -81,8 +81,8 @@ def test_title_convert(database):
     assert '<li' in html
     assert '<input' in html
 
-    # 1 @search, 1 link and 4x2 @list
-    assert html.count('href=') == 10
+    # 1 @search, 1 link and 3x2 @list
+    assert html.count('href=') == 8
 
 
 def test_title_parse():

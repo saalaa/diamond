@@ -59,8 +59,8 @@ def sign_up():
         (result, question) = generate()
         checksum = hash(result)
 
-        return render_template('sign-up.j2', menu=Document.get('main-menu'),
-                question=question, checksum=checksum)
+        return render_template('sign-up.j2', question=question,
+                checksum=checksum)
 
     if request.method == 'GET':
         return respond()
@@ -107,7 +107,7 @@ def sign_in():
         if message:
             flash(message)
 
-        return render_template('sign-in.j2', menu=Document.get('main-menu'))
+        return render_template('sign-in.j2')
 
     if request.method == 'GET':
         return respond()

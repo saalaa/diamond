@@ -17,12 +17,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from flask import request, render_template, redirect, url_for, flash
+import json
+
+from flask import request, render_template, redirect, url_for, flash, g
 from flask_babel import gettext as _
 from diamond.app import app
 from diamond.db import db
 from diamond.auth import current_user
-from diamond.models import Document, Parameter
+from diamond.models import Parameter, param
 
 
 def handle_form(section):
@@ -31,8 +33,7 @@ def handle_form(section):
         return render_template('error.j2', error=error), 403
 
     if request.method == 'GET':
-        return render_template('admin-' + section + '.j2',
-                menu=Document.get('main-menu'))
+        return render_template('admin-' + section + '.j2')
 
     params = request.form.get('params', '')
     for key in params.split():
@@ -69,3 +70,97 @@ def appearance():
 @app.route('/admin/security', methods=['GET', 'POST'])
 def security():
     return handle_form('security')
+
+
+@app.route('/admin/menu', methods=['GET', 'POST'])
+def menu():
+    if not current_user.admin:
+        error = _('You are not allowed to access this page')
+        return render_template('error.j2', error=error), 403
+
+    if request.method == 'GET':
+        return render_template('admin-menu.j2')
+
+    item = {
+        'type': request.form.get('type', 'link'),
+    }
+
+    if item['type'] == 'link':
+        item['title'] = request.form.get('title', 'Title')
+        item['url'] = request.form.get('url', 'URL')
+
+    menu = param('menu', g.DEFAULT_MENU, 'json') or {}
+    menu.setdefault('items', []) \
+        .append(item)
+
+    Parameter.set('menu', json.dumps(menu))
+
+    db.session.commit()
+
+    Parameter.clear_cache()
+
+    flash(_('Your changes have been saved'))
+
+    return redirect(url_for('menu'))
+
+
+@app.route('/admin/menu/remove/<int:i>')
+def menu_remove(i):
+    menu = param('menu', g.DEFAULT_MENU, 'json') or {}
+    menu.setdefault('items', [])
+
+    menu['items'].pop(i)
+
+    Parameter.set('menu', json.dumps(menu))
+
+    db.session.commit()
+
+    Parameter.clear_cache()
+
+    flash(_('Your changes have been saved'))
+
+    return redirect(url_for('menu'))
+
+
+@app.route('/admin/menu/move-up/<int:i>')
+def menu_move_up(i):
+    menu = param('menu', g.DEFAULT_MENU, 'json') or {}
+    menu.setdefault('items', [])
+
+    item = menu['items'].pop(i)
+
+    i = len(menu['items']) if i == 0 else i - 1
+
+    menu['items'].insert(i, item)
+
+    Parameter.set('menu', json.dumps(menu))
+
+    db.session.commit()
+
+    Parameter.clear_cache()
+
+    flash(_('Your changes have been saved'))
+
+    return redirect(url_for('menu'))
+
+
+@app.route('/admin/menu/move-down/<int:i>')
+def menu_move_down(i):
+    menu = param('menu', g.DEFAULT_MENU, 'json') or {}
+    menu.setdefault('items', [])
+
+    item = menu['items'].pop(i)
+
+    i = 0 if i >= len(menu['items']) else i + 1
+
+    menu['items'].insert(i, item)
+
+    Parameter.set('menu', json.dumps(menu))
+
+    db.session.commit()
+
+    Parameter.clear_cache()
+
+    flash(_('Your changes have been saved'))
+
+    return redirect(url_for('menu'))

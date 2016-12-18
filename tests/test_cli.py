@@ -68,4 +68,4 @@ def test_load_fixtures():
 
     load_fixtures()
 
-    assert Document.count() == 4
+    assert Document.count() == 3

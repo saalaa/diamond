@@ -1,0 +1,19 @@
+<ul>
+  {% for item in g.param('menu', g.DEFAULT_MENU, 'json')['items'] %}
+    <li>
+      {% if item['type'] == 'link' %}
+        <a class="wikilink" href="{{ item['url'] }}">
+          {{ _(item['title']) }}
+        </a>
+      {% elif item['type'] == 'search' %}
+        <div class="search">
+          <a class="hidden-l wikilink" href="/search">{{ _('Search') }}</a>
+
+          <form action="/search" class="hidden visible-l">
+            <input name="query" type="text"><button
+              type="submit">{{ _('Search') }}</button>
+          </form>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

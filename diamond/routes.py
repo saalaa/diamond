@@ -31,6 +31,17 @@ from diamond.models import Document, Metadata, param
 from diamond.utils import secret, get_int_arg
 from diamond.caching import cached_body, invalidator
 
+DEFAULT_MENU = '''
+{
+    "items": [
+        { "type": "link", "title": "Sandbox",        "url": "/sandbox" },
+        { "type": "link", "title": "Recent changes", "url": "/recent-changes"},
+        { "type": "link", "title": "Title index",    "url": "/title-index"},
+        { "type": "search" }
+    ]
+}
+'''
+
 
 def generate_csrf_token():
     if '_csrf_token' not in session:
@@ -41,6 +52,7 @@ def generate_csrf_token():
 
 @app.before_request
 def set_globals():
+    g.DEFAULT_MENU = DEFAULT_MENU
     g.cached_body = cached_body
     g.version = diamond.__version__
     g.param = param
@@ -85,8 +97,7 @@ def read(slug=None):
                 version=version)
         flash(message)
 
-        return render_template('read.j2', menu=Document.get('main-menu'),
-                page=page)
+        return render_template('read.j2', page=page)
 
     parsed = parse(page.body)
 
@@ -97,8 +108,7 @@ def read(slug=None):
 
         return redirect(url_for('read', slug=parsed['redirect']['page']))
 
-    return render_template('read.j2', menu=Document.get('main-menu'),
-            page=page), 200 if page.id else 404
+    return render_template('read.j2', page=page), 200 if page.id else 404
 
 
 @app.route('/<slug>.md')
@@ -114,8 +124,7 @@ def read_md(slug):
 @invalidator('cache-')
 def edit(slug):
     if request.method == 'GET':
-        return render_template('edit.j2', menu=Document.get('main-menu'),
-                page=Document.get(slug))
+        return render_template('edit.j2', page=Document.get(slug))
 
     auth_only = param('auth_only', False)
     if auth_only and not current_user.is_authenticated:
@@ -165,15 +174,13 @@ def search(path=None):
     hits = Document.search(query, filters)
     facets = Document.facets(hits, ignores=ignores)
 
-    return render_template('search.j2', menu=Document.get('main-menu'),
-            query=query, path=path, hits=hits, facets=facets,
-            total=Document.count())
+    return render_template('search.j2', query=query, path=path, hits=hits,
+            facets=facets, total=Document.count())
 
 
 @app.route('/title-index')
 def title_index():
-    return render_template('title-index.j2', menu=Document.get('main-menu'),
-            titles=Document.titles())
+    return render_template('title-index.j2', titles=Document.titles())
 
 
 @app.route('/recent-changes')
@@ -183,8 +190,7 @@ def recent_changes():
     changes = Document.changes() \
             .paginate(page_arg, 100)
 
-    return render_template('recent-changes.j2', menu=Document.get('main-menu'),
-            changes=changes)
+    return render_template('recent-changes.j2', changes=changes)
 
 
 @app.route('/history/<slug>')
@@ -195,8 +201,7 @@ def history(slug):
     history = page.history() \
             .paginate(page_arg, 100)
 
-    return render_template('history.j2', menu=Document.get('main-menu'),
-            page=page, history=history)
+    return render_template('history.j2', page=page, history=history)
 
 
 @app.route('/diff/<slug>/<a>/<b>')
@@ -212,15 +217,14 @@ def diff(slug, a, b):
 
     diff = unified_diff(body_a, body_b, name_a, name_b)
 
-    return render_template('diff.j2', menu=Document.get('main-menu'),
-            page=Document.get(slug), diff=diff)
+    return render_template('diff.j2', page=Document.get(slug), diff=diff)
 
 
 @app.route('/deactivate/<slug>', methods=['GET', 'POST'])
 @invalidator('cache-')
 def deactivate(slug):
     if request.method == 'GET':
-        return render_template('deactivate.j2', menu=Document.get('main-menu'))
+        return render_template('deactivate.j2')
 
     if not current_user.admin:
         error = _('You are not allowed to deactivate this page')
@@ -244,7 +248,7 @@ def activate(slug):
         return render_template('error.j2', error=error)
 
     if request.method == 'GET':
-        return render_template('activate.j2', menu=Document.get('main-menu'))
+        return render_template('activate.j2')
 
     if not current_user.admin:
         error = _('You are not allowed to activate this page')
