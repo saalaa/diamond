@@ -25,7 +25,6 @@ from diamond.formatter import convert, parse
 from diamond.formatter.link import LinkExtension
 from diamond.formatter.list import ListExtension
 from diamond.formatter.redirect import RedirectExtension
-from diamond.formatter.search import SearchExtension
 from diamond.formatter.title import TitleExtension
 
 FIXTURE = '''
@@ -35,8 +34,6 @@ bbb: 2
 ---
 
 # xxx
-
-@search
 
 @redirect { "page": "yyy" }
 
@@ -74,15 +71,13 @@ def test_title_convert(database):
     assert 'xxx' in html
 
     assert '@redirect' in html
-    assert '@search' not in html
     assert '@list' not in html
 
     assert '<h1' in html
     assert '<li' in html
-    assert '<input' in html
 
-    # 1 @search, 1 link and 3x2 @list
-    assert html.count('href=') == 8
+    # 1 link and 3x2 @list
+    assert html.count('href=') == 7
 
 
 def test_title_parse():
@@ -155,18 +150,6 @@ def test_title_redirect():
 
     assert hasattr(markdown, 'Redirect')
     assert getattr(markdown, 'Redirect', {}) == {'page': 'yyy'}
-
-
-def test_title_search():
-    extension = SearchExtension()
-    markdown = Markdown(extensions=[extension])
-
-    assert markdown.convert('') == ''
-
-    html = markdown.convert(FIXTURE)
-
-    assert '<input' in html
-    assert '@search' not in html
 
 
 def test_title_ext():

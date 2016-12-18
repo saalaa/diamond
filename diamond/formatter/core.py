@@ -23,7 +23,6 @@ from markdown.extensions.codehilite import CodeHiliteExtension
 from diamond.formatter.link import LinkExtension
 from diamond.formatter.list import ListExtension
 from diamond.formatter.redirect import RedirectExtension
-from diamond.formatter.search import SearchExtension
 from diamond.formatter.title import TitleExtension
 
 
@@ -34,7 +33,6 @@ def convert(text):
         LinkExtension(),
         ListExtension(),
         RedirectExtension(),
-        SearchExtension(),
         CodeHiliteExtension(guess_lang=False)
     ])
 
