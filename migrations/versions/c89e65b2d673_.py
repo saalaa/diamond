@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 25e63a4fd444
+Revision ID: c89e65b2d673
 Revises: None
-Create Date: 2016-12-24 01:07:37.544104
+Create Date: 2016-12-24 01:30:54.214904
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '25e63a4fd444'
+revision = 'c89e65b2d673'
 down_revision = None
 
 from alembic import op
@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('value', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('key')
     )
-    op.create_index('idx_parameter_key', 'parameters', ['key'], unique=False)
+    op.create_index('idx_parameter_key', 'parameters', ['key'], unique=True)
     op.create_table('tokens',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.String(), nullable=False),
@@ -68,9 +68,9 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index('idx_document_active', 'documents', ['active'], unique=False)
-    op.create_index('idx_document_active_user_id', 'documents', ['active', 'user_id'], unique=True)
+    op.create_index('idx_document_active_user_id', 'documents', ['active', 'user_id'], unique=False)
     op.create_index('idx_document_slug', 'documents', ['slug'], unique=False)
-    op.create_index('idx_document_slug_active', 'documents', ['slug', 'active'], unique=True)
+    op.create_index('idx_document_slug_active', 'documents', ['slug', 'active'], unique=False)
     # ### end Alembic commands ###
 
 

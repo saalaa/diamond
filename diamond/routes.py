@@ -153,9 +153,8 @@ def edit(slug):
 
     db.session.commit()
 
-    message = _('Thank you for your changes. Your attention to detail '
-            'is appreciated.')
-    flash(message)
+    flash(_('Thank you for your changes. Your attention to detail '
+            'is appreciated.'))
 
     return redirect(url_for('read', slug=slug))
 

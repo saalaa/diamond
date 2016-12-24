@@ -39,7 +39,7 @@ class Document(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False,
             default=datetime.datetime.utcnow)
 
-    author = db.relationship('User')
+    user = db.relationship('User')
 
     @property
     def initial(self):
@@ -178,7 +178,5 @@ class Document(db.Model):
 
 db.Index('idx_document_slug', Document.slug)
 db.Index('idx_document_active', Document.active)
-db.Index('idx_document_slug_active', Document.slug, Document.active,
-        unique=True)
-db.Index('idx_document_active_user_id', Document.active, Document.user_id,
-        unique=True)
+db.Index('idx_document_slug_active', Document.slug, Document.active)
+db.Index('idx_document_active_user_id', Document.active, Document.user_id)

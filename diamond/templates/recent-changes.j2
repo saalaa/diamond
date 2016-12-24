@@ -39,9 +39,9 @@
             <a href="/{{ item.slug }}" class="wikilink">{{ item.title }}</a>
           </td>
           <td>
-            {% if item.user %}
-              <a href="/{{ item.author.name | slugify }}" class="wikilink">
-                {{ item.author.name }}
+            {% if item.user_id %}
+              <a href="/{{ item.user.name | slugify }}" class="wikilink">
+                {{ item.user.name }}
               </a>
             {% endif %}
           </td>
