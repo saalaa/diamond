@@ -1,0 +1,14 @@
+{% macro render_menu(active) %}
+  <div class="navbar">
+    <ul>
+      <li>
+        <a {{ 'active' if active == 'dashboard' else '' }}
+          href="/user/dashboard">{{ _('Dashboard') }}</a>
+      </li>
+      <li>
+        <a {{ 'active' if active == 'account' else '' }}
+          href="/user/account">{{ _('Account') }}</a>
+      </li>
+    </ul>
+  </div>
+{% endmacro %}

@@ -57,7 +57,6 @@ def set_globals():
     g.version = diamond.__version__
     g.param = param
     g.csrf_token = generate_csrf_token
-    g._ = _
 
 
 @app.before_request
@@ -148,7 +147,7 @@ def edit(slug):
     page = Document(slug=slug, title=title, body=body, comment=comment)
 
     if current_user.is_authenticated:
-        page.author = current_user.slug
+        page.user_id = current_user.id
 
     page.save()
 

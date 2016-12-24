@@ -58,8 +58,8 @@
         </div>
 
         <div class="col-s-12-12 col-m-6-12">
-          <p>{{ hits | length | pluralize('%d hit', '%d hits') }} out of
-            {{ total | pluralize('%d page', '%d pages') }} searched.</p>
+          <p>{{ ngettext('%(num)s hit', '%(num)s hits', hits | length) }} /
+            {{ ngettext('%(num)s page', '%(num)s pages', total) }}</p>
 
           <ul>
             {% for page in hits %}

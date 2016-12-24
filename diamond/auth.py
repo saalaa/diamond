@@ -17,23 +17,20 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from flask import request, render_template, redirect, url_for, flash
-
-from slugify import slugify
-from flask_login import LoginManager, login_user, logout_user, \
-        AnonymousUserMixin
-
 # The import statement below allows exporting symbol, hence the NOQA marker.
 
 from flask_login import current_user # NOQA
 
 from flask_babel import gettext as _
+from flask import request, render_template, redirect, url_for, flash
+from flask_login import LoginManager, login_user, logout_user, \
+        login_required, AnonymousUserMixin
+
 from diamond.app import app
 from diamond.db import db
-from diamond.models import User, Document
+from diamond.models import User, Token
 from diamond.maths import hash, generate
-
-DEFAULT_COMMENT = 'Sign up'
+from diamond import mail
 
 
 class AnonymousUser(AnonymousUserMixin):
@@ -42,12 +39,12 @@ class AnonymousUser(AnonymousUserMixin):
 
 login_manager = LoginManager(app)
 login_manager.anonymous_user = AnonymousUser
-login_manager.login_view = 'sign-in'
+login_manager.login_view = 'sign_in'
 
 
 @login_manager.user_loader
-def user_loader(slug):
-    return User.get(slug) if slug else None
+def user_loader(user_id):
+    return User.get(id=user_id) if user_id else None
 
 
 @app.route('/auth/sign-up', methods=['GET', 'POST'])
@@ -66,39 +63,39 @@ def sign_up():
         return respond()
 
     checksum = request.form['checksum']
-    name = request.form['name']
+    email = request.form['email']
     password = request.form['password']
+    name = request.form['name']
     answer = request.form['answer']
 
-    slug = slugify(name)
-
     if hash(answer) != checksum:
-        message = _('You failed to answer the simple maths question')
-        return respond(message)
+        return respond(_('You failed to answer the simple maths question'))
 
-    if User.exists(slug):
-        message = _('This user name is unavailable')
-        return respond(message)
+    if User.exists(email=email):
+        return respond(_('This email address is already in use'))
+
+    if User.exists(name=name):
+        return respond(_('This name is already in use'))
 
     is_first = User.is_first()
-    page = Document.get(slug)
 
-    if not page.id:
-        page.title = name
-        page.author = slug
-        page.comment = DEFAULT_COMMENT
-        page.save()
-
-    user = User(slug=slug, admin=is_first)
+    user = User(email=email, name=name, admin=is_first)
     user.set_password(password)
 
     user.save()
 
     db.session.commit()
 
+    token = Token.make(user, user.email)
+    token.save()
+
+    db.session.commit()
+
     login_user(user)
 
-    return redirect(url_for('read', slug=slug))
+    mail.send_welcome(user.email, token.digest)
+
+    return redirect(url_for('user_dashboard'))
 
 
 @app.route('/auth/sign-in', methods=['GET', 'POST'])
@@ -112,22 +109,42 @@ def sign_in():
     if request.method == 'GET':
         return respond()
 
-    name = request.form['name']
+    email = request.form['email']
     password = request.form['password']
 
-    slug = slugify(name)
-    user = User.get(slug)
+    user = User.get(email)
 
     if not user or not user.check_password(password):
-        message = _('Wrong user name or password')
-        return respond(message)
+        return respond(_('Wrong user name or password'))
 
     login_user(user)
 
-    return redirect(url_for('read', slug=user.slug))
+    if 'next' in request.args:
+        return redirect(request.args.get('next'))
+
+    return redirect(url_for('user_dashboard'))
 
 
 @app.route('/auth/sign-out')
+@login_required
 def sign_out():
     logout_user()
     return redirect(url_for('read'))
+
+
+@app.route('/auth/confirm/<token>')
+@login_required
+def confirm(token):
+    token = Token.get(current_user, token)
+
+    if not token.valid(current_user.email):
+        return render_template('error.j2', error=_('The token supplied is '
+            'invalid')), 403
+
+    current_user.validated = True
+    current_user.save()
+
+    db.session.delete(token)
+    db.session.commit()
+
+    return redirect(url_for('user_dashboard'))

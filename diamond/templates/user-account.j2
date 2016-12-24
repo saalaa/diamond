@@ -1,0 +1,96 @@
+{% extends "skeleton.j2" %}
+
+{% import "user-macros.j2" as macros %}
+
+{% block title %}
+  {{ _('Dashboard') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ macros.render_menu('account') }}
+  </div>
+
+  <div class="user">
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+      <input type="hidden" name="action" value="change-name">
+
+      <fieldset>
+        <legend>{{ _('User name form') }}</legend>
+
+        <h2>Change your user name</h2>
+
+        <div class="form-row">
+          <label for="field-name">{{ _('User name') }}</label>
+          <input name="name" id="field-name" class="full-w" type="text"
+            required placeholder="{{ _('Choose a new user name') }}"
+            value="{{ current_user.name }}">
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+      </fieldset>
+    </form>
+
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+      <input type="hidden" name="action" value="change-email">
+
+      <fieldset>
+        <legend>{{ _('Email form') }}</legend>
+
+        <h2>Change your email address</h2>
+
+        <div class="form-row">
+          <label for="field-email">{{ _('Email address') }}</label>
+          <input name="email" id="field-email" class="full-w" type="text"
+            required placeholder="{{ _('Your email address') }}"
+            value="{{ current_user.email }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-password">{{ _('Password') }}</label>
+          <input name="password" id="field-password" class="full-w"
+            required placeholder="{{ _('Your password') }}"
+            type="password">
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+      </fieldset>
+    </form>
+
+    <form method="POST">
+      <input type="hidden" name="_csrf_token" value="{{ g.csrf_token() }}">
+      <input type="hidden" name="action" value="change-password">
+
+      <fieldset>
+        <legend>{{ _('Password form') }}</legend>
+
+        <h2>Change your password</h2>
+
+        <div class="form-row">
+          <label for="field-current-password">
+            {{ _('Current password') }}</label>
+          <input name="current-password" id="field-current-password"
+            required placeholder="{{ _('Your current password') }}"
+            class="full-w" type="password">
+        </div>
+
+        <div class="form-row">
+          <label for="field-new-password">{{ _('New password') }}</label>
+          <input name="new-password" id="field-new-password" class="full-w"
+            required placeholder="{{ _('Your new password') }}"
+            type="password">
+        </div>
+
+        <div class="form-row">
+          <input type="submit" value="{{ _('Save') }}" class="full-w">
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock %}

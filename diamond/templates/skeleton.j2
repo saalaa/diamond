@@ -47,7 +47,7 @@
 
       <div class="auth">
         {% if current_user.is_authenticated %}
-          <a href="/{{ current_user.slug }}" class="wikilink signed-in">
+          <a href="/user/dashboard" class="wikilink signed-in">
             {{ current_user.name }}</a>
           <span>/</span>
           <a href="/auth/sign-out" class="sign-out">

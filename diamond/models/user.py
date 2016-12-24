@@ -22,6 +22,8 @@ import bcrypt
 import six
 
 from flask_login import UserMixin
+from slugify import slugify
+
 from diamond.utils import cached_property
 from diamond.db import db
 from diamond.models.document import Document
@@ -30,38 +32,46 @@ from diamond.models.document import Document
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
-    slug = db.Column(db.String, primary_key=True)
-    password = db.Column(db.String)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    validated = db.Column(db.Boolean, nullable=False, default=False)
+    password = db.Column(db.String, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     timestamp = db.Column(db.DateTime, nullable=False,
             default=datetime.datetime.utcnow)
 
     @cached_property
     def document(self):
-        return Document.get(self.slug)
-
-    @cached_property
-    def name(self):
-        return self.document.title if self.document.id else self.slug
+        return Document.get(slugify(self.name))
 
     @classmethod
     def is_first(self):
         return User.query.count() == 0
 
     @classmethod
-    def exists(self, slug):
-        return User.query \
-                .filter(User.slug == slug) \
-                .count() != 0
+    def exists(self, email=None, name=None):
+        if email is not None:
+            return User.query.filter(User.email == email) \
+                    .count() != 0
+
+        if name is not None:
+            return User.query.filter(User.name == name) \
+                    .count() != 0
+
+        return True
 
     @classmethod
-    def get(cls, slug):
-        return User.query \
-                .filter(User.slug == slug) \
-                .one_or_none()
+    def get(cls, email=None, id=None):
+        if email:
+            return User.query.filter(User.email == email) \
+                    .one_or_none()
+        else:
+            return User.query.filter(User.id == id) \
+                    .one_or_none()
 
     def get_id(self):
-        return self.slug
+        return self.id
 
     def set_password(self, password):
         if isinstance(password, six.text_type):
@@ -86,3 +96,7 @@ class User(UserMixin, db.Model):
         db.session.add(self)
 
         return self
+
+
+db.Index('idx_user_email', User.email, unique=True)
+db.Index('idx_user_name', User.name, unique=True)

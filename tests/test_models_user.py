@@ -33,62 +33,71 @@ def database():
 
 
 def test_all(database):
-    assert not User.exists('a')
-    assert not User.exists('b')
-    assert not User.exists('c')
-    assert not User.exists('d')
+    assert not User.exists(email='a@a.a')
+    assert not User.exists(email='b@b.b')
+    assert not User.exists(email='c@c.c')
+    assert not User.exists(email='d@d.d')
+
+    assert not User.exists(name='a')
+    assert not User.exists(name='b')
+    assert not User.exists(name='c')
+    assert not User.exists(name='d')
 
     assert User.is_first()
 
-    User(slug='a', admin=True).save()
+    user = User(email='a@a.a', name='a', password='').save()
 
     db.session.commit()
+
+    assert not user.admin
 
     assert not User.is_first()
 
-    User(slug='b').save()
-    User(slug='c').save()
-    User(slug='d').save()
-
-    Document(body='', slug='b', title='B').save()
-    Document(body='', slug='c', title='C').save()
+    User(email='b@b.b', name='B', password='').save()
+    User(email='c@c.c', name='C', password='').save()
+    User(email='d@d.d', name='D', password='').save()
 
     db.session.commit()
 
-    assert User.exists('a')
-    assert User.exists('b')
-    assert User.exists('c')
-    assert User.exists('d')
+    assert User.exists(email='a@a.a')
+    assert User.exists(email='b@b.b')
+    assert User.exists(email='c@c.c')
+    assert User.exists(email='d@d.d')
 
-    assert User.get('a').name == 'a'
-    assert User.get('b').name == 'B'
-    assert User.get('c').name == 'C'
-    assert User.get('d').name == 'd'
+    assert User.exists(name='a')
+    assert User.exists(name='B')
+    assert User.exists(name='C')
+    assert User.exists(name='D')
 
-    assert not User.get('e')
+    assert User.get('a@a.a').name == 'a'
+    assert User.get('b@b.b').name == 'B'
+    assert User.get('c@c.c').name == 'C'
+    assert User.get('d@d.d').name == 'D'
+
+    assert not User.get('e@e.e')
 
 
 def test_u_string(database):
-    user = User(slug='u-string') \
+    user = User(email='u-string@example.com', name='u-string') \
             .set_password(u'é') \
             .save()
 
     db.session.commit()
 
-    user = User.get('u-string')
+    user = User.get('u-string@example.com')
 
     assert user.check_password('é')
     assert user.check_password(u'é')
     assert user.check_password(b'\xc3\xa9')
 
 def test_b_string(database):
-    user = User(slug='b-string') \
+    user = User(email='b-string@example.com', name='b-string') \
             .set_password(b'\xc3\xa9') \
             .save()
 
     db.session.commit()
 
-    user = User.get('b-string')
+    user = User.get('b-string@example.com')
 
     assert user.check_password('é')
     assert user.check_password(u'é')
@@ -96,13 +105,13 @@ def test_b_string(database):
 
 
 def test_string(database):
-    user = User(slug='string') \
+    user = User(email='string@example.com', name='string') \
             .set_password('é') \
             .save()
 
     db.session.commit()
 
-    user = User.get('string')
+    user = User.get('string@example.com')
 
     assert user.check_password('é')
     assert user.check_password(u'é')

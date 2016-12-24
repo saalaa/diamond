@@ -208,6 +208,17 @@ a.backlink {
   margin: 0;
   padding: 0 5px;
 }
+.user .dashboard-counter,
+.settings .dashboard-counter {
+  text-align: center;
+  text-transform: uppercase;
+}
+.user .dashboard-counter big,
+.settings .dashboard-counter big {
+  display: block;
+  font-size: 6em;
+  line-height: 100px;
+}
 .navbar {
   margin-bottom: 1.5em;
 }
@@ -247,6 +258,13 @@ fieldset label {
 }
 fieldset label:after {
   content: ":";
+}
+fieldset label i.required {
+  font-style: normal;
+}
+fieldset label i.required:after {
+  content: " *";
+  color: red;
 }
 fieldset .form-row {
   margin-bottom: 20px;

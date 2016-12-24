@@ -24,12 +24,14 @@
         <div class="form-row">
           <label for="field-title">{{ _('Title') }}</label>
           <input name="title" id="field-title" class="full-w" type="text"
+            placeholder="{{ _('Title of the wiki') }}"
             value="{{ g.param('title', 'Diamond wiki') }}">
         </div>
 
         <div class="form-row">
           <label for="field-description">{{ _('Description') }}</label>
           <input name="description" id="field-description" class="full-w"
+            placeholder="{{ _('Description of the wiki') }}"
             type="text" value="{{ g.param('description',
               'Diamond wiki, the metadata enabled wiki engine') }}">
         </div>
@@ -37,12 +39,14 @@
         <div class="form-row">
           <label for="field-frontpage">{{ _('Front page slug') }}</label>
           <input name="frontpage" id="field-frontpage" class="full-w"
+            placeholder="{{ _('Short URL for the front page') }}"
             type="text" value="{{ g.param('frontpage', 'front-page') }}">
         </div>
 
         <div class="form-row">
           <label for="field-lang">{{ _('Language') }}</label>
           <input name="lang" id="field-lang" class="full-w" type="text"
+            placeholder="{{ _('Main language of the wiki') }}"
             value="{{ g.param('lang', 'en') }}">
         </div>
 

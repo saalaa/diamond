@@ -17,14 +17,16 @@
         <legend>{{ _('Sign in form') }}</legend>
 
         <div class="form-row">
-          <label for="field-name">{{ _('User name') }}</label>
-          <input type="text" id="field-name" name="name" class="full-w"
-            placeholder="{{ _('Your full name, eg.: John Doe') }}">
+          <label for="field-email">{{ _('Email address') }}
+            <i class="required"></i></label>
+          <input type="text" id="field-email" name="email" class="full-w"
+            required placeholder="{{ _('Your email address') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-password">{{ _('Password') }}</label>
-          <input type="password" id="field-password" name="password"
+          <label for="field-password" class="required">{{ _('Password') }}
+            <i class="required"></i></label>
+          <input type="password" id="field-password" name="password" required
             class="full-w" placeholder="{{ _('Your password') }}">
         </div>
 

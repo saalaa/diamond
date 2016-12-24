@@ -23,3 +23,4 @@ from diamond.models.parameter import Parameter, param   # NOQA
 from diamond.models.document import Document            # NOQA
 from diamond.models.metadata import Metadata            # NOQA
 from diamond.models.user import User                    # NOQA
+from diamond.models.token import Token                  # NOQA

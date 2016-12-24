@@ -20,6 +20,7 @@
 import json
 
 from flask import request, render_template, redirect, url_for, flash, g
+from flask_login import login_required
 from flask_babel import gettext as _
 from diamond.app import app
 from diamond.db import db
@@ -53,26 +54,31 @@ def handle_form(section):
 
 
 @app.route('/admin')
+@login_required
 def admin():
     return redirect(url_for('settings'))
 
 
 @app.route('/admin/settings', methods=['GET', 'POST'])
+@login_required
 def settings():
     return handle_form('settings')
 
 
 @app.route('/admin/appearance', methods=['GET', 'POST'])
+@login_required
 def appearance():
     return handle_form('appearance')
 
 
 @app.route('/admin/security', methods=['GET', 'POST'])
+@login_required
 def security():
     return handle_form('security')
 
 
 @app.route('/admin/menu', methods=['GET', 'POST'])
+@login_required
 def menu():
     if not current_user.admin:
         error = _('You are not allowed to access this page')
@@ -105,6 +111,7 @@ def menu():
 
 
 @app.route('/admin/menu/remove/<int:i>')
+@login_required
 def menu_remove(i):
     menu = param('menu', g.DEFAULT_MENU, 'json') or {}
     menu.setdefault('items', [])
@@ -123,6 +130,7 @@ def menu_remove(i):
 
 
 @app.route('/admin/menu/move-up/<int:i>')
+@login_required
 def menu_move_up(i):
     menu = param('menu', g.DEFAULT_MENU, 'json') or {}
     menu.setdefault('items', [])
@@ -145,6 +153,7 @@ def menu_move_up(i):
 
 
 @app.route('/admin/menu/move-down/<int:i>')
+@login_required
 def menu_move_down(i):
     menu = param('menu', g.DEFAULT_MENU, 'json') or {}
     menu.setdefault('items', [])

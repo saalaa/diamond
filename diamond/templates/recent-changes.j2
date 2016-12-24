@@ -40,8 +40,8 @@
           </td>
           <td>
             {% if item.user %}
-              <a href="/{{ item.user.slug }}" class="wikilink">
-                {{ item.user.name }}
+              <a href="/{{ item.author.name | slugify }}" class="wikilink">
+                {{ item.author.name }}
               </a>
             {% endif %}
           </td>

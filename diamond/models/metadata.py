@@ -24,7 +24,7 @@ class Metadata(db.Model):
     __tablename__ = 'metadata'
 
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String, nullable=False) # ForeignKey('documents.slug')
+    slug = db.Column(db.String, nullable=False)
     key = db.Column(db.String, nullable=False)
     value = db.Column(db.String, nullable=False)
 
@@ -72,3 +72,5 @@ class Metadata(db.Model):
 
 db.Index('idx_metadata_slug', Metadata.slug)
 db.Index('idx_metadata_key_value', Metadata.key, Metadata.value)
+db.Index('idx_metadata_slug_key_value', Metadata.slug, Metadata.key,
+        Metadata.value, unique=True)

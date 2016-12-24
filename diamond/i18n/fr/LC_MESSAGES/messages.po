@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-18 01:30+0100\n"
+"POT-Creation-Date: 2016-12-24 00:51+0100\n"
 "PO-Revision-Date: 2016-12-14 22:51+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,26 +18,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: diamond/admin.py:32 diamond/admin.py:79
+#: diamond/admin.py:33 diamond/admin.py:84
 msgid "You are not allowed to access this page"
 msgstr "Vous n'êtes pas autorisé à accéder à cette page"
 
-#: diamond/admin.py:50 diamond/admin.py:103 diamond/admin.py:121
-#: diamond/admin.py:143 diamond/admin.py:165
+#: diamond/admin.py:50 diamond/admin.py:108 diamond/admin.py:127
+#: diamond/admin.py:150 diamond/admin.py:173
 msgid "Your changes have been saved"
 msgstr "Vos modifications ont été sauvegardées"
 
-#: diamond/auth.py:76
+#: diamond/auth.py:72
 msgid "You failed to answer the simple maths question"
 msgstr "Vous n'avez pas réussi le test mathématique"
 
-#: diamond/auth.py:80
-msgid "This user name is unavailable"
-msgstr "Ce nom d'utilisateur n'est pas disponible"
+#: diamond/auth.py:75 diamond/user.py:72
+msgid "This email address is already in use"
+msgstr "Cette adresse email est déjà utilisée"
 
-#: diamond/auth.py:122
+#: diamond/auth.py:78 diamond/user.py:75
+msgid "This name is already in use"
+msgstr "Ce nom est déjà utilisé"
+
+#: diamond/auth.py:118
 msgid "Wrong user name or password"
 msgstr "Mauvais nom d'utilisateur ou mot de passe"
+
+#: diamond/auth.py:138
+msgid "The token supplied is invalid"
+msgstr "Le token envoyé est invalide"
 
 #: diamond/errors.py:29
 msgid "An error has occured; please contact the administrator or try again later."
@@ -45,43 +53,117 @@ msgstr ""
 "Une erreur est survenue, veuillez contacter l'administrateur ou réessayer"
 " plus tard."
 
-#: diamond/routes.py:68
+#: diamond/mail.py:37
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: diamond/mail.py:38
+#, python-format
+msgid ""
+"Greetings,\n"
+"\n"
+"We would like to welcome you to %(service)s.\n"
+"\n"
+"Here's a link to confirm your email address:\n"
+"\n"
+"%(scheme)s://%(host)s/auth/confirm/%(token)s\n"
+"\n"
+"Best regards.\n"
+"\n"
+"--\n"
+"%(service)s"
+msgstr ""
+"Bonjour,\n"
+"\n"
+"Bienvenue sur %(service)s.\n"
+"\n"
+"Voici un lien pour confirmer votre adresse email:\n"
+"\n"
+"%(scheme)s://%(host)s/auth/confirm/%(token)s\n"
+"\n"
+"Cordialement.\n"
+"\n"
+"--\n"
+"%(service)s"
+
+#: diamond/mail.py:60
+msgid "Confirm your email address"
+msgstr "Confirmez votre adresse email"
+
+#: diamond/mail.py:61
+#, python-format
+msgid ""
+"Greetings,\n"
+"\n"
+"Here's a link to confirm your email address:\n"
+"\n"
+"%(scheme)s://%(host)s/auth/confirm/%(token)s\n"
+"\n"
+"Best regards.\n"
+"\n"
+"--\n"
+"%(service)s"
+msgstr ""
+"Bonjour,\n"
+"\n"
+"Voici un lien pour confirmer votre adresse email:\n"
+"\n"
+"%(scheme)s://%(host)s/auth/confirm/%(token)s\n"
+"\n"
+"Cordialement.\n"
+"\n"
+"--\n"
+"%(service)s"
+
+#: diamond/routes.py:67
 msgid "CSRF error"
 msgstr "Erreur de protection CSRF"
 
-#: diamond/routes.py:93
+#: diamond/routes.py:92
 msgid "This version does not exist"
 msgstr "Cette version n'existe pas"
 
-#: diamond/routes.py:96
+#: diamond/routes.py:95
 #, python-format
 msgid "You are viewing version %(version)s of this page"
 msgstr "Vous visualisez la version %(version)s de cette page"
 
-#: diamond/routes.py:107
+#: diamond/routes.py:105
 #, python-format
 msgid "Redirected from %(page_name)s"
 msgstr "Redirigé depuis %(page_name)s"
 
-#: diamond/routes.py:134
+#: diamond/routes.py:130
 msgid "Edition is limited to registered users only"
 msgstr "L'édition est limitée aux utilisateurs enregistrés"
 
-#: diamond/routes.py:160
+#: diamond/routes.py:156
 msgid "Thank you for your changes. Your attention to detail is appreciated."
 msgstr "Merci pour votre contribution. Votre attention aux détails est appréciée."
 
-#: diamond/routes.py:238
+#: diamond/routes.py:229
 msgid "You are not allowed to deactivate this page"
 msgstr "Vous n'êtes pas autorisé à désactiver la page"
 
-#: diamond/routes.py:255
+#: diamond/routes.py:246
 msgid "Missing version parameter"
 msgstr "Paramètre de version manquant"
 
-#: diamond/routes.py:262
+#: diamond/routes.py:253
 msgid "You are not allowed to activate this page"
 msgstr "Vous n'êtes pas autorisé à activer la page"
+
+#: diamond/user.py:38 diamond/user.py:54
+msgid ""
+"You have not yet confirmed your email address. Send a <a href=\"/user"
+"/send-confirmation\">confirmation link</a>?"
+msgstr ""
+"Vous n'avez pas encore confirmé votre adresse email. Envoyer un <a "
+"href=\"/user/send-confirmation\">lien de confirmation</a>?"
+
+#: diamond/user.py:78 diamond/user.py:97
+msgid "The password you entered did not match your current password"
+msgstr "Le mot de passe fourni ne correspond à votre mot de passe actuel"
 
 #: diamond/templates/activate.j2:4 diamond/templates/activate.j2:9
 msgid "Activation"
@@ -114,23 +196,37 @@ msgstr "Formulaire d'apparence"
 
 #: diamond/templates/admin-appearance.j2:25
 msgid "Favicon"
-msgstr "Icône du site"
+msgstr "Icône du wiki"
 
-#: diamond/templates/admin-appearance.j2:31
+#: diamond/templates/admin-appearance.j2:28
+msgid "Wiki icon URL"
+msgstr "URL de l'icône du wiki"
+
+#: diamond/templates/admin-appearance.j2:32
 msgid "Stylesheet"
 msgstr "Feuille de style"
+
+#: diamond/templates/admin-appearance.j2:34
+msgid "Stylesheet URL, e.g.: /static/stylesheet-diplomat.css"
+msgstr "URL de la feuille de style, ex. : /static/stylesheet-diplomat.css"
 
 #: diamond/templates/admin-appearance.j2:45
 msgid "Body classes"
 msgstr "Classes CSS"
 
+#: diamond/templates/admin-appearance.j2:47
+msgid "CSS classes added to the body element, e.g.: purple fixed-menu"
+msgstr "Classes CSS ajoutée sur l'élélment body, ex. : purple fixed-menu"
+
 #: diamond/templates/admin-appearance.j2:61
 msgid "Custom CSS"
 msgstr "CSS personnalisé"
 
-#: diamond/templates/admin-appearance.j2:67 diamond/templates/admin-menu.j2:95
+#: diamond/templates/admin-appearance.j2:67 diamond/templates/admin-menu.j2:97
 #: diamond/templates/admin-security.j2:34
-#: diamond/templates/admin-settings.j2:69 diamond/templates/edit.j2:46
+#: diamond/templates/admin-settings.j2:73 diamond/templates/edit.j2:46
+#: diamond/templates/user-account.j2:32 diamond/templates/user-account.j2:61
+#: diamond/templates/user-account.j2:91
 msgid "Save"
 msgstr "Sauvergarder"
 
@@ -168,7 +264,7 @@ msgstr "Type"
 msgid "Title"
 msgstr "Titre"
 
-#: diamond/templates/admin-menu.j2:26 diamond/templates/admin-menu.j2:89
+#: diamond/templates/admin-menu.j2:26 diamond/templates/admin-menu.j2:90
 msgid "URL"
 msgstr "URL"
 
@@ -187,6 +283,14 @@ msgstr "Lien"
 #: diamond/templates/admin-menu.j2:78
 msgid "Search bar"
 msgstr "Barre de recherche"
+
+#: diamond/templates/admin-menu.j2:86
+msgid "Link text"
+msgstr "Texte du lien"
+
+#: diamond/templates/admin-menu.j2:92
+msgid "Link URL"
+msgstr "URL du lien"
 
 #: diamond/templates/admin-security.j2:19
 msgid "Security form"
@@ -208,39 +312,55 @@ msgstr "Utilisateurs enregistrés seulement"
 msgid "Settings form"
 msgstr "Formulaire de configuration"
 
-#: diamond/templates/admin-settings.j2:31
+#: diamond/templates/admin-settings.j2:27
+msgid "Title of the wiki"
+msgstr "Titre du wiki"
+
+#: diamond/templates/admin-settings.j2:32
 msgid "Description"
 msgstr "Description"
 
-#: diamond/templates/admin-settings.j2:38
+#: diamond/templates/admin-settings.j2:34
+msgid "Description of the wiki"
+msgstr "Description du wiki"
+
+#: diamond/templates/admin-settings.j2:40
 msgid "Front page slug"
 msgstr "Adresse de page d'accueil"
 
-#: diamond/templates/admin-settings.j2:44
+#: diamond/templates/admin-settings.j2:42
+msgid "Short URL for the front page"
+msgstr "URL courte de la page d'accueil"
+
+#: diamond/templates/admin-settings.j2:47
 msgid "Language"
 msgstr "Langue"
 
-#: diamond/templates/admin-settings.j2:50
+#: diamond/templates/admin-settings.j2:49
+msgid "Main language of the wiki"
+msgstr "Langue principale du wiki"
+
+#: diamond/templates/admin-settings.j2:54
 msgid "Text direction"
 msgstr "Sens d'écriture"
 
-#: diamond/templates/admin-settings.j2:53
+#: diamond/templates/admin-settings.j2:57
 msgid "Left to right"
 msgstr "De gauche à droite"
 
-#: diamond/templates/admin-settings.j2:55
+#: diamond/templates/admin-settings.j2:59
 msgid "Right to left"
 msgstr "De droite à gauche"
 
-#: diamond/templates/admin-settings.j2:60
+#: diamond/templates/admin-settings.j2:64
 msgid "Editor"
 msgstr "Éditeur"
 
-#: diamond/templates/admin-settings.j2:62
+#: diamond/templates/admin-settings.j2:66
 msgid "Default editor"
 msgstr "Éditeur par défaut"
 
-#: diamond/templates/admin-settings.j2:64
+#: diamond/templates/admin-settings.j2:68
 msgid "CodeMirror"
 msgstr "CodeMirror"
 
@@ -423,6 +543,20 @@ msgstr "Terme de recherche"
 msgid "No further faceting available."
 msgstr "Aucune facette supplémentaire disponible."
 
+#: diamond/templates/search.j2:61
+#, python-format
+msgid "%(num)s hit"
+msgid_plural "%(num)s hits"
+msgstr[0] "%(num)s résultat"
+msgstr[1] "%(num)s résultats"
+
+#: diamond/templates/search.j2:62
+#, python-format
+msgid "%(num)s page"
+msgid_plural "%(num)s pages"
+msgstr[0] "%(num)s page"
+msgstr[1] "%(num)s pages"
+
 #: diamond/templates/sign-in.j2:4 diamond/templates/sign-in.j2:9
 #: diamond/templates/skeleton.j2:57
 msgid "Sign in"
@@ -433,22 +567,25 @@ msgid "Sign in form"
 msgstr "Formulaire de connexion"
 
 #: diamond/templates/sign-in.j2:20 diamond/templates/sign-up.j2:21
-msgid "User name"
-msgstr "Nom d'utilisateur"
+#: diamond/templates/user-account.j2:47
+msgid "Email address"
+msgstr "Adresse email"
 
-#: diamond/templates/sign-in.j2:22 diamond/templates/sign-up.j2:23
-msgid "Your full name, eg.: John Doe"
-msgstr "Votre nom complet, par exemple : Jean Colle"
+#: diamond/templates/sign-in.j2:23 diamond/templates/sign-up.j2:24
+#: diamond/templates/user-account.j2:49
+msgid "Your email address"
+msgstr "Votre adresse email"
 
-#: diamond/templates/sign-in.j2:26 diamond/templates/sign-up.j2:27
+#: diamond/templates/sign-in.j2:27 diamond/templates/sign-up.j2:28
+#: diamond/templates/user-account.j2:54
 msgid "Password"
 msgstr "Mot de passe"
 
-#: diamond/templates/sign-in.j2:28
+#: diamond/templates/sign-in.j2:30 diamond/templates/user-account.j2:56
 msgid "Your password"
 msgstr "Votre mot de passe"
 
-#: diamond/templates/sign-in.j2:32 diamond/templates/sign-up.j2:40
+#: diamond/templates/sign-in.j2:34 diamond/templates/sign-up.j2:49
 msgid "Go"
 msgstr "Envoyer"
 
@@ -461,15 +598,23 @@ msgstr "Créer un compte"
 msgid "Sign up form"
 msgstr "Formulaire de connexion"
 
-#: diamond/templates/sign-up.j2:29
+#: diamond/templates/sign-up.j2:31
 msgid "Choose a password"
 msgstr "Choisissez un mot de passe"
 
-#: diamond/templates/sign-up.j2:33
+#: diamond/templates/sign-up.j2:35 diamond/templates/user-account.j2:25
+msgid "User name"
+msgstr "Nom d'utilisateur"
+
+#: diamond/templates/sign-up.j2:38
+msgid "Your full name, eg.: John Doe"
+msgstr "Votre nom complet, par exemple : Jean Colle"
+
+#: diamond/templates/sign-up.j2:42
 msgid "Confirm you're human:"
 msgstr "Confirmez que vous êtes un humain"
 
-#: diamond/templates/sign-up.j2:36
+#: diamond/templates/sign-up.j2:45
 msgid "Answer using numbers only"
 msgstr "Répondez avec des chiffres uniquement"
 
@@ -488,4 +633,80 @@ msgid ""
 msgstr ""
 "Cette page liste toutes les pages du wiki; elle vous permet de découvrir "
 "de nouvelles pages."
+
+#: diamond/templates/user-account.j2:6 diamond/templates/user-dashboard.j2:6
+#: diamond/templates/user-macros.j2:6
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: diamond/templates/user-account.j2:20
+msgid "User name form"
+msgstr "Formulaire de nom d'utilisateur"
+
+#: diamond/templates/user-account.j2:27
+msgid "Choose a new user name"
+msgstr "Choisissez un nouveau nom d'utilisateur"
+
+#: diamond/templates/user-account.j2:42
+msgid "Email form"
+msgstr "Formulaire d'adresse email"
+
+#: diamond/templates/user-account.j2:71
+msgid "Password form"
+msgstr "Formulaire de mot de passe"
+
+#: diamond/templates/user-account.j2:77
+msgid "Current password"
+msgstr "Mot de passe actuel"
+
+#: diamond/templates/user-account.j2:79
+msgid "Your current password"
+msgstr "Votre mot de passe actuel"
+
+#: diamond/templates/user-account.j2:84
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: diamond/templates/user-account.j2:86
+msgid "Your new password"
+msgstr "Votre nouveau mot de passe"
+
+#: diamond/templates/user-dashboard.j2:17
+#, python-format
+msgid ""
+"It may be time to create your <a href=\"/%(slug)s\"\n"
+"          class=\"wikilink\">user page</a> and write a short introduction"
+" about\n"
+"          yourself."
+msgstr ""
+"Il est peut-être temps de créer votre <a href=\"/%(slug)s\"\n"
+" class=\"wikilink\">page personnelle</a> et de vous y présenter."
+
+#: diamond/templates/user-dashboard.j2:21
+#, python-format
+msgid ""
+"It may be time to review your <a href=\"/%(slug)s\"\n"
+"          class=\"wikilink\">user page</a> and update it."
+msgstr ""
+"Il est peut-être temps de mettre à jour votre <a href=\"/%(slug)s\"\n"
+" class=\"wikilink\">page personnelle</a>."
+
+#: diamond/templates/user-dashboard.j2:27
+msgid ""
+"As an administrator of the wiki, you can access the <a\n"
+"          href=\"/admin\">administration area</a>."
+msgstr ""
+"En tant qu'administrateur du wiki, vous pouvez accéder à la <a\n"
+" href=\"/admin\">zone d'administration</a>."
+
+#: diamond/templates/user-dashboard.j2:36
+#, python-format
+msgid "<big>%(num)s</big> Contribution"
+msgid_plural "<big>%(num)s</big> Contributions"
+msgstr[0] "<big>%(num)s</big> Contribution"
+msgstr[1] "<big>%(num)s</big> Contributions"
+
+#: diamond/templates/user-macros.j2:10
+msgid "Account"
+msgstr "Compte"
 

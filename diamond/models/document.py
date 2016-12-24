@@ -33,13 +33,13 @@ class Document(db.Model):
     slug = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String, db.ForeignKey('users.slug'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comment = db.Column(db.Text)
-    active = db.Column(db.Boolean, nullable=False, default=0)
+    active = db.Column(db.Boolean, nullable=False, default=False)
     timestamp = db.Column(db.DateTime, nullable=False,
             default=datetime.datetime.utcnow)
 
-    user = db.relationship('User')
+    author = db.relationship('User')
 
     @property
     def initial(self):
@@ -178,4 +178,7 @@ class Document(db.Model):
 
 db.Index('idx_document_slug', Document.slug)
 db.Index('idx_document_active', Document.active)
-db.Index('idx_document_slug_active', Document.slug, Document.active)
+db.Index('idx_document_slug_active', Document.slug, Document.active,
+        unique=True)
+db.Index('idx_document_active_user_id', Document.active, Document.user_id,
+        unique=True)

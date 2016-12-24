@@ -23,15 +23,24 @@ from diamond.utils import env, secret
 app = Flask(__name__)
 
 app.config.update({
-    'BABEL_TRANSLATION_DIRECTORIES': 'i18n',
     'SQL_DEBUG': env('SQL_DEBUG', False, bool),
     'FLASK_DEBUG': env('FLASK_DEBUG', False, bool),
+    'TESTING': env('TESTING', False, bool),
+    'BABEL_TRANSLATION_DIRECTORIES': 'i18n',
     'HOST': env('HOST', '0.0.0.0'),
     'PORT': env('PORT', 5000, int),
     'SQLALCHEMY_DATABASE_URI': env('DATABASE_URL',
         'sqlite:////tmp/diamond.db'),
     'REDIS_URL': env('REDIS_URL', 'redis://mock'),
-    'SECRET_KEY': env('SECRET_KEY', secret())
+    'SECRET_KEY': env('SECRET_KEY', secret()),
+    'MAIL_SERVER': env('MAIL_SERVER'),
+    'MAIL_PORT': env('MAIL_PORT', '587'),
+    'MAIL_USERNAME': env('MAIL_USERNAME'),
+    'MAIL_PASSWORD': env('MAIL_PASSWORD'),
+    'MAIL_USE_TLS': env('MAIL_USE_TLS', 'yes', cast=bool),
+    'MAIL_USE_SSL': env('MAIL_USE_SSL', '', cast=bool),
+    'MAIL_DEFAULT_SENDER': env('MAIL_DEFAULT_SENDER',
+        'diamond-wiki@example.com')
 })
 
 # Fix legacy default

@@ -36,6 +36,15 @@ fieldset {
     &:after {
       content: ":";
     }
+
+    i.required {
+      font-style: normal;
+
+      &:after {
+        content: " *";
+        color: red;
+      }
+    }
   }
 
   .form-row {

@@ -24,15 +24,15 @@
         <div class="form-row">
           <label for="field-favicon">{{ _('Favicon') }}</label>
           <input name="favicon" id="field-favicon" class="full-w" type="text"
-            value="{{ g.param('favicon', '/static/diamond.ico') }}">
+            value="{{ g.param('favicon', '/static/diamond.ico') }}"
+              placeholder="{{ _('Wiki icon URL') }}">
         </div>
 
         <div class="form-row">
           <label for="field-stylesheet">{{ _('Stylesheet') }}</label>
           <input name="stylesheet" id="field-stylesheet" class="full-w"
-            placeholder="Example: /static/stylesheet-diplomat.css" type="text"
-            value="{{ g.param('stylesheet',
-              '/static/stylesheet-diplomat.css') }}">
+            placeholder="{{ _('Stylesheet URL, e.g.: /static/stylesheet-diplomat.css') }}"
+            type="text" value="{{ g.param('stylesheet', '/static/stylesheet-diplomat.css') }}">
 
           <div class="form-help">
             <p>Available stylesheets:
@@ -44,7 +44,7 @@
         <div class="form-row">
           <label for="field-classes">{{ _('Body classes') }}</label>
           <input name="classes" id="field-classes" class="full-w" type="text"
-            placeholder="Example: purple fixed-menu"
+            placeholder="{{ _('CSS classes added to the body element, e.g.: purple fixed-menu') }}"
             value="{{ g.param('classes', '') }}">
 
           <div class="form-help">

@@ -27,7 +27,6 @@ from diamond.models import Document, Metadata
 from diamond.formatter import parse
 
 FIXTURES_DIR = 'fixtures'
-DEFAULT_COMMENT = 'Fixtures import'
 
 
 def clear_cache():
@@ -78,8 +77,7 @@ def load_fixtures():
                     Metadata(slug=slug, key=key, value=value) \
                             .save()
 
-            Document(slug=slug, title=title, body=body,
-                    comment=DEFAULT_COMMENT) \
+            Document(slug=slug, title=title, body=body) \
                             .save()
 
             db.session.commit()

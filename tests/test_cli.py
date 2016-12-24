@@ -50,9 +50,9 @@ def test_init_db():
     # is never removed by SQLAlchemy.
 
     if 'alembic_version' in names:
-        assert len(names) == 5
+        assert len(names) == 6
     else:
-        assert len(names) == 4
+        assert len(names) == 5
 
 
 def test_clear_cache():

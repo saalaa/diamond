@@ -1,0 +1,43 @@
+{% extends "skeleton.j2" %}
+
+{% import "user-macros.j2" as macros %}
+
+{% block title %}
+  {{ _('Dashboard') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ macros.render_menu('dashboard') }}
+  </div>
+
+  <div class="user">
+    <p>
+      {% if not current_user.document.id %}
+        {{ _('It may be time to create your <a href="/%(slug)s"
+          class="wikilink">user page</a> and write a short introduction about
+          yourself.', slug=current_user.document.slug) }}
+      {% else %}
+        {{ _('It may be time to review your <a href="/%(slug)s"
+          class="wikilink">user page</a> and update it.',
+          slug=current_user.document.slug) }}
+      {% endif %}
+
+      {% if current_user.admin %}
+        {{ _('As an administrator of the wiki, you can access the <a
+          href="/admin">administration area</a>.') }}
+      {% endif %}
+    </p>
+
+    <div class="form-row grid gutters">
+      <dic class="row">
+        <div class="col-s-12-12 col-m-6-12">
+          <p class="dashboard-counter">
+            {{ ngettext('<big>%(num)s</big> Contribution',
+              '<big>%(num)s</big> Contributions', contributions) }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -18,22 +18,31 @@
         <legend>{{ _('Sign up form') }}</legend>
 
         <div class="form-row">
-          <label for="field-name">{{ _('User name') }}</label>
-          <input type="text" id="field-name" name="name" class="full-w"
-            placeholder="{{ _('Your full name, eg.: John Doe') }}">
+          <label for="field-email">{{ _('Email address') }}
+            <i class="required"></i></label>
+          <input type="text" id="field-email" name="email" class="full-w"
+            required placeholder="{{ _('Your email address') }}">
         </div>
 
         <div class="form-row">
-          <label for="field-password">{{ _('Password') }}</label>
+          <label for="field-password">{{ _('Password') }}
+            <i class="required"></i></label>
           <input type="password" id="field-password" name="password"
-            class="full-w" placeholder="{{ _('Choose a password') }}">
+            class="full-w" required placeholder="{{ _('Choose a password') }}">
+        </div>
+
+        <div class="form-row">
+          <label for="field-name">{{ _('User name') }}
+            <i class="required"></i></label>
+          <input type="text" id="field-name" name="name" class="full-w"
+            required placeholder="{{ _('Your full name, eg.: John Doe') }}">
         </div>
 
         <div class="form-row">
           <label for="field-answer">{{ _('Confirm you\'re human:') }} <em>
-              {{ question }}</em></label>
+              {{ question }}</em><i class="required"></i></label>
           <input type="text" id="field-answer" name="answer" class="full-w"
-            placeholder="{{ _('Answer using numbers only') }}">
+            required placeholder="{{ _('Answer using numbers only') }}">
         </div>
 
         <div class="form-row">

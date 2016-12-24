@@ -208,6 +208,17 @@ a.backlink {
   margin: 0;
   padding: 0 5px;
 }
+.user .dashboard-counter,
+.settings .dashboard-counter {
+  text-align: center;
+  text-transform: uppercase;
+}
+.user .dashboard-counter big,
+.settings .dashboard-counter big {
+  display: block;
+  font-size: 6em;
+  line-height: 100px;
+}
 .navbar {
   margin-bottom: 1.5em;
 }
@@ -247,6 +258,13 @@ fieldset label {
 }
 fieldset label:after {
   content: ":";
+}
+fieldset label i.required {
+  font-style: normal;
+}
+fieldset label i.required:after {
+  content: " *";
+  color: red;
 }
 fieldset .form-row {
   margin-bottom: 20px;
@@ -568,6 +586,7 @@ body .actions {
     width: initial;
   }
   body .container .document .help > *,
+  body .container .document .user > *,
   body .container .document .settings > *,
   body .container .document .title-index > *,
   body .container .document .search > *,
@@ -578,6 +597,7 @@ body .actions {
     margin-left: 100px;
   }
   body .container .document .help > blockquote,
+  body .container .document .user > blockquote,
   body .container .document .settings > blockquote,
   body .container .document .title-index > blockquote,
   body .container .document .search > blockquote,
@@ -587,6 +607,7 @@ body .actions {
     margin-left: 140px;
   }
   body .container .document .help > .illustration,
+  body .container .document .user > .illustration,
   body .container .document .settings > .illustration,
   body .container .document .title-index > .illustration,
   body .container .document .search > .illustration,
@@ -598,6 +619,7 @@ body .actions {
     margin-right: 0px;
   }
   body .container .document .help > table,
+  body .container .document .user > table,
   body .container .document .settings > table,
   body .container .document .title-index > table,
   body .container .document .search > table,
@@ -605,6 +627,7 @@ body .actions {
   body .container .document .actions > table,
   body .container .document .body > table,
   body .container .document .help > .codehilite,
+  body .container .document .user > .codehilite,
   body .container .document .settings > .codehilite,
   body .container .document .title-index > .codehilite,
   body .container .document .search > .codehilite,
