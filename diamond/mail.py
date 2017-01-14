@@ -17,25 +17,34 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from flask import request
+from celery import Celery
+from flask import g
 from flask_mail import Mail, Message
 from flask_babel import gettext as _
+from flask_babel import refresh
 
 from diamond.app import app
 from diamond.models import param
 
-
 mail = Mail(app)
 
+celery = Celery('tasks', broker=app.config['REDIS_URL'])
 
-def send_welcome(recipient, token):
+
+@celery.task
+def send_welcome(context, recipient, token):
     service = param('title', 'Diamond wiki')
 
-    scheme = request.scheme
-    host = request.host
+    scheme = context['scheme']
+    host = context['host']
 
-    subject = _('Welcome')
-    body = _('''Greetings,
+    with app.app_context():
+        g.locale = context['locale']
+
+        refresh()
+
+        subject = _('Welcome')
+        body = _('''Greetings,
 
 We would like to welcome you to %(service)s.
 
@@ -48,17 +57,23 @@ Best regards.
 --
 %(service)s''', service=service, token=token, scheme=scheme, host=host)
 
-    mail.send(Message(subject, body=body, recipients=[recipient]))
+        mail.send(Message(subject, body=body, recipients=[recipient]))
 
 
-def send_confirmation(recipient, token):
+@celery.task
+def send_confirmation(context, recipient, token):
     service = param('title', 'Diamond wiki')
 
-    scheme = request.scheme
-    host = request.host
+    scheme = context['scheme']
+    host = context['host']
 
-    subject = _('Confirm your email address')
-    body = _('''Greetings,
+    with app.app_context():
+        g.locale = context['locale']
+
+        refresh()
+
+        subject = _('Confirm your email address')
+        body = _('''Greetings,
 
 Here's a link to confirm your email address:
 
@@ -69,4 +84,4 @@ Best regards.
 --
 %(service)s''', service=service, token=token, scheme=scheme, host=host)
 
-    mail.send(Message(subject, body=body, recipients=[recipient]))
+        mail.send(Message(subject, body=body, recipients=[recipient]))

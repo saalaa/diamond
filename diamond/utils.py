@@ -23,6 +23,7 @@ import string
 import functools
 
 from flask import request
+from flask_babel import get_locale
 
 # The import statement below allows exporting symbols, hence the NOQA marker.
 
@@ -70,3 +71,12 @@ def get_int_arg(name, default=None):
             value = default
 
     return value or default
+
+def serialize_request(request):
+    locale = get_locale()
+
+    return {
+        'locale': str(locale),
+        'scheme': request.scheme,
+        'host': request.host
+    }

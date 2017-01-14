@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from flask import request
+from flask import g, request
 from flask_babel import Babel
 from diamond.app import app
 
@@ -26,6 +26,10 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
+    locale = getattr(g, 'locale', None)
+    if locale:
+        return locale
+
     return request.accept_languages.best_match([
         'en',
         'fr'

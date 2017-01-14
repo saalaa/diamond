@@ -25,6 +25,7 @@ from diamond.db import db
 from diamond.app import app
 from diamond.auth import current_user
 from diamond.models import User, Document, Token
+from diamond.utils import serialize_request
 
 
 @app.route('/user/dashboard')
@@ -87,7 +88,7 @@ def user_account():
 
         db.session.commit()
 
-        mail.send_confirmation(email, token.digest)
+        mail.send_confirmation.delay(email, token.digest)
 
     if request.form.get('action') == 'change-password':
         current_password = request.form.get('current-password')
@@ -113,6 +114,7 @@ def send_confirmation():
 
     db.session.commit()
 
-    mail.send_confirmation(current_user.email, token.digest)
+    context = serialize_request(request)
+    mail.send_confirmation.delay(context, current_user.email, token.digest)
 
     return redirect(url_for('user_dashboard'))

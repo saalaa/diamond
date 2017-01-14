@@ -93,7 +93,7 @@ def sign_up():
 
     login_user(user)
 
-    mail.send_welcome(user.email, token.digest)
+    mail.send_welcome.delay(user.email, token.digest)
 
     return redirect(url_for('user_dashboard'))
 
