@@ -29,6 +29,4 @@ if [ -e .env ]; then
   source .env
 fi
 
-export FLASK_APP=diamond/__init__.py
-
-exec flask $@
+exec gunicorn diamond:app -b 0.0.0.0:8080

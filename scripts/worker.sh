@@ -29,6 +29,4 @@ if [ -e .env ]; then
   source .env
 fi
 
-export FLASK_APP=diamond/__init__.py
-
-exec flask $@
+exec celery worker -A diamond.mail.celery
