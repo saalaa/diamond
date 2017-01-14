@@ -88,7 +88,8 @@ def user_account():
 
         db.session.commit()
 
-        mail.send_confirmation.delay(email, token.digest)
+        context = serialize_request(request)
+        mail.send_confirmation.delay(context, email, token.digest)
 
     if request.form.get('action') == 'change-password':
         current_password = request.form.get('current-password')

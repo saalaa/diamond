@@ -30,6 +30,7 @@ from diamond.app import app
 from diamond.db import db
 from diamond.models import User, Token
 from diamond.maths import hash, generate
+from diamond.utils import serialize_request
 from diamond import mail
 
 
@@ -93,7 +94,8 @@ def sign_up():
 
     login_user(user)
 
-    mail.send_welcome.delay(user.email, token.digest)
+    context = serialize_request(request)
+    mail.send_welcome.delay(context, user.email, token.digest)
 
     return redirect(url_for('user_dashboard'))
 
