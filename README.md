@@ -76,6 +76,13 @@ Here's a full list of supported environment variables:
   doesn't require Redis to work.
 - `SECRET_KEY`: Secret key for encrypting and signing things. Defaults to a
   random value.
+- `MAIL_SERVER`: SMTP server address and port.
+- `MAIL_USE_TLS`: Whether or not the SMTP server supports TLS.
+- `MAIL_USE_SSL`: Whether or not the SMTP server supports SSL.
+- `MAIL_USERNAME`: SMTP user name.
+- `MAIL_PASSWORD`: SMTP password.
+- `MAIL_DEFAULT_SENDER`: Default sender used for all communication with users,
+  for example: `Diamond Wiki <diamond-wiki@example.com>`.
 
 When running Diamond wiki through Gunicorn (on Heroku for example) or directly
 through Python (`python -m diamond`), the following variables are taken into
