@@ -1,1 +1,2 @@
-web: gunicorn diamond:app
+web: scripts/web.sh
+worker: scripts/worker.sh
