@@ -123,10 +123,17 @@ def edit(slug):
     if request.method == 'GET':
         return render_template('edit.j2', page=Document.get(slug))
 
-    auth_only = param('auth_only', False)
-    if auth_only and not current_user.is_authenticated:
-        return render_template('error.j2', error=_('Edition is limited to '
-            'registered users only')), 403
+    edition_policy = param('edition_policy', '')
+
+    if edition_policy == 'users':
+        if not current_user.is_authenticated:
+            return render_template('error.j2', error=_('Edition is limited to '
+                'registered users only')), 403
+
+    if edition_policy == 'admins':
+        if not current_user.admin:
+            return render_template('error.j2', error=_('Edition is limited to '
+                'administrators only')), 403
 
     Metadata.deactivate(slug)
     Document.deactivate(slug)

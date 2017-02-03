@@ -53,9 +53,9 @@
         <div class="form-row">
           <label for="field-dir">{{ _('Text direction') }}</label>
           <select name="dir" id="field-dir" class="full-w">
-            <option {{ 'selected' if g.param('dir', '') == 'ltr' else '' }}
+            <option {{ macros.selected_if_param('dir', '', 'ltr') }}
               value="ltr">{{ _('Left to right') }}</option>
-            <option {{ 'selected' if g.param('dir', '') == 'rtl' else '' }}
+            <option {{ macros.selected_if_param('dir', '', 'rtl') }}
               value="rtl">{{ _('Right to left') }}</option>
           </select>
         </div>

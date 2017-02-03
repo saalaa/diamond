@@ -18,15 +18,18 @@
       <fieldset>
         <legend>{{ _('Security form') }}</legend>
 
-        <input value="auth_only" type="hidden"
-          name="params">
+        <input name="params" type="hidden"
+          value="edition_policy">
 
         <div class="form-row">
-          <label for="field-auth_only">{{ _('Edition policy') }}</label>
-          <select name="auth_only" id="field-auth_only" class="full-w">
-            <option value="">{{ _('Everyone') }}</option>
-            <option {{ 'selected' if g.param('auth_only', '') else '' }}
-              value="yes">{{ _('Registered users only') }}</option>
+          <label for="field-edition_policy">{{ _('Edition policy') }}</label>
+          <select name="edition_policy" id="field-edition_policy" class="full-w">
+            <option {{ macros.selected_if_param('edition_policy', '', '') }}
+              value="">{{ _('Everyone') }}</option>
+            <option {{ macros.selected_if_param('edition_policy', '', 'users') }}
+              value="users">{{ _('Registered users only') }}</option>
+            <option {{ macros.selected_if_param('edition_policy', '', 'admins') }}
+              value="admins">{{ _('Administrators only') }}</option>
           </select>
         </div>
 

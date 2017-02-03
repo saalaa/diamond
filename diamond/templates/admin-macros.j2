@@ -20,3 +20,9 @@
     </ul>
   </div>
 {% endmacro %}
+
+{% macro selected_if_param(name, default, value) %}
+  {% if g.param(name, default) == value %}
+    selected
+  {% endif %}
+{% endmacro %}
