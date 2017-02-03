@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <id>/recent-changes/atom</id>
+  <updated>{{ now.isoformat() }}Z</updated>
+
+  <title>{{ _('Recent changes') }}</title>
+  <link rel="alternate" type="text/html"
+    href="/recent-changes"/>
+
+  {% for item in changes.items %}
+    <entry>
+      <id>/{{ item.slug }}?version={{ item.id }}</id>
+      <updated>{{ item.timestamp.isoformat() }}Z</updated>
+      <author>
+        <name>
+          {% if item.user_id %}
+            <name>{{ item.user.name }}</name>
+          {% endif %}
+        </name>
+      </author>
+
+      <title>{{ item.title }}</title>
+      <link rel="alternate" type="text/html"
+        href="/{{ item.slug }}?version={{ item.id }}" />
+
+      <summary>
+        {{ item.comment or '' }}
+      </summary>
+    </entry>
+  {% endfor %}
+</feed>

@@ -18,6 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 import diamond
+import datetime
 
 from flask import request, render_template, redirect, url_for, flash, g, \
         session
@@ -193,6 +194,17 @@ def recent_changes():
     return render_template('recent-changes.j2', changes=changes)
 
 
+@app.route('/recent-changes/atom')
+def recent_changes_atom():
+    page_arg = get_int_arg('page', 1)
+
+    changes = Document.changes() \
+            .paginate(page_arg, 100)
+
+    return render_template('recent-changes_atom.j2', changes=changes,
+            now=datetime.datetime.utcnow())
+
+
 @app.route('/history/<slug>')
 def history(slug):
     page_arg = get_int_arg('page', 1)
@@ -202,6 +214,18 @@ def history(slug):
             .paginate(page_arg, 100)
 
     return render_template('history.j2', page=page, history=history)
+
+
+@app.route('/history/<slug>/atom')
+def history_atom(slug):
+    page_arg = get_int_arg('page', 1)
+
+    page = Document.get(slug)
+    history = page.history() \
+            .paginate(page_arg, 100)
+
+    return render_template('history_atom.j2', page=page, history=history,
+            now=datetime.datetime.utcnow())
 
 
 @app.route('/diff/<slug>/<a>/<b>')
