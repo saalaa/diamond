@@ -29,4 +29,4 @@ if [ -e .env ]; then
   source .env
 fi
 
-exec celery worker -A diamond.mail.celery
+exec celery worker -A diamond.tasks.celery

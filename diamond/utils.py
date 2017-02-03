@@ -72,11 +72,16 @@ def get_int_arg(name, default=None):
 
     return value or default
 
-def serialize_request(request):
+
+def make_context(request, user):
     locale = get_locale()
 
     return {
-        'locale': str(locale),
         'scheme': request.scheme,
-        'host': request.host
+        'host': request.host,
+        'locale': str(locale),
+        'user': {
+            'id': user.id,
+            'email': user.email
+        }
     }

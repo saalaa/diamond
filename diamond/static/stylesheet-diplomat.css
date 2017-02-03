@@ -160,6 +160,15 @@ table.codehilitetable th {
   padding: 0;
   border: 0;
 }
+.left-aligned {
+  text-align: left;
+}
+.centered {
+  text-align: center;
+}
+.right-aligned {
+  text-align: right;
+}
 .actions {
   font-size: 0.8em;
 }
@@ -293,6 +302,7 @@ input[type=password],
 input[type=text] {
   background-color: #fff;
   height: 2em;
+  line-height: 2em;
   min-width: 2em;
   padding: 0 0.5em;
 }

@@ -1,6 +1,6 @@
 {% extends "skeleton.j2" %}
 
-{% import "user-macros.j2" as macros %}
+{% import "user-macros.j2" as user_macros %}
 
 {% block title %}
   {{ _('Dashboard') }}
@@ -8,7 +8,7 @@
 
 {% block body %}
   <div class="help">
-    {{ macros.render_menu('account') }}
+    {{ user_macros.render_menu('account') }}
   </div>
 
   <div class="user">

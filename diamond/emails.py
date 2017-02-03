@@ -17,11 +17,40 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-# The import statements below allow exporting symbols, hence the NOQA markers.
+EMAIL_WELCOME = '''
+Greetings,
 
-from diamond.models.parameter import Parameter, param   # NOQA
-from diamond.models.document import Document            # NOQA
-from diamond.models.metadata import Metadata            # NOQA
-from diamond.models.user import User                    # NOQA
-from diamond.models.token import Token                  # NOQA
-from diamond.models.notification import Notification    # NOQA
+We would like to welcome you to %(service)s.
+
+Here's a link to confirm your email address:
+
+%(scheme)s://%(host)s/auth/confirm/%(token)s
+
+Best regards.
+
+--
+%(service)s'''
+
+EMAIL_CONFIRMATION = '''
+Greetings,
+
+Here's a link to confirm your email address:
+
+%(scheme)s://%(host)s/auth/confirm/%(token)s
+
+Best regards.
+
+--
+%(service)s'''
+
+EMAIL_MODIFIED = '''
+Greetings,
+
+A page you've subscribed to has been modified:
+
+%(scheme)s://%(host)s/%(slug)s
+
+Best regards.
+
+--
+%(service)s'''

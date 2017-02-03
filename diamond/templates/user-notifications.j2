@@ -1,0 +1,67 @@
+{% extends "skeleton.j2" %}
+
+{% import "macros.j2" as macros %}
+{% import "user-macros.j2" as user_macros %}
+
+{% block title %}
+  {{ _('Notifications') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ user_macros.render_menu('notifications') }}
+  </div>
+
+  <div class="user">
+    <p>
+      {{ _('From this page, you can control what notifications you wish to
+      receive.') }}
+    </p>
+
+    <p class="centered">
+      {{ _('Global notifications status:') }}
+
+      {% if current_user.notifications %}
+        <a class="button" href="/user/notifications/disable">
+          {{ _('Enabled') }}
+        </a>
+      {% else %}
+        <a class="button" href="/user/notifications/enable">
+          {{ _('Disabled') }}
+        </a>
+      {% endif %}
+    </p>
+
+    <table>
+      <tr>
+        <th>{{ _('Timestamp') }}</th>
+        <th>{{ _('Page') }}</th>
+        <th class="right-aligned">{{ _('Status') }}</th>
+      </tr>
+
+      {% for item in notifications.items %}
+        <tr>
+          <td>
+            {{ item.ymd_hm }}
+          </td>
+          <td>
+            <a href="/{{ item.page.slug }}" class="wikilink">
+              {{ item.page.title }}
+            </a>
+          </td>
+          <td class="right-aligned">
+            {% if item.active %}
+              <a href="/user/notifications/disable/{{ item.id }}"
+                class="button">{{ _('Enabled') }}</a>
+            {% else %}
+              <a href="/user/notifications/enable/{{ item.id }}"
+                class="button">{{ _('Disabled') }}</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {{ macros.render_pagination(notifications, 'notifications') }}
+  </div>
+{% endblock %}

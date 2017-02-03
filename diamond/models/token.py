@@ -30,7 +30,7 @@ class Token(db.Model):
     __tablename__ = 'tokens'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
     digest = db.Column(db.String, nullable=False)
     payload = db.Column(db.String, nullable=False)
     nonce = db.Column(db.String, nullable=False)

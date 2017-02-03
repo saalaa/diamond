@@ -27,7 +27,7 @@ from diamond.formatter import convert, parse
 from diamond.auth import current_user
 from diamond.diff import unified_diff
 from diamond.db import db
-from diamond.models import Document, Metadata, param
+from diamond.models import Document, Metadata, Notification, param
 from diamond.utils import secret, get_int_arg
 from diamond.caching import cached_body, invalidator
 
@@ -64,8 +64,7 @@ def csrf_check():
     if request.method == "POST" and not request.path == '/preview':
         token = session.pop('_csrf_token', None)
         if not token == request.form.get('_csrf_token'):
-            error = _('CSRF error')
-            return render_template('error.j2', error=error), 403
+            return render_template('error.j2', error=_('CSRF error')), 403
 
 
 @app.route('/robots.txt')
@@ -89,12 +88,11 @@ def read(slug=None):
 
     if version:
         if not page:
-            error = _('This version does not exist')
-            return render_template('error.j2', error=error), 404
+            return render_template('error.j2', error=_('This version does not '
+                'exist')), 404
 
-        message = _('You are viewing version %(version)s of this page',
-                version=version)
-        flash(message)
+        flash(_('You are viewing version %(version)s of this page',
+            version=version))
 
         return render_template('read.j2', page=page)
 
@@ -102,8 +100,7 @@ def read(slug=None):
 
     if 'page' in parsed['redirect']:
         page_name = page.title or page.slug
-        message = _('Redirected from %(page_name)s', page_name=page_name)
-        flash(message)
+        flash(_('Redirected from %(page_name)s', page_name=page_name))
 
         return redirect(url_for('read', slug=parsed['redirect']['page']))
 
@@ -127,8 +124,8 @@ def edit(slug):
 
     auth_only = param('auth_only', False)
     if auth_only and not current_user.is_authenticated:
-        error = _('Edition is limited to registered users only')
-        return render_template('error.j2', error=error), 403
+        return render_template('error.j2', error=_('Edition is limited to '
+            'registered users only')), 403
 
     Metadata.deactivate(slug)
     Document.deactivate(slug)
@@ -151,7 +148,12 @@ def edit(slug):
 
     page.save()
 
+    if not current_user.is_anonymous:
+        Notification.add(slug, current_user, 'automatic')
+
     db.session.commit()
+
+    Notification.send(page, current_user)
 
     flash(_('Thank you for your changes. Your attention to detail '
             'is appreciated.'))
@@ -225,8 +227,8 @@ def deactivate(slug):
         return render_template('deactivate.j2')
 
     if not current_user.admin:
-        error = _('You are not allowed to deactivate this page')
-        return render_template('error.j2', error=error), 403
+        return render_template('error.j2', error=_('You are not allowed to '
+            'deactivate this page')), 403
 
     Document.deactivate(slug)
     Metadata.deactivate(slug)
@@ -242,15 +244,15 @@ def activate(slug):
     version = get_int_arg('version')
 
     if not version:
-        error = _('Missing version parameter')
-        return render_template('error.j2', error=error)
+        return render_template('error.j2', error=_('Missing version '
+            'parameter'))
 
     if request.method == 'GET':
         return render_template('activate.j2')
 
     if not current_user.admin:
-        error = _('You are not allowed to activate this page')
-        return render_template('error.j2', error=error), 403
+        return render_template('error.j2', error=_('You are not allowed to '
+            'activate this page')), 403
 
     page = Document.get(slug, version)
 

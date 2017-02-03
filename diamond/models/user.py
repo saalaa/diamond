@@ -21,10 +21,13 @@ import datetime
 import bcrypt
 import six
 
+from flask import request
 from flask_login import UserMixin
 from slugify import slugify
 
-from diamond.utils import cached_property
+
+from diamond import tasks
+from diamond.utils import cached_property, make_context
 from diamond.db import db
 from diamond.models.document import Document
 
@@ -38,6 +41,7 @@ class User(UserMixin, db.Model):
     validated = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
+    notifications = db.Column(db.Boolean, nullable=False, default=True)
     timestamp = db.Column(db.DateTime, nullable=False,
             default=datetime.datetime.utcnow)
 
@@ -91,6 +95,15 @@ class User(UserMixin, db.Model):
             self_password = self_password.encode('utf-8')
 
         return bcrypt.checkpw(password, self_password)
+
+    def sendmail(self, template, **kwargs):
+        context = make_context(request, self)
+        sendmail = getattr(tasks, 'send_' + template)
+
+        if tasks.with_celery():
+            sendmail = sendmail.delay
+
+        sendmail(context, **kwargs)
 
     def save(self):
         db.session.add(self)

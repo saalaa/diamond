@@ -20,12 +20,17 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required
 from flask_babel import gettext as _
-from diamond import mail
 from diamond.db import db
 from diamond.app import app
 from diamond.auth import current_user
-from diamond.models import User, Document, Token
-from diamond.utils import serialize_request
+from diamond.models import User, Document, Token, Notification
+from diamond.utils import get_int_arg
+
+
+def check_user_validation():
+    if not current_user.validated:
+        flash(_('You have not yet confirmed your email address. Send a '
+          '<a href="/user/send-confirmation">confirmation link</a>?'))
 
 
 @app.route('/user/dashboard')
@@ -35,10 +40,7 @@ def user_dashboard():
             .filter(Document.user_id == current_user.id) \
             .count()
 
-    if not current_user.validated:
-        flash(_('You have not yet confirmed your email address. Send a '
-          '<a href="/user/send-confirmation">confirmation link</a>?'))
-
+    check_user_validation()
     return render_template('user-dashboard.j2', contributions=contributions)
 
 
@@ -49,11 +51,8 @@ def user_account():
         if message:
             flash(message)
 
+        check_user_validation()
         return render_template('user-account.j2')
-
-    if not current_user.validated:
-        flash(_('You have not yet confirmed your email address. Send a '
-          '<a href="/user/send-confirmation">confirmation link</a>?'))
 
     if request.method == 'GET':
         return respond()
@@ -88,8 +87,7 @@ def user_account():
 
         db.session.commit()
 
-        context = serialize_request(request)
-        mail.send_confirmation.delay(context, email, token.digest)
+        current_user.sendmail('confirmation', token=token.digest)
 
     if request.form.get('action') == 'change-password':
         current_password = request.form.get('current-password')
@@ -107,6 +105,66 @@ def user_account():
     return respond()
 
 
+@app.route('/user/notifications')
+@login_required
+def notifications():
+    page_arg = get_int_arg('page', 1)
+
+    notifications = Notification.get(user=current_user) \
+            .paginate(page_arg, 25)
+
+    check_user_validation()
+    return render_template('user-notifications.j2',
+            notifications=notifications)
+
+@app.route('/user/notifications/enable')
+@login_required
+def enable_notifications():
+    current_user.notifications = True
+    current_user.save()
+
+    db.session.commit()
+
+    return redirect(url_for('notifications'))
+
+
+@app.route('/user/notifications/disable')
+@login_required
+def disable_notifications():
+    current_user.notifications = False
+    current_user.save()
+
+    db.session.commit()
+
+    return redirect(url_for('notifications'))
+
+
+@app.route('/user/notifications/enable/<int:id>')
+@login_required
+def enable_notification(id):
+    notification = Notification.get(id)
+
+    notification.active = True
+    notification.save()
+
+    db.session.commit()
+
+    return redirect(url_for('notifications'))
+
+
+@app.route('/user/notifications/disable/<int:id>')
+@login_required
+def disable_notification(id):
+    notification = Notification.get(id)
+
+    notification.active = False
+    notification.save()
+
+    db.session.commit()
+
+    return redirect(url_for('notifications'))
+
+
 @app.route('/user/send-confirmation')
 @login_required
 def send_confirmation():
@@ -115,7 +173,6 @@ def send_confirmation():
 
     db.session.commit()
 
-    context = serialize_request(request)
-    mail.send_confirmation.delay(context, current_user.email, token.digest)
+    current_user.sendmail('confirmation', token=token.digest)
 
     return redirect(url_for('user_dashboard'))

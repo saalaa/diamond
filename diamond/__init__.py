@@ -23,7 +23,7 @@ import diamond.cli      # NOQA
 import diamond.filters  # NOQA
 import diamond.i18n     # NOQA
 import diamond.auth     # NOQA
-import diamond.mail     # NOQA
+import diamond.tasks    # NOQA
 import diamond.routes   # NOQA
 import diamond.admin    # NOQA
 import diamond.user     # NOQA

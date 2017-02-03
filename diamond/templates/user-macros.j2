@@ -6,6 +6,10 @@
           href="/user/dashboard">{{ _('Dashboard') }}</a>
       </li>
       <li>
+        <a {{ 'active' if active == 'notifications' else '' }}
+          href="/user/notifications">{{ _('Notifications') }}</a>
+      </li>
+      <li>
         <a {{ 'active' if active == 'account' else '' }}
           href="/user/account">{{ _('Account') }}</a>
       </li>
