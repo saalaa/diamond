@@ -1,0 +1,61 @@
+{% extends "skeleton.j2" %}
+
+{% import "admin-macros.j2" as admin_macros %}
+{% import "macros.j2" as macros %}
+
+{% block title %}
+  {{ _('Users') }}
+{% endblock %}
+
+{% block body %}
+  <div class="help">
+    {{ admin_macros.render_menu('users') }}
+  </div>
+
+  <div class="recent-changes">
+    <table>
+      <tr>
+        <th>{{ _('Date') }}</th>
+        <th>{{ _('Name') }}</th>
+        <th>{{ _('Email') }}</th>
+        <th>{{ _('Validated?') }}</th>
+        <th>{{ _('Administrator?') }}</th>
+      </tr>
+
+      {% for item in users.items %}
+        <tr>
+          <td>
+            {{ item.ymd_hm }}
+          </td>
+          <td>
+            {{ item.name }}
+            <a href="/admin/users/impersonate/{{ item.id }}">
+              →
+            </a>
+          </td>
+          <td>
+            {{ item.email }}
+          </td>
+          <td>
+            {% if item.validated %}
+              Yes
+            {% else %}
+              No
+            {% endif %}
+          </td>
+          <td>
+            <a href="/admin/users/toggle-admin/{{ item.id }}">
+              {% if item.admin %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    {{ macros.render_pagination(users, 'recent_changes') }}
+  </div>
+{% endblock %}

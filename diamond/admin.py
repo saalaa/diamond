@@ -20,12 +20,14 @@
 import json
 
 from flask import request, render_template, redirect, url_for, flash, g
-from flask_login import login_required
+from flask_login import login_user, login_required
 from flask_babel import gettext as _
+
 from diamond.app import app
 from diamond.db import db
 from diamond.auth import current_user
-from diamond.models import Parameter, param
+from diamond.models import Parameter, param, User
+from diamond.utils import get_int_arg
 
 
 def handle_form(section):
@@ -173,3 +175,51 @@ def menu_move_down(i):
     flash(_('Your changes have been saved'))
 
     return redirect(url_for('menu'))
+
+
+@app.route('/admin/users')
+@login_required
+def users():
+    if not current_user.admin:
+        return render_template('error.j2', error=_('You are not allowed to '
+            'access this page')), 403
+
+    page_arg = get_int_arg('page', 1)
+
+    users = User.get() \
+            .paginate(page_arg, 100)
+
+    if request.method == 'GET':
+        return render_template('admin-users.j2', users=users)
+
+
+@app.route('/admin/users/toggle-admin/<int:user>')
+@login_required
+def users_toggle_admin(user):
+    if not current_user.admin:
+        return render_template('error.j2', error=_('You are not allowed to '
+            'access this page')), 403
+
+    user = User.get(id=user)
+
+    if not user == current_user:
+        user.admin = not user.admin
+        user.save()
+
+        db.session.commit()
+
+    return redirect(url_for('users'))
+
+
+@app.route('/admin/users/impersonate/<int:user>')
+@login_required
+def users_impersonate(user):
+    if not current_user.admin:
+        return render_template('error.j2', error=_('You are not allowed to '
+            'access this page')), 403
+
+    user = User.get(id=user)
+
+    login_user(user)
+
+    return redirect(url_for('read'))

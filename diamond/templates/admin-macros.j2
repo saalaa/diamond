@@ -17,6 +17,10 @@
         <a {{ 'active' if active == 'menu' else '' }}
           href="/admin/menu">{{ _('Menu') }}</a>
       </li>
+      <li>
+        <a {{ 'active' if active == 'users' else '' }}
+          href="/admin/users">{{ _('Users') }}</a>
+      </li>
     </ul>
   </div>
 {% endmacro %}

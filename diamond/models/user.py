@@ -49,12 +49,25 @@ class User(UserMixin, db.Model):
     def document(self):
         return Document.get(slugify(self.name))
 
+    @cached_property
+    def ymd(self):
+        return self.timestamp.strftime('%Y-%m-%d') if self.timestamp else None
+
+    @cached_property
+    def hm(self):
+        return self.timestamp.strftime('%H:%M') if self.timestamp else None
+
+    @cached_property
+    def ymd_hm(self):
+        return self.timestamp.strftime('%Y-%m-%d %H:%M') if self.timestamp \
+                else None
+
     @classmethod
-    def is_first(self):
+    def is_first(cls):
         return User.query.count() == 0
 
     @classmethod
-    def exists(self, email=None, name=None):
+    def exists(cls, email=None, name=None):
         if email is not None:
             return User.query.filter(User.email == email) \
                     .count() != 0
@@ -70,9 +83,11 @@ class User(UserMixin, db.Model):
         if email:
             return User.query.filter(User.email == email) \
                     .one_or_none()
-        else:
+        elif id:
             return User.query.filter(User.id == id) \
                     .one_or_none()
+        else:
+            return User.query
 
     def get_id(self):
         return self.id
