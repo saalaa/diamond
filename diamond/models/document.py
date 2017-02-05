@@ -33,6 +33,7 @@ class Document(db.Model):
     slug = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.Text, nullable=False)
+    bytes_delta = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comment = db.Column(db.Text)
     active = db.Column(db.Boolean, nullable=False, default=False)

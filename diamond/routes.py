@@ -123,6 +123,15 @@ def edit(slug):
     if request.method == 'GET':
         return render_template('edit.j2', page=Document.get(slug))
 
+    current_revision = Document.get(slug=slug)
+
+    if not request.form['revision'] == str(current_revision.id):
+        return render_template('error.j2', error=_('This page has been '
+            'modified while you were working on it.')), 400
+
+    if not current_revision.id:
+        current_revision.body = ''  # For byte delta computation
+
     edition_policy = param('edition_policy', '')
 
     if edition_policy == 'users':
@@ -149,7 +158,10 @@ def edit(slug):
     body = request.form['body']
     comment = request.form['comment'] or None
 
-    page = Document(slug=slug, title=title, body=body, comment=comment)
+    bytes_delta = len(body) - len(current_revision.body)
+
+    page = Document(slug=slug, title=title, body=body, comment=comment,
+            bytes_delta=bytes_delta)
 
     if current_user.is_authenticated:
         page.user_id = current_user.id

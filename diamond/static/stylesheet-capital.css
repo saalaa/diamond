@@ -371,6 +371,12 @@ input[type=submit] {
 .diff .chunk-changed {
   background-color: #FFFF80;
 }
+.delta-gt {
+  background-color: #E0FFE0;
+}
+.delta-lt {
+  background-color: #FFFFE0;
+}
 /*
  * Mobile-first grid
  * -----------------

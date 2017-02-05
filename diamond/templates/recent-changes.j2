@@ -20,6 +20,7 @@
       <tr>
         <th>{{ _('Timestamp') }}</th>
         <th>{{ _('V.') }}</th>
+        <th>{{ _('Delta') }}</th>
         <th>{{ _('Title') }}</th>
         <th>{{ _('Author') }}</th>
         <th>{{ _('Comment') }}</th>
@@ -34,6 +35,18 @@
             <a href="/history/{{ item.slug }}?version={{ item.id }}"
               class="wikilink">{{ item.id }}{{ '*' if item.active else ''}}
             </a>
+          </td>
+          <td class="centered">
+            {% if item.bytes_delta == 0 %}
+            {% elif item.bytes_delta > 0 %}
+              <span class="delta-gt">
+                +{{item.bytes_delta}}
+              </span>
+            {% elif item.bytes_delta < 0 %}
+              <span class="delta-lt">
+                {{item.bytes_delta}}
+              </span>
+            {% endif %}
           </td>
           <td>
             <a href="/{{ item.slug }}" class="wikilink">{{ item.title }}</a>
