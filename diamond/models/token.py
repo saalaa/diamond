@@ -19,6 +19,7 @@
 
 import datetime
 import hashlib
+import six
 
 from diamond.db import db
 from diamond.utils import secret
@@ -61,6 +62,10 @@ class Token(db.Model):
 
     def make_digest(self, payload):
         message = self.nonce + str(self.timestamp) + payload
+
+        if isinstance(message, six.text_type):
+            message = message.encode('utf-8')
+
         return hashlib.sha256(message) \
             .hexdigest()
 
