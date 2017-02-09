@@ -20,7 +20,8 @@
 import pytest
 
 from markdown import Markdown
-from diamond.cli import drop_db, init_db, load_fixtures
+from diamond.db import db
+from diamond.cli import load_fixtures
 from diamond.formatter import convert, parse
 from diamond.formatter.link import LinkExtension
 from diamond.formatter.list import ListExtension
@@ -53,8 +54,9 @@ San]]
 
 @pytest.fixture
 def database():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
+
     load_fixtures()
 
 

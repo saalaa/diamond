@@ -20,18 +20,18 @@
 import pytest
 import six
 
-from diamond.cli import init_db, drop_db, clear_cache
 from diamond.caching import cached_body, invalidator
 from diamond.models import Document
 from diamond.redis import redis
+from diamond.db import db
 
 
 @pytest.fixture
 def database():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
 
-    clear_cache()
+    redis.flushdb()
 
 
 def test_cached_body(database):

@@ -23,7 +23,7 @@ import six
 
 from diamond.app import app
 from diamond.mail import mail
-from diamond.cli import init_db, drop_db
+from diamond.db import db
 from diamond.maths import hash
 
 CSRF_RE = re.compile(r'_csrf_token" value="(.*)">$', re.MULTILINE)
@@ -31,8 +31,8 @@ CSRF_RE = re.compile(r'_csrf_token" value="(.*)">$', re.MULTILINE)
 
 @pytest.fixture
 def client():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
 
     return app.test_client()
 

@@ -22,14 +22,13 @@
 import pytest
 
 from diamond.db import db
-from diamond.cli import drop_db, init_db
-from diamond.models import Document, User
+from diamond.models import User
 
 
 @pytest.fixture
 def database():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
 
 
 def test_all(database):

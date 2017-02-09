@@ -17,15 +17,15 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from diamond.db import db
 from diamond.models import Document
 from diamond.redis import redis
-from diamond.cli import drop_db, init_db, clear_cache, load_fixtures
+from diamond.db import db
+from diamond.cli import load_fixtures
 
 
 def test_drop_db():
-    init_db()
-    drop_db()
+    db.create_all()
+    db.drop_all()
 
     inspector = db.inspect(db.engine)
     names = inspector.get_table_names()
@@ -40,8 +40,8 @@ def test_drop_db():
 
 
 def test_init_db():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
 
     inspector = db.inspect(db.engine)
     names = inspector.get_table_names()
@@ -57,14 +57,13 @@ def test_init_db():
 
 def test_clear_cache():
     redis.set('xxx', 42)
-
-    clear_cache()
+    redis.flushdb()
 
     assert redis.get('xxx') is None
 
 
 def test_load_fixtures():
-    init_db()
+    db.create_all()
 
     load_fixtures()
 

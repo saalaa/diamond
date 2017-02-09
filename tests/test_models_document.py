@@ -20,14 +20,13 @@
 import pytest
 
 from diamond.db import db
-from diamond.cli import drop_db, init_db
 from diamond.models import Document, Metadata
 
 
 @pytest.fixture
 def database():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
 
     Document(slug='a', title='A', body='111').save()
 
