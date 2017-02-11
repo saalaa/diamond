@@ -22,3 +22,7 @@ from flask_mail import Mail
 from diamond.app import app
 
 mail = Mail(app)
+
+
+def with_mail():
+    return app.config['MAIL_SERVER']

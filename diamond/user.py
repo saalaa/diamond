@@ -22,12 +22,16 @@ from flask_login import login_required
 from flask_babel import gettext as _
 from diamond.db import db
 from diamond.app import app
+from diamond.mail import with_mail
 from diamond.auth import current_user
 from diamond.models import User, Document, Token, Notification
 from diamond.utils import get_int_arg
 
 
 def check_user_validation():
+    if not with_mail():
+        return
+
     if not current_user.validated:
         flash(_('You have not yet confirmed your email address. Send a '
           '<a href="/user/send-confirmation">confirmation link</a>?'))

@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
+import traceback
+
 from celery import Celery
 from flask import g
 from flask_babel import gettext as _
@@ -24,7 +26,7 @@ from flask_mail import Message
 from flask_babel import refresh
 
 from diamond.app import app
-from diamond.mail import mail
+from diamond.mail import mail, with_mail
 from diamond.models import param
 from diamond.emails import (
     EMAIL_WELCOME, EMAIL_CONFIRMATION, EMAIL_MODIFIED
@@ -38,6 +40,10 @@ def with_celery():
 
 
 def send_email(context, subject, body, params):
+    if not with_mail():
+        print(' * SMTP server not configured, aborting')
+        return
+
     recipients = [
         context['user']['email']
     ]
@@ -58,7 +64,12 @@ def send_email(context, subject, body, params):
 
         message = Message(subject, recipients, body)
 
-        mail.send(message)
+        try:
+            mail.send(message)
+        except:
+            app.logger.error(
+                traceback.format_exc().strip()
+            )
 
 
 @celery.task
