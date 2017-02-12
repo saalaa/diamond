@@ -17,7 +17,11 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
-from diamond import main
+import sys
 
-if __name__ == '__main__':
+from diamond.main import main
+
+
+sys.exit(
     main()
+)

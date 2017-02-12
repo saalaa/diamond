@@ -1,2 +1,2 @@
-web: scripts/web.sh
-worker: scripts/worker.sh
+web: diamond web
+worker: diamond worker

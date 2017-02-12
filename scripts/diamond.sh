@@ -29,6 +29,6 @@ if [ -e .env ]; then
   source .env
 fi
 
-export FLASK_APP=diamond/__init__.py
+export FLASK_APP=diamond/app.py
 
 exec flask $@

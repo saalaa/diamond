@@ -19,7 +19,7 @@
 
 import pytest
 
-from diamond import app
+from diamond.app import app
 from diamond.utils import env, secret, get_int_arg
 
 

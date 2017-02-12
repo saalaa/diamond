@@ -17,9 +17,20 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
+import os
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from diamond.app import app
+
+
+# Database path fix
+if 'SQLALCHEMY_DATABASE_URI' in app.config:
+    if '~' in app.config['SQLALCHEMY_DATABASE_URI']:
+        home = os.path.expanduser('~')
+        uri = app.config['SQLALCHEMY_DATABASE_URI']
+
+        app.config['SQLALCHEMY_DATABASE_URI'] = uri.replace('~', home, 1)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

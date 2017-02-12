@@ -1,0 +1,40 @@
+# Diamond wiki configuration
+# --------------------------
+
+# Sessions and security
+
+SECRET_KEY = {{ serialize('SECRET_KEY') }}
+
+SESSION_COOKIE_DOMAIN = {{ serialize('SESSION_COOKIE_DOMAIN') }}
+SESSION_COOKIE_SECURE = {{ serialize('SESSION_COOKIE_SECURE') }}
+
+PREFERRED_URL_SCHEME = {{ serialize('PREFERRED_URL_SCHEME') }}
+
+
+# Internationalization
+
+BABEL_DEFAULT_LOCALE = {{ serialize('BABEL_DEFAULT_LOCALE') }}
+BABEL_DEFAULT_TIMEZONE = {{ serialize('BABEL_DEFAULT_TIMEZONE') }}
+
+
+# Database configuration (SQLite, PostgreSQL, ...)
+
+SQLALCHEMY_DATABASE_URI = {{ serialize('SQLALCHEMY_DATABASE_URI') }}
+
+
+# Redis configuration (caching and Celery)
+
+REDIS_URL = {{ serialize('REDIS_URL') }}
+
+
+# SMTP server configuration
+
+MAIL_SERVER = {{ serialize('MAIL_SERVER') }}
+MAIL_PORT = {{ serialize('MAIL_PORT') }}
+MAIL_USE_TLS = {{ serialize('MAIL_USE_TLS') }}
+MAIL_USE_SSL = {{ serialize('MAIL_USE_SSL') }}
+
+MAIL_USERNAME = {{ serialize('MAIL_USERNAME') }}
+MAIL_PASSWORD = {{ serialize('MAIL_PASSWORD') }}
+
+MAIL_DEFAULT_SENDER = {{ serialize('MAIL_DEFAULT_SENDER') }}

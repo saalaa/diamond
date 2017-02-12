@@ -20,7 +20,7 @@
 import pytest
 import six
 
-from diamond import app
+from diamond.app import app
 
 
 @pytest.fixture

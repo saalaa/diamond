@@ -17,37 +17,43 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
+import sys
+import click
+import json
 import codecs
+import datetime
 
+from flask import render_template
+from gunicorn.app import wsgiapp as gunicorn
 from os import listdir, getcwd, path
 from diamond.app import app
 from diamond.db import db
-from diamond.redis import redis
 from diamond.models import Document, Metadata
 from diamond.formatter import parse
+from diamond.tasks import celery, with_celery
 
 FIXTURES_DIR = 'fixtures'
 
 
-def clear_cache():
-    '''Clear all data from Redis.'''
-    redis.flushdb()
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.timedelta):
+            return str(obj)
 
-    print(' * Cache cleared (%s)' % app.config['REDIS_URL'])
-
-
-def init_db():
-    '''Create all database entities.'''
-    db.create_all()
-
-    print(' * Database created (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
+        return super(JSONEncoder, self).default(obj)
 
 
-def drop_db():
-    '''Destroy all database entities (and data).'''
-    db.drop_all()
+def serialize(key):
+    value = app.config[key]
 
-    print(' * Database destroyed (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
+    if value is None:
+        return None
+    elif type(value) is int:
+        return value
+    elif type(value) is str:
+        return "'%s'" % value
+    elif type(value) is bool:
+        return 'True' if value else 'False'
 
 
 def load_fixtures():
@@ -58,34 +64,99 @@ def load_fixtures():
     for filename in listdir(dir):
         file = path.join(dir, filename)
 
-        if path.isfile(file) and file.endswith('.md'):
-            print(' * Loading %s' % filename)
+        if not path.isfile(file) or not file.endswith('.md'):
+            continue
 
-            body = codecs.open(file, 'r', 'utf-8') \
-                    .read()
+        print(' * Loading %s' % filename)
 
-            parsed = parse(body)
+        slug = filename[:-3]
 
-            slug = filename[:-3]
-            title = parsed['title'] or slug
+        page = Document.get(slug=slug)
 
-            Metadata.deactivate(slug)
-            Document.deactivate(slug)
+        if page.id:
+            print(' * Document exists, skipping')
+            continue
 
-            for key, values in parsed['meta'].items():
-                for value in values:
-                    Metadata(slug=slug, key=key, value=value) \
-                            .save()
+        body = codecs.open(file, 'r', 'utf-8') \
+                .read()
 
-            Document(slug=slug, title=title, body=body) \
-                            .save()
+        parsed = parse(body)
 
-            db.session.commit()
+        title = parsed['title'] or slug
 
-    print(' * Fixtures loaded (%s)' % app.config['SQLALCHEMY_DATABASE_URI'])
+        Metadata.deactivate(slug)
+        Document.deactivate(slug)
+
+        for key, values in parsed['meta'].items():
+            for value in values:
+                Metadata(slug=slug, key=key, value=value) \
+                        .save()
+
+        Document(slug=slug, title=title, body=body) \
+                        .save()
+
+        db.session.commit()
 
 
-app.cli.command('clear-cache')(clear_cache)
-app.cli.command('init-db')(init_db)
-app.cli.command('drop-db')(drop_db)
+@click.option('-b', '--bind', help='The socket to bind.')
+@click.option('-w', '--workers', help='The number of worker processes for '
+        'handling requests.')
+@click.option('-D', '--daemon', is_flag=True, help='Daemonize the Gunicorn '
+        'process.')
+@click.option('-u', '--user', help='Switch worker processes to run as this '
+        'user.')
+@click.option('-g', '--group', help='Switch worker process to run as this '
+        'group.')
+@click.option('-m', '--umask', help='A bit mask for the file mode on files '
+        'written by Gunicorn.')
+def web(bind, workers, daemon, user, group, umask):
+    '''Runs a production web server (Gunicorn).
+
+    All command line options are passed to Gunicorn as is. See Gunicorn
+    documentation for additional information on command line options.
+    '''
+    print(' * Starting a task worker (Gunicorn)')
+
+    sys.argv.pop(0)
+    sys.argv.append('diamond:app')
+
+    gunicorn.run()
+
+
+@click.option('-D', '--detach', is_flag=True, help='Start worker as a '
+        'background process.')
+def worker(detach):
+    '''Runs a task worker (Celery).
+
+    All command line options are passed to Celery as is. See Celery
+    documentation for additional information on command line options.
+    '''
+    print(' * Starting a task worker (Celery)')
+
+    if not with_celery():
+        print(' * Broker not configured, aborting')
+        sys.exit(1)
+
+    celery.start()
+
+
+@click.option('-r', '--raw', is_flag=True, help='Raw output for debugging')
+def config(raw):
+    '''Dump configuration.
+
+    By default, this command dumps the configuration in a format meant to be
+    stored and reloaded as-is.
+    '''
+    if raw:
+        output = JSONEncoder(indent=2) \
+                .encode(app.config)
+    else:
+        output = render_template('config.j2', serialize=serialize)
+
+    print(output)
+
+
 app.cli.command('load-fixtures')(load_fixtures)
+app.cli.command('web')(web)
+app.cli.command('worker')(worker)
+app.cli.command('config')(config)
