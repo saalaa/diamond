@@ -39,13 +39,54 @@ def requirements(filename):
 
 
 setup(
-    name='Diamond',
+    name='diamond-wiki',
     version=version('diamond/__init__.py'),
-    url='http://github.com/saalaa/diamond',
+    url='https://github.com/saalaa/diamond',
     license='GPL',
     author='Benoit Myard',
     author_email='myardbenoit@gmail.com',
     description='The metadata enabled wiki engine',
+    zip_safe=False,
+    include_package_data=True,
+    packages=['diamond'],
     install_requires=requirements('requirements.txt'),
-    setup_requires=['pytest-runner']
+    setup_requires=['pytest-runner'],
+    tests_requires=['pytest-runner'],
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: No Input/Output (Daemon)',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Education',
+        'Intended Audience :: End Users/Desktop',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: OS Independent',
+        'Operating System :: POSIX :: BSD',
+        'Operating System :: POSIX :: Linux',
+        'Operating System :: POSIX',
+        'Operating System :: Unix',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
+        'Topic :: Internet :: WWW/HTTP :: WSGI',
+        'Topic :: Office/Business :: Groupware',
+        'Topic :: Text Processing :: Markup'
+    ],
+    entry_points={
+        'console_scripts': [
+            'diamond = diamond.main:main'
+        ]
+    }
 )

@@ -19,6 +19,11 @@
 # You should have received a copy of the GNU General Public License along with
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
+if [ "$1" = "" ]; then
+  echo "Usage: $0 REQUIREMENTS"
+  exit 1
+fi
+
 NEW_REQUIREMENTS=`pip list --outdated --format legacy | \
   awk '{ print $1 "==" $5; }'`
 
@@ -28,8 +33,8 @@ for line in $NEW_REQUIREMENTS; do
   echo $library
 
   # Some `sed` implementations don't support `-i` properly.
-  sed "s/^$library==.*/$line/" requirements.txt > \
-    /tmp/requirements.txt.$$
+  sed "s/^$library==.*/$line/" $1 > \
+    /tmp/$1.$$
 
-  mv /tmp/requirements.txt.$$ requirements.txt
+  mv /tmp/$1.$$ $1
 done
