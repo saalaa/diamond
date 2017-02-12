@@ -118,7 +118,7 @@ def web(bind, workers, daemon, user, group, umask):
     print(' * Starting a task worker (Gunicorn)')
 
     sys.argv.pop(0)
-    sys.argv.append('diamond:app')
+    sys.argv.append('diamond.app:app')
 
     gunicorn.run()
 
