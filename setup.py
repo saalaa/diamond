@@ -46,6 +46,7 @@ setup(
     author='Benoit Myard',
     author_email='myardbenoit@gmail.com',
     description='The metadata enabled wiki engine',
+    long_description='See https://github.com/saalaa/diamond',
     zip_safe=False,
     include_package_data=True,
     packages=['diamond'],
