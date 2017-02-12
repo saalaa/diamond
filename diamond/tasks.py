@@ -41,7 +41,6 @@ def with_celery():
 
 def send_email(context, subject, body, params):
     if not with_mail():
-        print(' * SMTP server not configured, aborting')
         return
 
     recipients = [
