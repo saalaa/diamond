@@ -20,25 +20,35 @@
       "generator": "secret"
     },
     "MAIL_SERVER": {
-      "description": "Mail server IP address or domain name"
+      "description": "Mail server IP address or domain name",
+      "required": false
     },
     "MAIL_PORT": {
-      "description": "Mail server port number"
+      "description": "Mail server port number",
+      "value": "587",
+      "required": false
     },
     "MAIL_USERNAME": {
-      "description": "Mail server username; often an email address"
+      "description": "Mail server username; often an email address",
+      "required": false
     },
     "MAIL_PASSWORD": {
-      "description": "Mail server password"
+      "description": "Mail server password",
+      "required": false
     },
     "MAIL_USE_TLS": {
-      "description": "Whether or not the mail server supports TLS"
+      "description": "Whether or not the mail server supports TLS",
+      "value": "yes",
+      "required": false
     },
     "MAIL_USE_SSL": {
-      "description": "Whether or not the mail server supports SSL"
+      "description": "Whether or not the mail server supports SSL",
+      "required": false
     },
     "MAIL_DEFAULT_SENDER": {
-      "description": "Default email sender"
+      "description": "Default email sender",
+      "value": "diamond-wiki@example.com",
+      "required": false
     }
   }
 }
