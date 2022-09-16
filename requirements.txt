@@ -23,7 +23,7 @@ gunicorn==19.6.0
 itsdangerous==0.24
 Jinja2==3.0.1
 kombu==4.0.2
-Mako==1.0.6
+Mako==1.2.2
 Markdown==2.6.7
 MarkupSafe==2.0.1
 mccabe==0.5.3
