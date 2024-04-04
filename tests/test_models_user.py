@@ -25,13 +25,7 @@ from diamond.db import db
 from diamond.models import User
 
 
-@pytest.fixture
-def database():
-    db.drop_all()
-    db.create_all()
-
-
-def test_all(database):
+def test_all(client):
     assert not User.exists(email='a@a.a')
     assert not User.exists(email='b@b.b')
     assert not User.exists(email='c@c.c')
@@ -76,7 +70,7 @@ def test_all(database):
     assert not User.get('e@e.e')
 
 
-def test_u_string(database):
+def test_u_string(client):
     user = User(email='u-string@example.com', name='u-string') \
             .set_password(u'é') \
             .save()
@@ -89,7 +83,7 @@ def test_u_string(database):
     assert user.check_password(u'é')
     assert user.check_password(b'\xc3\xa9')
 
-def test_b_string(database):
+def test_b_string(client):
     user = User(email='b-string@example.com', name='b-string') \
             .set_password(b'\xc3\xa9') \
             .save()
@@ -103,7 +97,7 @@ def test_b_string(database):
     assert user.check_password(b'\xc3\xa9')
 
 
-def test_string(database):
+def test_string(client):
     user = User(email='string@example.com', name='string') \
             .set_password('é') \
             .save()

@@ -24,10 +24,7 @@ from diamond.models import Document, Metadata
 
 
 @pytest.fixture
-def database():
-    db.drop_all()
-    db.create_all()
-
+def database(client):
     Document(slug='a', title='A', body='111').save()
 
     db.session.commit()
@@ -48,7 +45,7 @@ def database():
     db.session.commit()
 
 
-def test_initial(database):
+def test_initial(client, database):
     assert Document(slug='awerty').initial == 'a'
     assert Document(title='QWERTY').initial == 'q'
     assert Document(slug='awerty', title='QWERTY').initial == 'q'
@@ -57,7 +54,7 @@ def test_initial(database):
     assert Document.get('b').initial == 'b'
 
 
-def test_timestamp(database):
+def test_timestamp(client, database):
     assert Document().ymd is None
     assert Document().hm is None
     assert Document().ymd_hm is None
@@ -67,18 +64,18 @@ def test_timestamp(database):
     assert Document.get('a').ymd_hm is not None
 
 
-def test_meta(database):
+def test_meta(client, database):
     assert Document.get('a').meta() != []
     assert Document.get('b').meta() != []
     assert Document.get('c').meta() == []
     assert Document.get('d').meta() == []
 
 
-def test_count(database):
+def test_count(client, database):
     assert Document.count() == 3
 
 
-def test_get(database):
+def test_get(client, database):
     assert Document.get('a').id is not None
     assert Document.get('b').id is not None
     assert Document.get('c').id is not None
@@ -95,19 +92,19 @@ def test_get(database):
     assert not doc.active
 
 
-def test_titles(database):
+def test_titles(client, database):
     titles = Document.titles().all()
 
     assert len(titles) == 3
 
 
-def test_changes(database):
+def test_changes(client, database):
     changes = Document.changes().all()
 
     assert len(changes) == 4
 
 
-def test_history(database):
+def test_history(client, database):
     history = Document.get('a') \
             .history() \
             .all()
@@ -127,7 +124,7 @@ def test_history(database):
     assert len(history) == 1
 
 
-def test_search(database):
+def test_search(client, database):
     docs = Document.search('')
 
     assert len(docs) == 3
@@ -161,7 +158,7 @@ def test_search(database):
     assert len(docs) == 1
 
 
-def test_facets(database):
+def test_facets(client, database):
     docs = Document.search('')
     facets = Document.facets(docs)
 

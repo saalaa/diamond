@@ -23,13 +23,7 @@ from diamond.db import db
 from diamond.models import Parameter, param
 
 
-@pytest.fixture
-def database():
-    db.drop_all()
-    db.create_all()
-
-
-def test_all(database):
+def test_all(client):
     Parameter.clear_cache()
 
     assert Parameter.cache is None

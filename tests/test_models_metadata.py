@@ -23,13 +23,7 @@ from diamond.db import db
 from diamond.models import Metadata
 
 
-@pytest.fixture
-def database():
-    db.drop_all()
-    db.create_all()
-
-
-def test_all(database):
+def test_all(client):
     Metadata(slug='AAA', key='a', value='1').save()
     Metadata(slug='AAA', key='b', value='2').save()
     Metadata(slug='BBB', key='a', value='1').save()

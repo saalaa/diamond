@@ -23,7 +23,7 @@ from diamond.db import db
 from diamond.cli import load_fixtures
 
 
-def test_drop_db():
+def test_drop_db(client):
     db.create_all()
     db.drop_all()
 
@@ -39,7 +39,7 @@ def test_drop_db():
         assert len(names) == 0
 
 
-def test_init_db():
+def test_init_db(client):
     db.drop_all()
     db.create_all()
 
@@ -55,14 +55,14 @@ def test_init_db():
         assert len(names) == 6
 
 
-def test_clear_cache():
+def test_clear_cache(client):
     redis.set('xxx', 42)
     redis.flushdb()
 
     assert redis.get('xxx') is None
 
 
-def test_load_fixtures():
+def test_load_fixtures(client):
     db.create_all()
 
     load_fixtures()

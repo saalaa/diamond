@@ -1,62 +1,39 @@
-[![Build status](https://travis-ci.org/saalaa/diamond.svg?branch=master)](https://travis-ci.org/saalaa/diamond)
-
 # Diamond Wiki
 
 The metadata enabled wiki engine.
 
+## Working on the Wiki Engine
 
-## Running on Heroku
+### Envrionment Setup
 
-The simplest is probably to use the following button:
+Follow the official [install
+instructions](https://asdf-vm.com/guide/getting-started.html) and then install
+the necessary plugins:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/saalaa/diamond)
+    $ asdf plugin add poetry
+    $ asdf plugin add pre-commit
+    $ asdf plugin add python
 
-But if you want to do it manually and/or intend to make meaningful changes to
-Diamond Wiki, we've got you covered. First, you should download and install the
-[Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line).
+Now install the required tooling:
 
-Then, create a new Heroku app:
+    $ asdf install
 
-    $ heroku create
+Install Python requirements:
 
-Add a PostgreSQL resource to the Heroku app (it doesn't have to be the free
-plan, please refer to Heroku documentation for alternative plans):
+    $ poetry install
 
-    $ heroku addons:create heroku-postgresql:hobby-dev
+Prepare the database:
 
-You can now deploy the application to Heroku:
+    $ poetry run flask -A diamond.app db upgrade
+    $ poetry run flask -A diamond.app load-fixtures
 
-    $ git push heroku
+Run the wiki engine:
 
-Finally it's time to initialize the database and load fixtures:
+    $ poetry run flask -A diamond.app run
 
-    $ heroku run scripts/bootstrap.sh
+### Testing
 
-The following chapters should also provide plenty of information on how to
-further configure the installation.
-
-
-## Running Elsewhere
-
-We will only cover using `virtualenv` for simplicity, so let's start with
-creating a new environment and activating it:
-
-    $ virtualenv env
-    $ source env/bin/activate
-
-Now, let's install dependencies:
-
-    $ pip install -r requirements.txt
-
-It's now time to initialize the database and load fixtures (this is strictly
-equivalent to running `scripts/bootstrap.sh`):
-
-    $ scripts/diamond.sh db upgrade
-    $ scripts/diamond.sh load-fixtures
-
-Finally, we can run the wiki:
-
-    $ scripts/diamond.sh run
+    $ poetry run pytest
 
 
 ## Configuration
@@ -142,17 +119,3 @@ polluting your system):
 Then, `tox` can be called:
 
     $ tox
-
-### Automated tests using [Travis CI](https://travis-ci.org)
-
-Similar to `tox`, Travis CI leverages our `pytest` test suite and runs it under
-several Python environments. In `.travis.yml` several Python versions can be
-configured as test environments (currently Python 2.7 and 3.5 are supported).
-
-Using this method still relies on `pytest` so these must be configured
-properly.
-
-Pushing code to the Github repository automatically triggers this system. The
-repository test status is available at the following address:
-
-- https://travis-ci.org/saalaa/diamond

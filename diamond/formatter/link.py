@@ -18,7 +18,7 @@
 # Diamond wiki. If not, see <http://www.gnu.org/licenses/>.
 
 from slugify import slugify
-from markdown.extensions.wikilinks import WikiLinkExtension, WikiLinks
+from markdown.extensions.wikilinks import WikiLinkExtension, WikiLinksInlineProcessor
 
 LINK_PATTERN = r'\[\[([\w0-9\?\!\(\)\'_ -]+)\]\]'
 
@@ -36,8 +36,8 @@ class LinkExtension(WikiLinkExtension):
             'build_url': [build_url, 'Callable formats URL from label.'],
         }
 
-    def extendMarkdown(self, md, md_globals):
-        wikilinkPattern = WikiLinks(LINK_PATTERN, self.getConfigs())
+    def extendMarkdown(self, md):
+        wikilinkPattern = WikiLinksInlineProcessor(LINK_PATTERN, self.getConfigs())
         wikilinkPattern.md = md
 
-        md.inlinePatterns.add('wikilink', wikilinkPattern, '<not_strong')
+        md.inlinePatterns.register(wikilinkPattern, 'wikilink', 75)
