@@ -26,12 +26,12 @@ class TitleTreeProcessor(Treeprocessor):
         self.md = md
 
     def run(self, root):
-        for child in root.getchildren():
+        for child in root:
             if child.tag == 'h1':
                 self.md.Title = (child.text or '').strip()
                 break
 
 
 class TitleExtension(Extension):
-    def extendMarkdown(self, md, md_globals):
-        md.treeprocessors.add('title', TitleTreeProcessor(md), '_end')
+    def extendMarkdown(self, md):
+        md.treeprocessors.register(TitleTreeProcessor(md), 'title', 100)

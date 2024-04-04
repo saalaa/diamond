@@ -25,7 +25,8 @@ from diamond.app import app
 
 @pytest.fixture
 def client():
-    return app.test_client()
+    with app.app_context():
+        yield app.test_client()
 
 
 def test_handler(client):

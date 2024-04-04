@@ -27,14 +27,14 @@ from diamond.db import db
 
 
 @pytest.fixture
-def database():
+def database(client):
     db.drop_all()
     db.create_all()
 
     redis.flushdb()
 
 
-def test_cached_body(database):
+def test_cached_body(client, database):
     data = cached_body(Document(slug='a', title='A', body='xxx', active=False),
             'cache-')
 
@@ -54,7 +54,7 @@ def test_cached_body(database):
     assert six.b('xxx') in redis.get('cache-b')
 
 
-def test_invalidator(database):
+def test_invalidator(client, database):
     @invalidator('cache-')
     def fake_endpoint():
         return 'response'

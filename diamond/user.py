@@ -115,7 +115,7 @@ def notifications():
     page_arg = get_int_arg('page', 1)
 
     notifications = Notification.get(user=current_user) \
-            .paginate(page_arg, 25)
+            .paginate(page=page_arg, per_page=25)
 
     check_user_validation()
     return render_template('user-notifications.j2',

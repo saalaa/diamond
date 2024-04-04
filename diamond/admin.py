@@ -187,7 +187,7 @@ def users():
     page_arg = get_int_arg('page', 1)
 
     users = User.get() \
-            .paginate(page_arg, 100)
+            .paginate(page=page_arg, per_page=100)
 
     if request.method == 'GET':
         return render_template('admin-users.j2', users=users)

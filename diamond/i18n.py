@@ -21,10 +21,7 @@ from flask import g, request
 from flask_babel import Babel
 from diamond.app import app
 
-babel = Babel(app)
 
-
-@babel.localeselector
 def get_locale():
     locale = getattr(g, 'locale', None)
     if locale:
@@ -34,3 +31,7 @@ def get_locale():
         'en',
         'fr'
     ])
+
+
+babel = Babel(app)
+babel.init_app(app, locale_selector=get_locale)

@@ -43,7 +43,6 @@ class RedirectProcessor(BlockProcessor):
 
 
 class RedirectExtension(Extension):
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         md.registerExtension(self)
-        md.parser.blockprocessors.add('redirect', RedirectProcessor(md,
-            md.parser), '_begin')
+        md.parser.blockprocessors.register(RedirectProcessor(md, md.parser), 'redirect', 100)

@@ -31,10 +31,11 @@ CSRF_RE = re.compile(r'_csrf_token" value="(.*)">$', re.MULTILINE)
 
 @pytest.fixture
 def client():
-    db.drop_all()
-    db.create_all()
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
 
-    return app.test_client()
+        yield app.test_client()
 
 
 def extract_csrf_token(client, url):

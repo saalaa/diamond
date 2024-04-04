@@ -53,14 +53,11 @@ San]]
 
 
 @pytest.fixture
-def database():
-    db.drop_all()
-    db.create_all()
-
+def database(client):
     load_fixtures()
 
 
-def test_title_convert(database):
+def test_title_convert(client, database):
     assert convert('') == ''
 
     html = convert(FIXTURE)
@@ -125,7 +122,7 @@ def test_title_link():
     assert 'cursed-san' not in html
 
 
-def test_title_list(database):
+def test_title_list(client, database):
     extension = ListExtension()
     markdown = Markdown(extensions=[extension])
 
