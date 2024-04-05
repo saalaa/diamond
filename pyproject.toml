@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "diamond"
-version = "0"
+version = "0.4.2"
 description = "The metadata enabled wiki engine"
 authors = [
   "Benoit Myard <benoit@myard.xyz>"
